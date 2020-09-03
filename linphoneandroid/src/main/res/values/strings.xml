@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">linphone_Android</string>
+
+    <string name="confirm">确认</string>
+    <string name="cancel">取消</string>
+
+    <string name="back">返回</string>
+    <string name="loading">加载中...</string>
+    <string name="countdown">%1$dS</string>
+    <string name="mobile_valid">请输入正确的手机号</string>
+
+
+    <string name="user_valid">身份信息验证失败,请重新登录</string>
+    <string name="system_error">系统异常,请稍后再试</string>
+</resources>

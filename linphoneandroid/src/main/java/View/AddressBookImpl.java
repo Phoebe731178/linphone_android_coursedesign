@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+//通讯录
 public class AddressBookImpl extends Activity implements AddressBook {
 
     AddressBookPresenter addressBookPresenter = new AddressBookPresenter(AddressBookImpl.this, this);

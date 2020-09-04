@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import com.hunter.fastandroid.R;
 import vo.Contact;
 
+//联系人详情
 public class ContactDetail extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

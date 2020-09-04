@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+//通讯录
 public class AddressBookModelImpl implements AddressBookModel {
 
     private static final int PHONE_NAME = 0;       //联系人姓名
@@ -23,8 +23,10 @@ public class AddressBookModelImpl implements AddressBookModel {
         this.context = context;
     }
 
+    //从本机通讯录获取联系人信息
     @Override
     public Map<String, List<String>> getAddressBookInfo() {
+        //查询本机数据库
         String[] column = new String[] {ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME, ContactsContract.CommonDataKinds.Phone.NUMBER};
         Cursor cursor = context.getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                 column, null, null, null);
@@ -47,6 +49,7 @@ public class AddressBookModelImpl implements AddressBookModel {
         return addressBookMap;
     }
 
+    //获取本机联系人详情(姓名，电话，SIP)
     @Override
     public List<Contact> getContactList(){
         for(Map.Entry<String, List<String>> entry: addressBookMap.entrySet()){

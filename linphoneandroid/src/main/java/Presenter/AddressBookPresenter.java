@@ -5,6 +5,7 @@ import Model.AddressBookModelImpl;
 import View.AddressBook;
 import View.AddressBookImpl;
 import android.content.Context;
+import vo.Contact;
 
 //通讯录
 public class AddressBookPresenter {

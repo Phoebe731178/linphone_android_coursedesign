@@ -1,14 +1,22 @@
 package Model;
 
+import android.content.ContentResolver;
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 import android.provider.ContactsContract;
+import android.util.Log;
+import org.linphone.core.Content;
 import vo.Contact;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Arrays;
 
 //通讯录
 public class AddressBookModelImpl implements AddressBookModel {
@@ -64,6 +72,36 @@ public class AddressBookModelImpl implements AddressBookModel {
     @Override
     public void setAddressBookInfo(Map<String, List<String>> addressBookInfo) {
 
+    }
+
+    //插入本机联系人数据库
+    @Override
+    public void insertContactToMachine(Context context, Contact contact){
+        String name = contact.getName();
+        List<String> phones = contact.getPhones();
+        ContentValues contentValues = new ContentValues();
+        ContentResolver contentResolver = context.getContentResolver();
+        long id;
+        //循环插入联系人电话
+        for(String phone: phones) {
+            contentValues.clear();
+            //插入raw_contacts，获取id属性
+            Uri uri = Uri.parse("content://com.android.contacts/raw_contacts");
+            id = ContentUris.parseId(context.getContentResolver().insert(uri, contentValues));
+            //姓名插入data表
+            uri = Uri.parse("content://com.android.contacts/data");
+            contentValues.put(ContactsContract.Data.RAW_CONTACT_ID, id);
+            contentValues.put(ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME, name);
+            contentValues.put(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE);
+            contentResolver.insert(uri, contentValues);
+            contentValues.clear();
+            //电话号码插入data表
+            contentValues.put(ContactsContract.Data.RAW_CONTACT_ID, id);
+            contentValues.put(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE);
+            contentValues.put(ContactsContract.CommonDataKinds.Phone.NUMBER, phone);
+            contentValues.put(ContactsContract.CommonDataKinds.Phone.TYPE, ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE);
+            context.getContentResolver().insert(uri, contentValues);
+        }
     }
 
 }

@@ -8,10 +8,15 @@ import java.util.List;
 //联系人实体类
 public class Contact implements Parcelable {
     private String name;
-    private List<String> phones;
+    private List<String> phones = null;
     private List<String> SIP = null;
 
     public Contact(){ }
+
+    public Contact(String name, List<String> phones){
+        this.name = name;
+        this.phones = phones;
+    }
 
     protected Contact(Parcel in) {
         name = in.readString();

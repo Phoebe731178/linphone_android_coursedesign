@@ -54,7 +54,25 @@ public class AddressBookModelImpl implements AddressBookModel {
                 }
             }
         }
+//        insertContactToMachine(context, new Contact("1111", Arrays.asList(new String[]{"1111"})));
+//        test(context);
+        deleteContactFromMachine(context, "1111");
         return addressBookMap;
+    }
+
+    public void test(Context context){
+        Uri uri = Uri.parse("content://com.android.contacts/raw_contacts");
+        ContentResolver contentResolver = context.getContentResolver();
+        String[] column = new String[]{ContactsContract.Data._ID};
+        String where = ContactsContract.Data._ID + "=?";
+        String[] params = new String[]{"1111"};
+        Cursor cursor = contentResolver.query(uri, new String[]{ContactsContract.Data._ID}, ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME+"=?", params, null);
+        cursor.moveToFirst();
+        long id = cursor.getInt(0);
+        Log.i("tag1", String.valueOf(cursor.getInt(0)));
+        contentResolver.delete(uri, where, new String[]{id+""});
+        cursor.moveToFirst();
+        Log.i("tag1", String.valueOf(cursor.getInt(0)));
     }
 
     //获取本机联系人详情(姓名，电话，SIP)
@@ -100,8 +118,26 @@ public class AddressBookModelImpl implements AddressBookModel {
             contentValues.put(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE);
             contentValues.put(ContactsContract.CommonDataKinds.Phone.NUMBER, phone);
             contentValues.put(ContactsContract.CommonDataKinds.Phone.TYPE, ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE);
-            context.getContentResolver().insert(uri, contentValues);
+            contentResolver.insert(uri, contentValues);
         }
+    }
+
+    public void deleteContactFromMachine(Context context, String phone){
+        Uri uri = Uri.parse("content://com.android.contacts/data");
+        ContentResolver contentResolver = context.getContentResolver();
+        String PHONE_NUMBER = ContactsContract.CommonDataKinds.Phone.NUMBER;
+        Cursor cursor = contentResolver.query(uri, new String[]{ContactsContract.Data.RAW_CONTACT_ID}, PHONE_NUMBER+"=?", new String[]{phone}, null);
+
+        if(cursor.moveToFirst()){
+            Log.i("hello", "he");
+            long id = cursor.getInt(0);
+            contentResolver.delete(uri, ContactsContract.Data.RAW_CONTACT_ID+"=?", new String[]{id+""});
+            uri = Uri.parse("content://com.android.contacts/raw_contacts");
+            contentResolver.delete(uri, ContactsContract.Data.CONTACT_ID+"=?", new String[]{id+""});
+//            uri = Uri.parse("content://com.android.contacts/phone_lookup");
+//            contentResolver.delete(uri, ContactsContract.Data.CONTACT_ID+"=?", new String[]{id+""});
+        }
+
     }
 
 }

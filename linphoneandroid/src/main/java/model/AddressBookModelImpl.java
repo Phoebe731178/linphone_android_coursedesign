@@ -7,10 +7,7 @@ import android.provider.ContactsContract;
 import android.util.Log;
 import vo.Contact;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 //通讯录
 public class AddressBookModelImpl implements AddressBookModel {
@@ -48,10 +45,13 @@ public class AddressBookModelImpl implements AddressBookModel {
                 }
             }
         }
-        deleteContactFromMachine(context, "2222");
+/**
+ * 接口使用样例
+ * deleteContactFromMachine("1111"); //“1111”为需要删除的手机号码
+ * insertContactToMachine(new Contact("2222", Arrays.asList("1111", "2222")));
+ */
         return addressBookMap;
     }
-
 
     //获取本机联系人详情(姓名，电话，SIP)
     @Override
@@ -72,7 +72,7 @@ public class AddressBookModelImpl implements AddressBookModel {
 
     //插入本机联系人数据库
     @Override
-    public void insertContactToMachine(Context context, Contact contact){
+    public void insertContactToMachine(Contact contact){
         String name = contact.getName();
         List<String> phones = contact.getPhones();
         ContentValues contentValues = new ContentValues();
@@ -100,7 +100,9 @@ public class AddressBookModelImpl implements AddressBookModel {
         }
     }
 
-    public void deleteContactFromMachine(Context context, String phone){
+    // 删除本机联系人
+    @Override
+    public void deleteContactFromMachine(String phone){
 //        Uri uri = Uri.parse("content://com.android.contacts/data");
 //        Uri uri = Uri.parse("content://com.android.contacts/contacts");
         Uri uri = Uri.parse("content://com.android.contacts/data/phones");
@@ -108,12 +110,29 @@ public class AddressBookModelImpl implements AddressBookModel {
 //        Cursor cursor = contentResolver.query(uri, new String[]{ContactsContract.PhoneLookup.DATA_ID, ContactsContract.PhoneLookup.CONTACT_ID},
 //                ContactsContract.PhoneLookup.NORMALIZED_NUMBER+"=?", new String[]{phone}, null);
         Cursor cursor = contentResolver.query(uri, new String[]{ContactsContract.CommonDataKinds.Phone.CONTACT_ID, ContactsContract.CommonDataKinds.Phone.NUMBER},
-                ContactsContract.CommonDataKinds.Phone.NUMBER+"=?", new String[]{}, null);
-
+                ContactsContract.CommonDataKinds.Phone.NUMBER+"=?", new String[]{phone}, null);
         if(cursor.moveToFirst()){
+            String contactID = cursor.getString(0);
             Log.i("tag1", cursor.getString(0) + " " +cursor.getString(1));
-            Log.i("tag1", String.valueOf(cursor.getCount()));
+            cursor = contentResolver.query(uri, new String[]{ContactsContract.CommonDataKinds.Phone.NUMBER}, ContactsContract.CommonDataKinds.Phone.CONTACT_ID+"=?", new String[]{contactID}, null);
+            int phone_number = cursor.getCount();
+            if(phone_number == 1){
+                uri = Uri.parse("content://com.android.contacts/contacts");
+                contentResolver.delete(uri, ContactsContract.Contacts._ID +"=?", new String[]{contactID});
+                uri = Uri.parse("content://com.android.contacts/data");
+                contentResolver.delete(uri, ContactsContract.Data.CONTACT_ID + "=?", new String[]{contactID});
+                uri = Uri.parse("content://com.android.contacts/raw_contacts");
+                contentResolver.delete(uri, ContactsContract.Data.CONTACT_ID + "=?", new String[]{contactID});
+            }
+            else if(phone_number > 1){
+                uri = Uri.parse("content://com.android.contacts/data");
+                contentResolver.delete(uri, ContactsContract.Data.DATA1 + "=?", new String[]{phone});
+            }
         }
+//        uri = uri.parse("content://com.android.contacts/contacts");
+//        cursor = contentResolver.query(uri, new String[]{ContactsContract.Contacts.DISPLAY_NAME, ContactsContract.Contacts.})
+
+
 //        if(cursor.moveToFirst()){
 //            long contactID = cursor.getInt(0);
 //            long id = cursor.getInt(1);

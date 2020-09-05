@@ -1,9 +1,8 @@
-package Model;
+package model;
 
 import android.content.Context;
 import vo.Contact;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

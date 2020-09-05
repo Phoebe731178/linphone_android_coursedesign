@@ -7,8 +7,8 @@
             android:label="linphoneAndroid"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name="View.ContactDetail"/>
-        <activity android:name="View.AddressBookImpl">
+        <activity android:name="view.ContactDetail"/>
+        <activity android:name="view.AddressBookImpl">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

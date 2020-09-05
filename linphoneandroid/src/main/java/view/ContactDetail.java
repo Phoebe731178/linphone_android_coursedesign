@@ -1,4 +1,4 @@
-package View;
+package view;
 
 import android.app.Activity;
 import android.content.Intent;

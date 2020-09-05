@@ -1,22 +1,16 @@
-package Model;
+package model;
 
-import android.content.ContentResolver;
-import android.content.ContentUris;
-import android.content.ContentValues;
-import android.content.Context;
+import android.content.*;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.util.Log;
-import org.linphone.core.Content;
 import vo.Contact;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Arrays;
 
 //通讯录
 public class AddressBookModelImpl implements AddressBookModel {
@@ -54,26 +48,10 @@ public class AddressBookModelImpl implements AddressBookModel {
                 }
             }
         }
-//        insertContactToMachine(context, new Contact("1111", Arrays.asList(new String[]{"1111"})));
-//        test(context);
-        deleteContactFromMachine(context, "1111");
+        deleteContactFromMachine(context, "2222");
         return addressBookMap;
     }
 
-    public void test(Context context){
-        Uri uri = Uri.parse("content://com.android.contacts/raw_contacts");
-        ContentResolver contentResolver = context.getContentResolver();
-        String[] column = new String[]{ContactsContract.Data._ID};
-        String where = ContactsContract.Data._ID + "=?";
-        String[] params = new String[]{"1111"};
-        Cursor cursor = contentResolver.query(uri, new String[]{ContactsContract.Data._ID}, ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME+"=?", params, null);
-        cursor.moveToFirst();
-        long id = cursor.getInt(0);
-        Log.i("tag1", String.valueOf(cursor.getInt(0)));
-        contentResolver.delete(uri, where, new String[]{id+""});
-        cursor.moveToFirst();
-        Log.i("tag1", String.valueOf(cursor.getInt(0)));
-    }
 
     //获取本机联系人详情(姓名，电话，SIP)
     @Override
@@ -123,21 +101,47 @@ public class AddressBookModelImpl implements AddressBookModel {
     }
 
     public void deleteContactFromMachine(Context context, String phone){
-        Uri uri = Uri.parse("content://com.android.contacts/data");
+//        Uri uri = Uri.parse("content://com.android.contacts/data");
+//        Uri uri = Uri.parse("content://com.android.contacts/contacts");
+        Uri uri = Uri.parse("content://com.android.contacts/data/phones");
         ContentResolver contentResolver = context.getContentResolver();
-        String PHONE_NUMBER = ContactsContract.CommonDataKinds.Phone.NUMBER;
-        Cursor cursor = contentResolver.query(uri, new String[]{ContactsContract.Data.RAW_CONTACT_ID}, PHONE_NUMBER+"=?", new String[]{phone}, null);
+//        Cursor cursor = contentResolver.query(uri, new String[]{ContactsContract.PhoneLookup.DATA_ID, ContactsContract.PhoneLookup.CONTACT_ID},
+//                ContactsContract.PhoneLookup.NORMALIZED_NUMBER+"=?", new String[]{phone}, null);
+        Cursor cursor = contentResolver.query(uri, new String[]{ContactsContract.CommonDataKinds.Phone.CONTACT_ID, ContactsContract.CommonDataKinds.Phone.NUMBER},
+                ContactsContract.CommonDataKinds.Phone.NUMBER+"=?", new String[]{}, null);
 
         if(cursor.moveToFirst()){
-            Log.i("hello", "he");
-            long id = cursor.getInt(0);
-            contentResolver.delete(uri, ContactsContract.Data.RAW_CONTACT_ID+"=?", new String[]{id+""});
-            uri = Uri.parse("content://com.android.contacts/raw_contacts");
-            contentResolver.delete(uri, ContactsContract.Data.CONTACT_ID+"=?", new String[]{id+""});
-//            uri = Uri.parse("content://com.android.contacts/phone_lookup");
-//            contentResolver.delete(uri, ContactsContract.Data.CONTACT_ID+"=?", new String[]{id+""});
+            Log.i("tag1", cursor.getString(0) + " " +cursor.getString(1));
+            Log.i("tag1", String.valueOf(cursor.getCount()));
         }
+//        if(cursor.moveToFirst()){
+//            long contactID = cursor.getInt(0);
+//            long id = cursor.getInt(1);
+//            contentResolver.delete(uri, ContactsContract.Data._ID+"=?", new String[]{id+""});
+//            cursor = contentResolver.query(uri, new String[]{ContactsContract.Data.RAW_CONTACT_ID, ContactsContract.CommonDataKinds.Phone.NUMBER},
+//                    ContactsContract.Data.MIMETYPE+"=? and " + ContactsContract.Data.RAW_CONTACT_ID + "=?",
+//                    new String[]{ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE, contactID+""}, null);
+//            if(!cursor.moveToFirst()){
+//                uri = Uri.parse("content://com.android.contacts/raw_contacts");
+//                contentResolver.delete(uri, ContactsContract.Data.CONTACT_ID+"=?", new String[]{contactID+""});
+//            }
+//        }
 
+//        ContentResolver contentResolver = context.getContentResolver();
+//        Uri uri = Uri.parse("content://com.android.contacts/data");
+//        Cursor cursor = contentResolver.query(uri, new String[]{ContactsContract.Data.RAW_CONTACT_ID, ContactsContract.Data._ID},
+//                ContactsContract.CommonDataKinds.Phone.NUMBER+"=?", new String[]{phone}, null);
+//        if(cursor.moveToFirst()){
+//            String dataRawContactID = cursor.getString(0);
+//            Log.i("tag1", "dataRawContactID " + dataRawContactID);
+//            String dataID = cursor.getString(1);
+//            Log.i("tag1", "dataID" + dataID);
+//            uri = Uri.parse("content://com.android.contacts/raw_contacts");
+//            uri = Uri.parse("content://com.android.contacts/contacts");
+//            cursor = contentResolver.query();
+//            ContactsContract.RawContacts.CONTENT_URI
+//            ContactsContract.Contacts.CONTENT_URI
+//        }
     }
 
 }

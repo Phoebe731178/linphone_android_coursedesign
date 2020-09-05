@@ -1,11 +1,9 @@
-package Presenter;
+package presenter;
 
-import Model.AddressBookModel;
-import Model.AddressBookModelImpl;
-import View.AddressBook;
-import View.AddressBookImpl;
+import model.AddressBookModel;
+import model.AddressBookModelImpl;
+import view.AddressBook;
 import android.content.Context;
-import vo.Contact;
 
 //通讯录
 public class AddressBookPresenter {

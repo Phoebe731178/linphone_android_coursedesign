@@ -1,5 +1,6 @@
 package view;
 
+import com.linphone.R;
 import presenter.AddressBookPresenter;
 import android.app.Activity;
 import android.content.Intent;
@@ -9,7 +10,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import androidx.annotation.Nullable;
-import com.hunter.fastandroid.R;
 import vo.Contact;
 
 import java.util.ArrayList;

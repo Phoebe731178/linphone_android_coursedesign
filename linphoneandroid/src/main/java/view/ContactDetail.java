@@ -7,7 +7,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
-import com.hunter.fastandroid.R;
+import com.linphone.R;
 import vo.Contact;
 
 //联系人详情

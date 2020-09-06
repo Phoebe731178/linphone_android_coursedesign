@@ -31,12 +31,13 @@ public class AddressBookImpl extends Activity implements AddressBook {
     }
 
     @Override
-    public void showAddressBookList(Map<String, List<String>> addressBookMap) {
+    public void showAddressBookList(Map<String, Contact> addressBookMap) {
 
         listView = findViewById(R.id.nameListView);
         List<String> nameList = new ArrayList<>();
-        for(Map.Entry entry: addressBookMap.entrySet()){
-            nameList.add((String) entry.getKey());
+        for(Map.Entry<String, Contact> entry: addressBookMap.entrySet()){
+            String name = entry.getValue().getName();
+            nameList.add(name);
         }
         String[] nameData = nameList.toArray(new String[nameList.size()]);
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, nameData);

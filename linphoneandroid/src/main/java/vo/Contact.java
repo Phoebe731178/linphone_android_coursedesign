@@ -7,11 +7,18 @@ import java.util.List;
 
 //联系人实体类
 public class Contact implements Parcelable {
+    private String contactID;
     private String name;
     private List<String> phones = null;
     private List<String> SIP = null;
 
     public Contact(){ }
+
+    public Contact(String contactID, String name, List<String> phones){
+        this.contactID = contactID;
+        this.name = name;
+        this.phones = phones;
+    }
 
     public Contact(String name, List<String> phones){
         this.name = name;
@@ -19,6 +26,7 @@ public class Contact implements Parcelable {
     }
 
     protected Contact(Parcel in) {
+        contactID = in.readString();
         name = in.readString();
         phones = in.createStringArrayList();
         SIP = in.createStringArrayList();
@@ -26,6 +34,7 @@ public class Contact implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(contactID);
         dest.writeString(name);
         dest.writeStringList(phones);
         dest.writeStringList(SIP);
@@ -48,6 +57,10 @@ public class Contact implements Parcelable {
         }
     };
 
+    public String getContactID() {
+        return contactID;
+    }
+
     public String getName(){
         return name;
     }
@@ -58,6 +71,10 @@ public class Contact implements Parcelable {
 
     public List<String> getSIP() {
         return SIP;
+    }
+
+    public void setContactID(String contactID) {
+        this.contactID = contactID;
     }
 
     public void setName(String name) {

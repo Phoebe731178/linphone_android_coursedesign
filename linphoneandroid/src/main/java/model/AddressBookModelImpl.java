@@ -12,11 +12,27 @@ import java.util.*;
 //通讯录
 public class AddressBookModelImpl implements AddressBookModel {
 
-    private static final int PHONE_NAME = 0;       //联系人姓名
-    private static final int PHONE_NUMBER = 1;    //联系人电话
+/**
+ * 接口使用样例
+ * 删除联系人
+ * deleteContactFromMachine("1111"); //“1111”为需要删除的手机号码
+ *
+ * 新增联系人
+ * insertContactToMachine(new Contact("yahoo", Arrays.asList("1111", "2222")));
+ *
+ * 更新联系人姓名
+ * updateContactToMachine(contactID, "yahoo", "AHa", UpdateType.NAME);
+ * “yahoo”为更新前的联系人姓名 ""为更新后的联系人姓名 UpdateType.NAME表示此方法用于更新联系人电话
+ *
+ * 更新联系人电话
+ * updateContactToMachine(contactID, "1111", "767336", UpdateType.PHONE);
+ * “1111”为更新前的手机号码 "767336"为更新后的手机号码 UpdateType.PHONE表示此方法用于更新联系人电话
+ *
+ */
     private Context context;
-    private Map<String, List<String>> addressBookMap = new HashMap<>();
+    private Map<String, Contact> addressBookMap = new HashMap<>();
     private List<Contact> contactList = new ArrayList<>();
+    public enum UpdateType {NAME, PHONE}    //更新的种类
 
     public AddressBookModelImpl(Context context){
         this.context = context;
@@ -24,50 +40,44 @@ public class AddressBookModelImpl implements AddressBookModel {
 
     //从本机通讯录获取联系人信息
     @Override
-    public Map<String, List<String>> getAddressBookInfo() {
+    public Map<String, Contact> getAddressBookInfo() {
         //查询本机数据库
-        String[] column = new String[] {ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME, ContactsContract.CommonDataKinds.Phone.NUMBER};
-        Cursor cursor = context.getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+        Uri uri = Uri.parse("content://com.android.contacts/data/phones");
+        String[] column = new String[] {ContactsContract.CommonDataKinds.Phone.CONTACT_ID, ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME, ContactsContract.CommonDataKinds.Phone.NUMBER};
+        Cursor cursor = context.getContentResolver().query(uri,
                 column, null, null, null);
         if(cursor != null) {
             while (cursor.moveToNext()) {
-                String phoneName = cursor.getString(PHONE_NAME);
-                String phoneNumber = cursor.getString(PHONE_NUMBER).replace(" ", "");
-                if(addressBookMap.get(phoneName) == null) {
-                    List<String> numberList = new ArrayList<>();
-                    numberList.add(phoneNumber);
-                    addressBookMap.put(phoneName, numberList);
+                String contactID = cursor.getString(0);
+                String contactNumber = cursor.getString(2).replace(" ", "");
+                if(addressBookMap.get(contactID) == null){
+                    String contactName = cursor.getString(1);
+                    Contact contact = new Contact(contactID, contactName, Arrays.asList(contactNumber));
+                    addressBookMap.put(contactID, contact);
                 }
                 else {
-                    List<String> numberList = addressBookMap.get(phoneName);
-                    numberList.add(phoneNumber);
-                    addressBookMap.put(phoneName, numberList);
+                    Contact contact = addressBookMap.get(contactID);
+                    List<String> phones = contact.getPhones();
+                    List<String> phonesCopy = new ArrayList<>();
+                    phonesCopy.addAll(phones);
+                    phonesCopy.add(contactNumber);
+                    contact.setPhones(phonesCopy);
+                    addressBookMap.put(contactID, contact);
                 }
             }
         }
-/**
- * 接口使用样例
- * deleteContactFromMachine("1111"); //“1111”为需要删除的手机号码
- * insertContactToMachine(new Contact("2222", Arrays.asList("1111", "2222")));
- */
         return addressBookMap;
+
     }
 
-    //获取本机联系人详情(姓名，电话，SIP)
+    //获取本机联系人详情(姓名，电话)
     @Override
     public List<Contact> getContactList(){
-        for(Map.Entry<String, List<String>> entry: addressBookMap.entrySet()){
-            Contact contact = new Contact();
-            contact.setName(entry.getKey());
-            contact.setPhones(entry.getValue());
+        for(Map.Entry<String, Contact> entry: addressBookMap.entrySet()){
+            Contact contact = entry.getValue();
             contactList.add(contact);
         }
         return contactList;
-    }
-
-    @Override
-    public void setAddressBookInfo(Map<String, List<String>> addressBookInfo) {
-
     }
 
     //插入本机联系人数据库
@@ -77,22 +87,21 @@ public class AddressBookModelImpl implements AddressBookModel {
         List<String> phones = contact.getPhones();
         ContentValues contentValues = new ContentValues();
         ContentResolver contentResolver = context.getContentResolver();
-        long id;
+        //插入raw_contacts，获取id属性
+        Uri uri = Uri.parse("content://com.android.contacts/raw_contacts");
+        long rawContactID = ContentUris.parseId(context.getContentResolver().insert(uri, contentValues));
         //循环插入联系人电话
         for(String phone: phones) {
             contentValues.clear();
-            //插入raw_contacts，获取id属性
-            Uri uri = Uri.parse("content://com.android.contacts/raw_contacts");
-            id = ContentUris.parseId(context.getContentResolver().insert(uri, contentValues));
             //姓名插入data表
             uri = Uri.parse("content://com.android.contacts/data");
-            contentValues.put(ContactsContract.Data.RAW_CONTACT_ID, id);
+            contentValues.put(ContactsContract.Data.RAW_CONTACT_ID, rawContactID);
             contentValues.put(ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME, name);
             contentValues.put(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE);
             contentResolver.insert(uri, contentValues);
             contentValues.clear();
             //电话号码插入data表
-            contentValues.put(ContactsContract.Data.RAW_CONTACT_ID, id);
+            contentValues.put(ContactsContract.Data.RAW_CONTACT_ID, rawContactID);
             contentValues.put(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE);
             contentValues.put(ContactsContract.CommonDataKinds.Phone.NUMBER, phone);
             contentValues.put(ContactsContract.CommonDataKinds.Phone.TYPE, ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE);
@@ -103,12 +112,8 @@ public class AddressBookModelImpl implements AddressBookModel {
     // 删除本机联系人
     @Override
     public void deleteContactFromMachine(String phone){
-//        Uri uri = Uri.parse("content://com.android.contacts/data");
-//        Uri uri = Uri.parse("content://com.android.contacts/contacts");
         Uri uri = Uri.parse("content://com.android.contacts/data/phones");
         ContentResolver contentResolver = context.getContentResolver();
-//        Cursor cursor = contentResolver.query(uri, new String[]{ContactsContract.PhoneLookup.DATA_ID, ContactsContract.PhoneLookup.CONTACT_ID},
-//                ContactsContract.PhoneLookup.NORMALIZED_NUMBER+"=?", new String[]{phone}, null);
         Cursor cursor = contentResolver.query(uri, new String[]{ContactsContract.CommonDataKinds.Phone.CONTACT_ID, ContactsContract.CommonDataKinds.Phone.NUMBER},
                 ContactsContract.CommonDataKinds.Phone.NUMBER+"=?", new String[]{phone}, null);
         if(cursor.moveToFirst()){
@@ -129,38 +134,36 @@ public class AddressBookModelImpl implements AddressBookModel {
                 contentResolver.delete(uri, ContactsContract.Data.DATA1 + "=?", new String[]{phone});
             }
         }
-//        uri = uri.parse("content://com.android.contacts/contacts");
-//        cursor = contentResolver.query(uri, new String[]{ContactsContract.Contacts.DISPLAY_NAME, ContactsContract.Contacts.})
+    }
 
+    @Override
+    public void updateContactToMachine(String contactID, String old, String _new, UpdateType updateType){
+        switch (updateType){
+            case NAME:
+                updateContactName(contactID, _new);
+                break;
+            case PHONE:
+                updateContactPhone(old, _new);
+                break;
+        }
+    }
 
-//        if(cursor.moveToFirst()){
-//            long contactID = cursor.getInt(0);
-//            long id = cursor.getInt(1);
-//            contentResolver.delete(uri, ContactsContract.Data._ID+"=?", new String[]{id+""});
-//            cursor = contentResolver.query(uri, new String[]{ContactsContract.Data.RAW_CONTACT_ID, ContactsContract.CommonDataKinds.Phone.NUMBER},
-//                    ContactsContract.Data.MIMETYPE+"=? and " + ContactsContract.Data.RAW_CONTACT_ID + "=?",
-//                    new String[]{ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE, contactID+""}, null);
-//            if(!cursor.moveToFirst()){
-//                uri = Uri.parse("content://com.android.contacts/raw_contacts");
-//                contentResolver.delete(uri, ContactsContract.Data.CONTACT_ID+"=?", new String[]{contactID+""});
-//            }
-//        }
+    private void updateContactName(String contactID, String newName){
+        Uri uri = Uri.parse("content://com.android.contacts/data");
+        ContentResolver contentResolver = context.getContentResolver();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(ContactsContract.Data.DATA1, newName);
+        contentResolver.update(uri, contentValues, ContactsContract.Data.CONTACT_ID + "=? and "
+                + ContactsContract.Data.MIMETYPE + "=?", new String[]{contactID, ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE});
+    }
 
-//        ContentResolver contentResolver = context.getContentResolver();
-//        Uri uri = Uri.parse("content://com.android.contacts/data");
-//        Cursor cursor = contentResolver.query(uri, new String[]{ContactsContract.Data.RAW_CONTACT_ID, ContactsContract.Data._ID},
-//                ContactsContract.CommonDataKinds.Phone.NUMBER+"=?", new String[]{phone}, null);
-//        if(cursor.moveToFirst()){
-//            String dataRawContactID = cursor.getString(0);
-//            Log.i("tag1", "dataRawContactID " + dataRawContactID);
-//            String dataID = cursor.getString(1);
-//            Log.i("tag1", "dataID" + dataID);
-//            uri = Uri.parse("content://com.android.contacts/raw_contacts");
-//            uri = Uri.parse("content://com.android.contacts/contacts");
-//            cursor = contentResolver.query();
-//            ContactsContract.RawContacts.CONTENT_URI
-//            ContactsContract.Contacts.CONTENT_URI
-//        }
+    private void updateContactPhone(String oldPhone, String newPhone){
+        Uri uri = Uri.parse("content://com.android.contacts/data");
+        ContentResolver contentResolver = context.getContentResolver();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(ContactsContract.Data.DATA1, newPhone);
+        contentResolver.update(uri, contentValues, ContactsContract.Data.DATA1 + "=? and " +
+                ContactsContract.Data.MIMETYPE + "=?", new String[]{oldPhone, ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE});
     }
 
 }

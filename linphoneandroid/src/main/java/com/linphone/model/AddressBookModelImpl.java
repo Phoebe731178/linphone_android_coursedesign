@@ -1,11 +1,11 @@
-package model;
+package com.linphone.model;
 
 import android.content.*;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.util.Log;
-import vo.Contact;
+import com.linphone.vo.Contact;
 
 import java.util.*;
 

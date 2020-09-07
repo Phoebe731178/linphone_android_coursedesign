@@ -1,4 +1,4 @@
-package view;
+package com.linphone.view;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,7 +8,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
 import com.linphone.R;
-import vo.Contact;
+import com.linphone.vo.Contact;
 
 //联系人详情
 public class ContactDetail extends Activity {

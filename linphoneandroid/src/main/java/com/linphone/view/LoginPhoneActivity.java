@@ -1,4 +1,4 @@
-package view;
+package com.linphone.view;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -7,9 +7,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import androidx.annotation.Nullable;
 import com.linphone.R;
-import org.linphone.LinphoneContext;
-import presenter.login.PhoneLoginHandler;
-import presenter.login.exceptions.LoginException;
+import com.linphone.util.LinphoneContext;
+import com.linphone.presenter.login.PhoneLoginHandler;
+import com.linphone.presenter.login.exceptions.LoginException;
 
 public class LoginPhoneActivity extends Activity
 {
@@ -24,13 +24,6 @@ public class LoginPhoneActivity extends Activity
     protected void onCreate(@Nullable Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        System.loadLibrary("c++_shared");
-        System.loadLibrary("bctoolbox");
-        System.loadLibrary("ortp");
-        System.loadLibrary("mediastreamer");
-        System.loadLibrary("linphone");
-        linphoneContext = new LinphoneContext(getApplicationContext());
-        linphoneContext.start();
         setContentView(R.layout.activity_login_phone);
         phoneEditText = findViewById(R.id.phoneEditText);
         authCodeEditText = findViewById(R.id.authCodeEditText);

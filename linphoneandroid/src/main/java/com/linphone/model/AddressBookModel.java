@@ -1,7 +1,6 @@
-package model;
+package com.linphone.model;
 
-import android.content.Context;
-import vo.Contact;
+import com.linphone.vo.Contact;
 
 import java.util.List;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package vo;
+package com.linphone.vo;
 
 import android.os.Parcel;
 import android.os.Parcelable;

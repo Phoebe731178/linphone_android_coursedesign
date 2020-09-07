@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.linphone;
+package com.linphone.util;
 
 import android.content.Context;
 import android.hardware.Sensor;
@@ -32,7 +32,7 @@ import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import org.linphone.core.*;
 import org.linphone.core.tools.Log;
-import org.linphone.settings.LinphonePreferences;
+import com.linphone.util.settings.LinphonePreferences;
 
 import java.io.File;
 import java.sql.Timestamp;

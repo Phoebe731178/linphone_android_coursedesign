@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.linphone.settings;
+package com.linphone.util.settings;
 
 import android.Manifest;
 import android.content.Context;
@@ -32,10 +32,10 @@ import java.io.InputStreamReader;
 
 
 import com.linphone.R;
-import org.linphone.LinphoneContext;
-import org.linphone.LinphoneManager;
+import com.linphone.util.LinphoneContext;
+import com.linphone.util.LinphoneManager;
 
-import org.linphone.compatibility.Compatibility;
+import com.linphone.util.compatibility.Compatibility;
 import org.linphone.core.Address;
 import org.linphone.core.AuthInfo;
 import org.linphone.core.Config;

@@ -17,15 +17,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.linphone;
+package com.linphone.util;
 
 import android.content.Context;
 import android.os.Build;
-import org.linphone.compatibility.Compatibility;
+import com.linphone.util.compatibility.Compatibility;
 import org.linphone.core.*;
 import org.linphone.core.tools.Log;
 import org.linphone.mediastream.Version;
-import org.linphone.settings.LinphonePreferences;
+import com.linphone.util.settings.LinphonePreferences;
 
 public class LinphoneContext
 {

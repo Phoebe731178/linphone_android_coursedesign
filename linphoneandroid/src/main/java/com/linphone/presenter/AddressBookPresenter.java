@@ -1,8 +1,8 @@
-package presenter;
+package com.linphone.presenter;
 
-import model.AddressBookModel;
-import model.AddressBookModelImpl;
-import view.AddressBook;
+import com.linphone.model.AddressBookModel;
+import com.linphone.model.AddressBookModelImpl;
+import com.linphone.view.AddressBook;
 import android.content.Context;
 
 //通讯录

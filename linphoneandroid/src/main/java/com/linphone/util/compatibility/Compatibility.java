@@ -1,4 +1,4 @@
-package org.linphone.compatibility;
+package com.linphone.util.compatibility;
 
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;

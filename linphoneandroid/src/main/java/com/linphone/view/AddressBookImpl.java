@@ -1,7 +1,7 @@
-package view;
+package com.linphone.view;
 
 import com.linphone.R;
-import presenter.AddressBookPresenter;
+import com.linphone.presenter.AddressBookPresenter;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import androidx.annotation.Nullable;
-import vo.Contact;
+import com.linphone.vo.Contact;
 
 import java.util.ArrayList;
 import java.util.List;

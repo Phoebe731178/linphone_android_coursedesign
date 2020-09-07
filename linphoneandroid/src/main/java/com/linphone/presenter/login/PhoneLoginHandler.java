@@ -1,9 +1,9 @@
-package presenter.login;
+package com.linphone.presenter.login;
 
 import android.util.Log;
-import org.linphone.LinphoneManager;
+import com.linphone.util.LinphoneManager;
 import org.linphone.core.AccountCreator;
-import presenter.login.exceptions.*;
+import com.linphone.presenter.login.exceptions.*;
 
 public class PhoneLoginHandler implements LoginHandler
 {

@@ -1,4 +1,4 @@
-package presenter.login.exceptions;
+package com.linphone.presenter.login.exceptions;
 
 public class AccountNotExistException extends LoginException
 {

@@ -1,6 +1,6 @@
-package view;
+package com.linphone.view;
 
-import vo.Contact;
+import com.linphone.vo.Contact;
 
 import java.util.List;
 import java.util.Map;

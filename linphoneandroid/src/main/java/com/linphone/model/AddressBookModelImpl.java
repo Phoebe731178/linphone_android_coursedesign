@@ -1,8 +1,11 @@
 package com.linphone.model;
 
 import android.content.*;
+import android.database.ContentObserver;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Handler;
+import android.os.RemoteException;
 import android.provider.ContactsContract;
 import android.util.Log;
 import com.linphone.vo.Contact;
@@ -22,7 +25,7 @@ public class AddressBookModelImpl implements AddressBookModel {
  *
  * 更新联系人姓名
  * updateContactToMachine(contactID, "yahoo", "AHa", UpdateType.NAME);
- * “yahoo”为更新前的联系人姓名 ""为更新后的联系人姓名 UpdateType.NAME表示此方法用于更新联系人电话
+ * “yahoo”为更新前的联系人姓名 "AHa"为更新后的联系人姓名 UpdateType.NAME表示此方法用于更新联系人电话
  *
  * 更新联系人电话
  * updateContactToMachine(contactID, "1111", "767336", UpdateType.PHONE);
@@ -42,6 +45,11 @@ public class AddressBookModelImpl implements AddressBookModel {
     @Override
     public Map<String, Contact> getAddressBookInfo() {
         //查询本机数据库
+        try {
+            addressBookMap.clear();
+        }
+        catch (Exception ignore){
+        }
         Uri uri = Uri.parse("content://com.android.contacts/data/phones");
         String[] column = new String[] {ContactsContract.CommonDataKinds.Phone.CONTACT_ID, ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME, ContactsContract.CommonDataKinds.Phone.NUMBER};
         Cursor cursor = context.getContentResolver().query(uri,
@@ -67,7 +75,6 @@ public class AddressBookModelImpl implements AddressBookModel {
             }
         }
         return addressBookMap;
-
     }
 
     //获取本机联系人详情(姓名，电话)
@@ -95,17 +102,29 @@ public class AddressBookModelImpl implements AddressBookModel {
             contentValues.clear();
             //姓名插入data表
             uri = Uri.parse("content://com.android.contacts/data");
-            contentValues.put(ContactsContract.Data.RAW_CONTACT_ID, rawContactID);
-            contentValues.put(ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME, name);
-            contentValues.put(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE);
-            contentResolver.insert(uri, contentValues);
-            contentValues.clear();
+            ArrayList<ContentProviderOperation> operations = new ArrayList<>();
+            ContentProviderOperation contentProviderOperation1 = ContentProviderOperation.
+                    newInsert(uri).
+                    withValue(ContactsContract.Data.RAW_CONTACT_ID, rawContactID).
+                    withValue(ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME, name).
+                    withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE).
+                    build();
+            operations.add(contentProviderOperation1);
             //电话号码插入data表
-            contentValues.put(ContactsContract.Data.RAW_CONTACT_ID, rawContactID);
-            contentValues.put(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE);
-            contentValues.put(ContactsContract.CommonDataKinds.Phone.NUMBER, phone);
-            contentValues.put(ContactsContract.CommonDataKinds.Phone.TYPE, ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE);
-            contentResolver.insert(uri, contentValues);
+            ContentProviderOperation contentProviderOperation2 = ContentProviderOperation.
+                    newInsert(uri).
+                    withValue(ContactsContract.Data.RAW_CONTACT_ID, rawContactID).
+                    withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE).
+                    withValue(ContactsContract.CommonDataKinds.Phone.NUMBER, phone).
+                    withValue(ContactsContract.CommonDataKinds.Phone.TYPE, ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE).
+                    build();
+            operations.add(contentProviderOperation2);
+            try {
+                contentResolver.applyBatch("com.android.contacts", operations);
+            } catch (OperationApplicationException | RemoteException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 
@@ -118,20 +137,47 @@ public class AddressBookModelImpl implements AddressBookModel {
                 ContactsContract.CommonDataKinds.Phone.NUMBER+"=?", new String[]{phone}, null);
         if(cursor.moveToFirst()){
             String contactID = cursor.getString(0);
-            Log.i("tag1", cursor.getString(0) + " " +cursor.getString(1));
             cursor = contentResolver.query(uri, new String[]{ContactsContract.CommonDataKinds.Phone.NUMBER}, ContactsContract.CommonDataKinds.Phone.CONTACT_ID+"=?", new String[]{contactID}, null);
             int phone_number = cursor.getCount();
             if(phone_number == 1){
-                uri = Uri.parse("content://com.android.contacts/contacts");
-                contentResolver.delete(uri, ContactsContract.Contacts._ID +"=?", new String[]{contactID});
+                ArrayList<ContentProviderOperation> operations = new ArrayList<>();
                 uri = Uri.parse("content://com.android.contacts/data");
-                contentResolver.delete(uri, ContactsContract.Data.CONTACT_ID + "=?", new String[]{contactID});
+                ContentProviderOperation contentProviderOperation1 = ContentProviderOperation.newDelete(uri).
+                        withSelection(ContactsContract.Data.CONTACT_ID + "=?", new String[]{contactID}).
+                        build();
+                operations.add(contentProviderOperation1);
+//                contentResolver.delete(uri, ContactsContract.Data.CONTACT_ID + "=?", new String[]{contactID});
                 uri = Uri.parse("content://com.android.contacts/raw_contacts");
-                contentResolver.delete(uri, ContactsContract.Data.CONTACT_ID + "=?", new String[]{contactID});
+                ContentProviderOperation contentProviderOperation2 = ContentProviderOperation.newDelete(uri).
+                        withSelection(ContactsContract.Data.CONTACT_ID + "=?", new String[]{contactID}).
+                        build();
+                operations.add(contentProviderOperation2);
+//                contentResolver.delete(uri, ContactsContract.Data.CONTACT_ID + "=?", new String[]{contactID});
+                uri = Uri.parse("content://com.android.contacts/contacts");
+                ContentProviderOperation contentProviderOperation3 = ContentProviderOperation.newDelete(uri).
+                        withSelection(ContactsContract.Contacts._ID + "=?", new String[]{contactID}).
+                        build();
+                operations.add(contentProviderOperation3);
+//                contentResolver.delete(uri, ContactsContract.Contacts._ID +"=?", new String[]{contactID});
+                try {
+                    contentResolver.applyBatch("com.android.contacts", operations);
+                } catch (OperationApplicationException | RemoteException e) {
+                    e.printStackTrace();
+                }
             }
             else if(phone_number > 1){
+                ArrayList<ContentProviderOperation> operations = new ArrayList<>();
                 uri = Uri.parse("content://com.android.contacts/data");
-                contentResolver.delete(uri, ContactsContract.Data.DATA1 + "=?", new String[]{phone});
+                ContentProviderOperation contentProviderOperation = ContentProviderOperation.newDelete(uri).
+                        withSelection(ContactsContract.Data.DATA1 + "=?", new String[]{phone}).
+                        build();
+                operations.add(contentProviderOperation);
+                try {
+                    contentResolver.applyBatch("com.android.contacts", operations);
+                } catch (OperationApplicationException | RemoteException e) {
+                    e.printStackTrace();
+                }
+//                contentResolver.delete(uri, ContactsContract.Data.DATA1 + "=?", new String[]{phone});
             }
         }
     }
@@ -141,6 +187,7 @@ public class AddressBookModelImpl implements AddressBookModel {
         switch (updateType){
             case NAME:
                 updateContactName(contactID, _new);
+                Log.i("tag1", "name");
                 break;
             case PHONE:
                 updateContactPhone(old, _new);
@@ -149,8 +196,21 @@ public class AddressBookModelImpl implements AddressBookModel {
     }
 
     private void updateContactName(String contactID, String newName){
-        Uri uri = Uri.parse("content://com.android.contacts/data");
         ContentResolver contentResolver = context.getContentResolver();
+//        ArrayList<ContentProviderOperation> operations = new ArrayList<>();
+        Uri uri = Uri.parse("content://com.android.contacts/data");
+//        ContentProviderOperation contentProviderOperation = ContentProviderOperation.newUpdate(uri).
+//                withValue(ContactsContract.Data.DATA1, newName).
+//                withSelection(ContactsContract.Data.CONTACT_ID + "=? and "
+//                        + ContactsContract.Data.MIMETYPE + "=?",
+//                        new String[]{contactID, ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE}).
+//                build();
+//        operations.add(contentProviderOperation);
+//        try {
+//            contentResolver.applyBatch("com.android.contacts", operations);
+//        } catch (OperationApplicationException | RemoteException e) {
+//            e.printStackTrace();
+//        }
         ContentValues contentValues = new ContentValues();
         contentValues.put(ContactsContract.Data.DATA1, newName);
         contentResolver.update(uri, contentValues, ContactsContract.Data.CONTACT_ID + "=? and "
@@ -158,8 +218,21 @@ public class AddressBookModelImpl implements AddressBookModel {
     }
 
     private void updateContactPhone(String oldPhone, String newPhone){
-        Uri uri = Uri.parse("content://com.android.contacts/data");
         ContentResolver contentResolver = context.getContentResolver();
+//        ArrayList<ContentProviderOperation> operations = new ArrayList<>();
+        Uri uri = Uri.parse("content://com.android.contacts/data");
+//        ContentProviderOperation contentProviderOperation = ContentProviderOperation.newUpdate(uri).
+//                withValue(ContactsContract.Data.DATA1, newPhone).
+//                withSelection(ContactsContract.Data.DATA1 + "=? and " +
+//                        ContactsContract.Data.MIMETYPE + "=?",
+//                        new String[]{oldPhone, ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE}).
+//                build();
+//        operations.add(contentProviderOperation);
+//        try {
+//            contentResolver.applyBatch("com.android.contacts", operations);
+//        } catch (OperationApplicationException | RemoteException e) {
+//            e.printStackTrace();
+//        }
         ContentValues contentValues = new ContentValues();
         contentValues.put(ContactsContract.Data.DATA1, newPhone);
         contentResolver.update(uri, contentValues, ContactsContract.Data.DATA1 + "=? and " +

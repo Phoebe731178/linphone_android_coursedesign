@@ -1,10 +1,8 @@
-package com.linphone.view;
+package com.linphone.view.addressbook;
 
 import android.util.Log;
 import com.linphone.R;
-import com.linphone.presenter.AddressBookPresenter;
-import com.linphone.model.AddressBookModelImpl;
-import com.linphone.presenter.AddressBookPresenter;
+import com.linphone.presenter.addressbook.AddressBookPresenter;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,7 +14,6 @@ import androidx.annotation.Nullable;
 import com.linphone.vo.Contact;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 

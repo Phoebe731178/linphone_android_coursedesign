@@ -1,4 +1,4 @@
-package com.linphone.view;
+package com.linphone.view.login;
 
 import android.app.Activity;
 import android.os.Bundle;

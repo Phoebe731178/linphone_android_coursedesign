@@ -1,4 +1,4 @@
-package com.linphone.view;
+package com.linphone.view.addressbook;
 
 import android.app.Activity;
 import android.content.Intent;

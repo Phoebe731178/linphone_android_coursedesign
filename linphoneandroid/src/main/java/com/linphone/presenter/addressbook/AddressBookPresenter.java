@@ -1,16 +1,12 @@
-package com.linphone.presenter;
+package com.linphone.presenter.addressbook;
 
-import com.linphone.model.AddressBookModel;
-import com.linphone.model.AddressBookModelImpl;
-import com.linphone.view.AddressBook;
-import com.linphone.vo.Contact;
+import com.linphone.model.addressbook.AddressBookModel;
+import com.linphone.model.addressbook.AddressBookModelImpl;
+import com.linphone.view.addressbook.AddressBook;
 import android.database.ContentObserver;
 import android.net.Uri;
 import android.os.Handler;
-import android.util.Log;
 import android.content.Context;
-
-import java.util.Map;
 
 //通讯录
 public class AddressBookPresenter {

@@ -1,10 +1,8 @@
-package com.linphone.model;
+package com.linphone.model.addressbook;
 
 import android.content.*;
-import android.database.ContentObserver;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Handler;
 import android.os.RemoteException;
 import android.provider.ContactsContract;
 import android.util.Log;

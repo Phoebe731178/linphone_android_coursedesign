@@ -1,4 +1,4 @@
-package com.linphone.view;
+package com.linphone.view.addressbook;
 
 import com.linphone.vo.Contact;
 

@@ -36,16 +36,6 @@ public class AddressBookImpl extends Activity implements AddressBook {
         setContentView(R.layout.activity_address_listview);
         addressBookPresenter.showAddressBook();
         addressBookPresenter.observers();
-//        new AddressBookModelImpl(this).insertContactToMachine(new Contact("hei", Arrays.asList("2222", "3333")));
-//        new AddressBookModelImpl(this).deleteContactFromMachine("3333");
-        for(Map.Entry<String, Contact> entry: new AddressBookModelImpl(this).getAddressBookInfo().entrySet()){
-            if(entry.getValue().getName().equals("6666")){
-                String id = entry.getKey();
-                Log.i("tag1", id + " " + entry.getValue().getName());
-                new AddressBookModelImpl(this).updateContactToMachine(id, "1111", "2222", AddressBookModelImpl.UpdateType.PHONE);
-            }
-        }
-
     }
 
     @Override

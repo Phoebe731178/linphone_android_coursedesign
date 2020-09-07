@@ -14,12 +14,12 @@ public class PhoneLoginHandler implements LoginHandler
 
     /**
      *
-     * @param userName:cellphone number
-     * @param authCode:auth code from SMS
-     * @throws LoginException
      * Login the certain user with the specified cellphone number and the authCode.
      * The country code is set to 86 (China).
      * The userName and authCode will be checked before actual login action.
+     * @param userName cellphone number
+     * @param authCode auth code from SMS
+     * @throws LoginException
      */
     @Override
     public void login(String userName, String authCode) throws LoginException
@@ -42,9 +42,9 @@ public class PhoneLoginHandler implements LoginHandler
 
     /**
      *
-     * @param userName: cellphone number
-     * @throws LoginException
      * Check if the username is valid.
+     * @param userName cellphone number
+     * @throws LoginException
      */
     private void checkUserName(String userName) throws LoginException
     {
@@ -66,9 +66,9 @@ public class PhoneLoginHandler implements LoginHandler
 
     /**
      *
-     * @param authCode: auth code from SMS
-     * @throws LoginException
      * Check the if the authCode matches the regex "^\d{4}$"
+     * @param authCode auth code from SMS
+     * @throws LoginException
      */
     private void checkAuthCode(String authCode) throws LoginException
     {
@@ -80,9 +80,9 @@ public class PhoneLoginHandler implements LoginHandler
 
     /**
      *
-     * @param userName: cellphone number
-     * @throws LoginException
      * The userName will be checked before sending request to the server.
+     * @param userName cellphone number
+     * @throws LoginException
      */
     public void getAuthCode(String userName) throws LoginException
     {

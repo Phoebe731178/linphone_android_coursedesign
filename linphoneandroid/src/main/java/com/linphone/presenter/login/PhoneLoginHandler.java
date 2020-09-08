@@ -1,16 +1,25 @@
 package com.linphone.presenter.login;
 
-import android.util.Log;
+import com.linphone.presenter.login.exceptions.InvalidAuthCodeException;
+import com.linphone.presenter.login.exceptions.InvalidUserNameException;
+import com.linphone.presenter.login.exceptions.LoginException;
 import com.linphone.util.LinphoneManager;
 import org.linphone.core.AccountCreator;
-import com.linphone.presenter.login.exceptions.*;
+import org.linphone.core.AccountCreatorListener;
 
 public class PhoneLoginHandler implements LoginHandler
 {
-    private AccountCreator accountCreator = LinphoneManager.getInstance().getAccountCreator();
+    private final AccountCreator accountCreator;
     private static final String PHONE_NUMBER_REGEX = "^1[3-9]\\d{9}$";
     private static final String AUTH_CODE_REGEX = "^\\d{4}$";
     private static final String COUNTRY_CODE = "86";
+    private static final String DOMAIN = "sip.linphone.org";
+    private static final AccountCreatorListener listener = new PhoneAccountCreatorListener();
+
+    public PhoneLoginHandler()
+    {
+        accountCreator = LinphoneManager.getInstance().getAccountCreator();
+    }
 
     /**
      *
@@ -24,20 +33,15 @@ public class PhoneLoginHandler implements LoginHandler
     @Override
     public void login(String userName, String authCode) throws LoginException
     {
+        accountCreator.addListener(listener);
         checkUserName(userName);
         checkAuthCode(authCode);
         accountCreator.setPhoneNumber(userName, COUNTRY_CODE);
         accountCreator.setActivationCode(authCode);
-        AccountCreator.Status loginStatus = accountCreator.loginLinphoneAccount();
-        if (loginStatus.equals(AccountCreator.Status.WrongActivationCode))
-        {
-            throw new WrongAuthCodeException();
-        }
-        if (!loginStatus.equals(AccountCreator.Status.RequestOk))
-        {
-            throw new NetworkException(loginStatus.name());
-        }
-        Log.i("login", loginStatus.name());
+        accountCreator.setUsername(accountCreator.getPhoneNumber());
+        accountCreator.setDomain(DOMAIN);
+        accountCreator.loginLinphoneAccount();
+        accountCreator.removeListener(listener);
     }
 
     /**
@@ -51,16 +55,6 @@ public class PhoneLoginHandler implements LoginHandler
         if (!userName.matches(PHONE_NUMBER_REGEX))
         {
             throw new InvalidUserNameException("Not a cellphone number");
-        }
-        AccountCreator.Status accountActivationStatus = accountCreator.isAccountActivated();
-        AccountCreator.Status accountExistenceStatus = accountCreator.isAccountExist();
-        if (accountExistenceStatus.equals(AccountCreator.Status.AccountNotExist))
-        {
-            throw new AccountNotExistException();
-        }
-        if (accountActivationStatus.equals(AccountCreator.Status.AccountNotActivated))
-        {
-            throw new AccountNotActivatedException();
         }
     }
 
@@ -86,12 +80,10 @@ public class PhoneLoginHandler implements LoginHandler
      */
     public void getAuthCode(String userName) throws LoginException
     {
+        accountCreator.addListener(listener);
         checkUserName(userName);
         accountCreator.setPhoneNumber(userName, COUNTRY_CODE);
-        AccountCreator.Status status = accountCreator.recoverAccount();
-        if (!status.equals(AccountCreator.Status.RequestOk))
-        {
-            throw new NetworkException(status.name());
-        }
+        accountCreator.recoverAccount();
+        accountCreator.removeListener(listener);
     }
 }

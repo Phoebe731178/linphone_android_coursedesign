@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import androidx.annotation.Nullable;
 import com.linphone.R;
+import com.linphone.presenter.login.exceptions.NetworkException;
 import com.linphone.util.LinphoneContext;
 import com.linphone.presenter.login.PhoneLoginHandler;
 import com.linphone.presenter.login.exceptions.LoginException;

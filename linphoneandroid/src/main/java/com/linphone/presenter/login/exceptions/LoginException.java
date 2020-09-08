@@ -1,6 +1,6 @@
 package com.linphone.presenter.login.exceptions;
 
-public class LoginException extends Exception
+public class LoginException extends RuntimeException
 {
     public LoginException()
     {

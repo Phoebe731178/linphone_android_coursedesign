@@ -12,5 +12,6 @@ public interface AddressBookModel {
     List<Contact> getContactList(); //获取本机联系人详情(姓名，电话，SIP)
     void insertContactToMachine(Contact contact);
     void deleteContactFromMachine(String phone);
+    void deleteContactByContactID(String contactID);
     void updateContactToMachine(String contactID, String old, String _new, AddressBookModelImpl.UpdateType updateType);
 }

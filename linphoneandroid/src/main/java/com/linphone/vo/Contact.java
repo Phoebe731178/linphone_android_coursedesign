@@ -20,6 +20,12 @@ public class Contact implements Parcelable {
         this.phones = phones;
     }
 
+    public Contact(String name, List<String> phones, List<String> SIP){
+        this.name = name;
+        this.phones = phones;
+        this.SIP = SIP;
+    }
+
     public Contact(String name, List<String> phones){
         this.name = name;
         this.phones = phones;

@@ -31,7 +31,7 @@ public class ContactDetail extends Activity {
             phones.setAdapter(phonesAdapter);
         }
         if(contact.getSIP() != null) {
-            String[] SIPList = contact.getPhones().toArray(new String[contact.getSIP().size()]);
+            String[] SIPList = contact.getSIP().toArray(new String[contact.getSIP().size()]);
             ArrayAdapter<String> phonesAdapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_list_item_1, SIPList);
             SIP.setAdapter(phonesAdapter);

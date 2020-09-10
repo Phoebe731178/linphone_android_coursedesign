@@ -1,8 +1,8 @@
-package com.linphone.presenter.login;
+package com.linphone.login;
 
-import com.linphone.presenter.login.exceptions.InvalidAuthCodeException;
-import com.linphone.presenter.login.exceptions.InvalidUserNameException;
-import com.linphone.presenter.login.exceptions.LoginException;
+import com.linphone.login.exceptions.InvalidAuthCodeException;
+import com.linphone.login.exceptions.InvalidUserNameException;
+import com.linphone.login.exceptions.LoginException;
 import com.linphone.util.LinphoneManager;
 import org.linphone.core.AccountCreator;
 import org.linphone.core.AccountCreatorListener;

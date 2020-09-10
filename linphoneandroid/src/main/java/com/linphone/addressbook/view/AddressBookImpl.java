@@ -1,10 +1,7 @@
-package com.linphone.view.addressbook;
+package com.linphone.addressbook.view;
 
 import android.util.Log;
 import com.linphone.R;
-import com.linphone.model.addressbook.AddressBookModel;
-import com.linphone.model.addressbook.AddressBookModelImpl;
-import com.linphone.presenter.addressbook.AddressBookPresenter;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,10 +10,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import androidx.annotation.Nullable;
+import com.linphone.addressbook.AddressBookPresenter;
 import com.linphone.vo.Contact;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -36,6 +33,8 @@ public class AddressBookImpl extends Activity implements AddressBook {
         setContentView(R.layout.activity_address_listview);
         addressBookPresenter.showAddressBook();
         addressBookPresenter.observers();
+//        new AddressBookModelImpl(this).insertContactToMachine(new Contact("yahoo", Arrays.asList("1(234)521-432")));
+//        new AddressBookModelImpl(this).updateContactToMachine("1", "133", "1", AddressBookModelImpl.UpdateType.PHONE);
     }
 
     @Override

@@ -1,8 +1,6 @@
-package com.linphone.presenter.addressbook;
+package com.linphone.addressbook;
 
-import com.linphone.model.addressbook.AddressBookModel;
-import com.linphone.model.addressbook.AddressBookModelImpl;
-import com.linphone.view.addressbook.AddressBook;
+import com.linphone.addressbook.view.AddressBook;
 import android.database.ContentObserver;
 import android.net.Uri;
 import android.os.Handler;

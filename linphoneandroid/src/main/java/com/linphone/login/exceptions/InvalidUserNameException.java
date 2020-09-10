@@ -1,4 +1,4 @@
-package com.linphone.presenter.login.exceptions;
+package com.linphone.login.exceptions;
 
 public class InvalidUserNameException extends LoginException
 {

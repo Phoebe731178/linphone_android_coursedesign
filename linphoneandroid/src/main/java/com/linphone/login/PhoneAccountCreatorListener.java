@@ -1,7 +1,7 @@
-package com.linphone.presenter.login;
+package com.linphone.login;
 
 import android.util.Log;
-import com.linphone.presenter.login.exceptions.*;
+import com.linphone.login.exceptions.*;
 import org.linphone.core.AccountCreator;
 import org.linphone.core.AccountCreatorListener;
 

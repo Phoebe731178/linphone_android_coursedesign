@@ -1,8 +1,7 @@
-package com.linphone.view.addressbook;
+package com.linphone.addressbook.view;
 
 import com.linphone.vo.Contact;
 
-import java.util.List;
 import java.util.Map;
 
 //通讯录

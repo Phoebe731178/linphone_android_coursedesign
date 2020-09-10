@@ -1,4 +1,4 @@
-package com.linphone.view.login;
+package com.linphone.login.view;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -7,10 +7,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import androidx.annotation.Nullable;
 import com.linphone.R;
-import com.linphone.presenter.login.exceptions.NetworkException;
 import com.linphone.util.LinphoneContext;
-import com.linphone.presenter.login.PhoneLoginHandler;
-import com.linphone.presenter.login.exceptions.LoginException;
+import com.linphone.login.PhoneLoginHandler;
+import com.linphone.login.exceptions.LoginException;
 
 public class LoginPhoneActivity extends Activity
 {

@@ -1,6 +1,6 @@
-package com.linphone.presenter.login;
+package com.linphone.login;
 
-import com.linphone.presenter.login.exceptions.LoginException;
+import com.linphone.login.exceptions.LoginException;
 
 public interface LoginHandler
 {

@@ -1,4 +1,4 @@
-package com.linphone.presenter.login;
+package com.linphone.login;
 
 public class UsernameLoginHandler implements LoginHandler
 {

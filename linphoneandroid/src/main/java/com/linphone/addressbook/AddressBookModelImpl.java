@@ -1,4 +1,4 @@
-package com.linphone.model.addressbook;
+package com.linphone.addressbook;
 
 import android.content.*;
 import android.database.Cursor;

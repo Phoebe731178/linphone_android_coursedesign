@@ -15,10 +15,22 @@ public class PhoneLoginHandler implements LoginHandler
     private static final String COUNTRY_CODE = "86";
     private static final String DOMAIN = "sip.linphone.org";
     private static final AccountCreatorListener listener = new PhoneAccountCreatorListener();
+    private static final PhoneLoginHandler instance = new PhoneLoginHandler();
 
-    public PhoneLoginHandler()
+    private PhoneLoginHandler()
     {
         accountCreator = LinphoneManager.getInstance().getAccountCreator();
+        accountCreator.addListener(listener);
+    }
+
+    public static PhoneLoginHandler getInstance()
+    {
+        return instance;
+    }
+
+    public AccountCreator getAccountCreator()
+    {
+        return accountCreator;
     }
 
     /**
@@ -33,7 +45,6 @@ public class PhoneLoginHandler implements LoginHandler
     @Override
     public void login(String userName, String authCode) throws LoginException
     {
-        accountCreator.addListener(listener);
         checkUserName(userName);
         checkAuthCode(authCode);
         accountCreator.setPhoneNumber(userName, COUNTRY_CODE);
@@ -41,7 +52,6 @@ public class PhoneLoginHandler implements LoginHandler
         accountCreator.setUsername(accountCreator.getPhoneNumber());
         accountCreator.setDomain(DOMAIN);
         accountCreator.loginLinphoneAccount();
-        accountCreator.removeListener(listener);
     }
 
     /**
@@ -68,7 +78,7 @@ public class PhoneLoginHandler implements LoginHandler
     {
         if (!authCode.matches(AUTH_CODE_REGEX))
         {
-            throw  new InvalidAuthCodeException("Not an auth code from SMS");
+            throw new InvalidAuthCodeException("Not an auth code from SMS");
         }
     }
 
@@ -80,10 +90,10 @@ public class PhoneLoginHandler implements LoginHandler
      */
     public void getAuthCode(String userName) throws LoginException
     {
-        accountCreator.addListener(listener);
         checkUserName(userName);
         accountCreator.setPhoneNumber(userName, COUNTRY_CODE);
+        accountCreator.setUsername(accountCreator.getPhoneNumber());
+        accountCreator.setDomain(DOMAIN);
         accountCreator.recoverAccount();
-        accountCreator.removeListener(listener);
     }
 }

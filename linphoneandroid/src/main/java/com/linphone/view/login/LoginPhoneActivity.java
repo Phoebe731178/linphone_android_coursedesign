@@ -30,7 +30,7 @@ public class LoginPhoneActivity extends Activity
         authCodeEditText = findViewById(R.id.authCodeEditText);
         confirmPhoneButton = findViewById(R.id.confirmPhoneButton);
         confirmAuthCodeButton = findViewById(R.id.confirmAuthCodeButton);
-        loginHandler = new PhoneLoginHandler();
+        loginHandler = PhoneLoginHandler.getInstance();
         confirmPhoneButton.setOnClickListener(new View.OnClickListener()
         {
             @Override

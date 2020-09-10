@@ -9,14 +9,14 @@
             android:label="linphoneAndroid"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name="com.linphone.view.addressbook.ContactDetail"/>
-        <activity android:name="com.linphone.view.login.LoginPhoneActivity">
+        <activity android:name="com.linphone.addressbook.view.ContactDetail"/>
+        <activity android:name="com.linphone.login.view.LoginPhoneActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="com.linphone.view.addressbook.AddressBookImpl"/>
+        <activity android:name="com.linphone.addressbook.view.AddressBookImpl"/>
     </application>
     <uses-permission android:name="android.permission.READ_CALL_LOG"/>
     <uses-permission android:name="android.permission.WRITE_CALL_LOG"/>

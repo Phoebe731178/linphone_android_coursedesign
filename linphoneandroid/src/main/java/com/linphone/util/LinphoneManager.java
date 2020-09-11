@@ -28,11 +28,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
-import android.telephony.PhoneStateListener;
-import android.telephony.TelephonyManager;
+import com.linphone.util.settings.LinphonePreferences;
 import org.linphone.core.*;
 import org.linphone.core.tools.Log;
-import com.linphone.util.settings.LinphonePreferences;
 
 import java.io.File;
 import java.sql.Timestamp;
@@ -50,8 +48,6 @@ public class LinphoneManager implements SensorEventListener {
     private final Context mContext;
     private final PowerManager mPowerManager;
     private final ConnectivityManager mConnectivityManager;
-    private TelephonyManager mTelephonyManager;
-    private PhoneStateListener mPhoneStateListener;
     private WakeLock mProximityWakelock;
     private final SensorManager mSensorManager;
     private final Sensor mProximity;
@@ -59,9 +55,7 @@ public class LinphoneManager implements SensorEventListener {
 
     private final LinphonePreferences mPrefs;
     private Core mCore;
-    private CoreListenerStub mCoreListener;
     private AccountCreator mAccountCreator;
-    private AccountCreatorListenerStub mAccountCreatorListener;
 
     private boolean mExited;
     private boolean mCallGsmON;
@@ -84,10 +78,8 @@ public class LinphoneManager implements SensorEventListener {
                 (ConnectivityManager) c.getSystemService(Context.CONNECTIVITY_SERVICE);
         mSensorManager = (SensorManager) c.getSystemService(Context.SENSOR_SERVICE);
         mProximity = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
-        mTelephonyManager = (TelephonyManager) c.getSystemService(Context.TELEPHONY_SERVICE);
 
         Log.i("[Manager] Registering phone state listener");
-        mTelephonyManager.listen(mPhoneStateListener, PhoneStateListener.LISTEN_CALL_STATE);
 
         mHasLastCallSasBeenRejected = false;
 
@@ -154,17 +146,11 @@ public class LinphoneManager implements SensorEventListener {
             }
         }
         mCore.stop();
-        mCore.removeListener(mCoreListener);
     }
 
     private synchronized void destroyManager() {
         Log.w("[Manager] Destroying Manager");
         changeStatusToOffline();
-
-        if (mTelephonyManager != null) {
-            Log.i("[Manager] Unregistering phone state listener");
-            mTelephonyManager.listen(mPhoneStateListener, PhoneStateListener.LISTEN_NONE);
-        }
 
         if (mTimer != null) mTimer.cancel();
 
@@ -183,7 +169,6 @@ public class LinphoneManager implements SensorEventListener {
                                     mPrefs.getLinphoneFactoryConfig(),
                                     mContext);
             mCore.addListener(listener);
-            mCore.addListener(mCoreListener);
 
             if (isPush) {
                 Log.w(
@@ -243,7 +228,6 @@ public class LinphoneManager implements SensorEventListener {
         resetCameraFromPreferences();
 
         mAccountCreator = mCore.createAccountCreator(LinphonePreferences.instance().getXmlrpcUrl());
-        mAccountCreator.setListener(mAccountCreatorListener);
         mCallGsmON = false;
 
         Log.i("[Manager] Core configured");
@@ -280,7 +264,6 @@ public class LinphoneManager implements SensorEventListener {
             Log.w("[Manager] Account creator shouldn't be null !");
             mAccountCreator =
                     mCore.createAccountCreator(LinphonePreferences.instance().getXmlrpcUrl());
-            mAccountCreator.setListener(mAccountCreatorListener);
         }
         return mAccountCreator;
     }

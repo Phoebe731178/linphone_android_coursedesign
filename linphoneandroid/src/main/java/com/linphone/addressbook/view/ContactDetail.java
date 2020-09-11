@@ -10,8 +10,7 @@ import android.widget.*;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import com.linphone.R;
-import com.linphone.addressbook.view.EditContactImpl;
-import com.linphone.addressbook.view.EditContactImpl;
+import com.linphone.addressbook.DeleteContactPresenter;
 import com.linphone.vo.Contact;
 
 
@@ -19,6 +18,8 @@ import java.util.List;
 
 //联系人详情
 public class ContactDetail extends Activity {
+
+    private DeleteContactPresenter deleteContactPresenter = new DeleteContactPresenter(ContactDetail.this);
 
 
     @Override
@@ -83,7 +84,7 @@ public class ContactDetail extends Activity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Toast.makeText(ContactDetail.this, "删除成功", Toast.LENGTH_SHORT).show();
-                        deleteContactPresenter.deleteContact2();
+                        deleteContactPresenter.deleteContact(contact);
                         Intent intent1 = new Intent(ContactDetail.this,AddressBookImpl.class);
                         startActivity(intent1);
                     }

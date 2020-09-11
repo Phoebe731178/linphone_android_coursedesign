@@ -1,170 +1,184 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
-              android:layout_height="match_parent" android:orientation="vertical">
-
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
     <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="80dp" android:layout_weight="1">
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:orientation="horizontal">
-
-            <ImageView
-                    android:id="@+id/back"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.2"
-                    android:padding="18dp"
-                    android:src="@drawable/back"/>
-
-            <View
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.4" />
-
-            <ImageView
-                    android:id="@+id/deleteContact"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.2"
-                    android:padding="15dp"
-                    android:src="@drawable/delete" />
-
-            <ImageView
-                    android:id="@+id/editContact"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.2"
-                    android:padding="15dp"
-                    android:src="@drawable/edit" />
-
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="261dp" android:layout_weight="1">
+            android:layout_height="60dp"
+            android:orientation="horizontal">
 
         <ImageView
-                android:layout_width="168dp"
-                android:layout_height="158dp"
-                android:layout_gravity="center"
-                android:src="@drawable/avatar"
-                android:id="@+id/contactView"
-                android:layout_weight="1"/>
-        <TextView
-                android:gravity="center_horizontal"
-                android:text="TextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/contactName"
-                android:layout_weight="1"/>
+                android:id="@+id/back"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.2"
+                android:padding="18dp"
+                android:src="@drawable/back" />
+
+        <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.4" />
+
+        <ImageView
+                android:id="@+id/deleteContact"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.2"
+                android:padding="15dp"
+                android:src="@drawable/delete" />
+
+        <ImageView
+                android:id="@+id/editContact"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.2"
+                android:padding="15dp"
+                android:src="@drawable/edit" />
+
     </LinearLayout>
-    <LinearLayout
-            android:id="@+id/controls_phone_numbers"
+
+
+    <ScrollView
+            android:id="@+id/controlsScrollView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:layout_height="match_parent">
 
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_gravity="center">
-
-            <TextView
-                    style="@style/contact_edit_form_label_font"
-                    android:layout_width="293dp"
-                    android:layout_height="match_parent"
-                    android:layout_centerVertical="true"
-                    android:text="电话号码"
-                    android:layout_weight="0.8"
-                    android:textAllCaps="true"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-                android:id="@+id/phone_numbers"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-            <TextView
-                    android:id="@+id/phonenumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:textColor="@color/black_color"
-                    android:gravity="left"
-                    android:inputType="textPersonName|textCapWords"
-                    android:paddingRight="5dp"
-                    android:textCursorDrawable="@null" />
-
-        </LinearLayout>
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_gravity="center">
-
-            <TextView
-                    style="@style/contact_edit_form_label_font"
-                    android:layout_width="293dp"
-                    android:layout_height="match_parent"
-                    android:layout_centerVertical="true"
-                    android:text="SIP地址"
-                    android:layout_weight="0.8"
-                    android:textAllCaps="true"/>
-        </LinearLayout>
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-            <TextView
-                    android:id="@+id/SIP"
+
+
+            <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:textColor="@color/black_color"
-                    android:gravity="left"
-                    android:inputType="textPersonName|textCapWords"
-                    android:paddingRight="5dp"
-                    android:textCursorDrawable="@null" />
+                    android:layout_height="match_parent" android:layout_weight="1">
+
+                <ImageView
+                        android:layout_width="168dp"
+                        android:layout_height="158dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/avatar"
+                        android:id="@+id/contactView"
+                        android:layout_weight="1"/>
+                <TextView
+                        android:padding="15dp"
+                        android:gravity="center_horizontal"
+                        android:text="TextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/contactName"
+                        android:layout_weight="1"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:id="@+id/controls_phone_numbers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center">
+
+                    <TextView
+                            style="@style/contact_edit_form_label_font"
+                            android:layout_width="293dp"
+                            android:layout_height="match_parent"
+                            android:layout_centerVertical="true"
+                            android:text="电话号码"
+                            android:layout_weight="0.8"
+                            android:textAllCaps="true"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                        android:id="@+id/phone_numbers"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                    <TextView
+                            android:id="@+id/phonenumber"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:textColor="@color/black_color"
+                            android:gravity="left"
+                            android:inputType="textPersonName|textCapWords"
+                            android:paddingRight="5dp"
+                            android:textCursorDrawable="@null" />
+
+                </LinearLayout>
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center">
+
+                    <TextView
+                            style="@style/contact_edit_form_label_font"
+                            android:layout_width="293dp"
+                            android:layout_height="match_parent"
+                            android:layout_centerVertical="true"
+                            android:text="SIP地址"
+                            android:layout_weight="0.8"
+                            android:textAllCaps="true"/>
+                </LinearLayout>
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                    <TextView
+                            android:id="@+id/SIP"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:textColor="@color/black_color"
+                            android:gravity="left"
+                            android:inputType="textPersonName|textCapWords"
+                            android:paddingRight="5dp"
+                            android:textCursorDrawable="@null" />
+
+                </LinearLayout>
+                <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="282dp"
+                        android:layout_weight="1">
+
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                        <LinearLayout
+                                android:layout_width="200dp"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+                            <ImageButton
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp" android:background="@drawable/phone"
+                                    android:layout_gravity="center_horizontal"
+                                    android:id="@+id/phone"/>
+                        </LinearLayout>
+                        <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+                            <ImageButton
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp" android:background="@drawable/message"
+                                    android:layout_gravity="center_horizontal"
+                                    android:id="@+id/message"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </LinearLayout>
 
         </LinearLayout>
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="282dp"
-            android:layout_weight="1">
 
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-            <LinearLayout
-                    android:layout_width="200dp"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-                <ImageButton
-                        android:layout_width="60dp"
-                        android:layout_height="60dp" android:background="@drawable/phone"
-                        android:layout_gravity="center_horizontal"
-                        android:id="@+id/phone"/>
-            </LinearLayout>
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-                <ImageButton
-                        android:layout_width="60dp"
-                        android:layout_height="60dp" android:background="@drawable/message"
-                        android:layout_gravity="center_horizontal"
-                        android:id="@+id/message"/>
-            </LinearLayout>
-        </LinearLayout>
-
-
-    </LinearLayout>
+    </ScrollView>
 </LinearLayout>
-</LinearLayout>
+

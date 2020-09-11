@@ -9,6 +9,7 @@
             android:label="linphoneAndroid"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+        <activity android:name="com.linphone.addressbook.view.EditContactImpl"/>
         <activity android:name="com.linphone.addressbook.view.ContactDetail"/>
         <activity android:name="com.linphone.login.view.LoginPhoneActivity">
             <intent-filter>

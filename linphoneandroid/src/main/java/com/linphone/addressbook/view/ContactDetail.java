@@ -69,36 +69,36 @@ public class ContactDetail extends Activity {
             }
         });
 
-//        ImageView bt_delete = findViewById(R.id.deleteContact);
-//        bt_delete.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                AlertDialog.Builder builder = new AlertDialog.Builder(ContactDetail.this);
-//
-//                builder.setTitle("温馨提示");
-//                builder.setMessage("确定要删除吗？");
-//                builder .setIcon(R.mipmap.ic_launcher);
-//                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {//添加"Yes"按钮
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        Toast.makeText(ContactDetail.this, "删除成功", Toast.LENGTH_SHORT).show();
-//                        deleteContactPresenter.deleteContact2();
-//                        Intent intent1 = new Intent(ContactDetail.this,AddressBookImpl.class);
-//                        startActivity(intent1);
-//                    }
-//                })
-//
-//                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {//添加取消
-//                            @Override
-//                            public void onClick(DialogInterface dialogInterface, int i) {
-//                                Toast.makeText(ContactDetail.this, "取消删除", Toast.LENGTH_SHORT).show();
-//                            }
-//                        })
-//                        .create();
-//                builder.show();
-//            }
-//        });
+        ImageView bt_delete = findViewById(R.id.deleteContact);
+        bt_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(ContactDetail.this);
+
+                builder.setTitle("温馨提示");
+                builder.setMessage("确定要删除吗？");
+                builder .setIcon(R.mipmap.ic_launcher);
+                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {//添加"Yes"按钮
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(ContactDetail.this, "删除成功", Toast.LENGTH_SHORT).show();
+                        deleteContactPresenter.deleteContact2();
+                        Intent intent1 = new Intent(ContactDetail.this,AddressBookImpl.class);
+                        startActivity(intent1);
+                    }
+                })
+
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {//添加取消
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Toast.makeText(ContactDetail.this, "取消删除", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .create();
+                builder.show();
+            }
+        });
 
     }
 }

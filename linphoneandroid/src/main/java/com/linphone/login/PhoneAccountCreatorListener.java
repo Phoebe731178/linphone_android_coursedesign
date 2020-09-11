@@ -1,7 +1,9 @@
 package com.linphone.login;
 
+import android.os.Bundle;
+import android.os.Message;
 import android.util.Log;
-import com.linphone.login.exceptions.*;
+import com.linphone.login.view.LoginPhoneActivity;
 import org.linphone.core.AccountCreator;
 import org.linphone.core.AccountCreatorListener;
 
@@ -42,21 +44,20 @@ public class PhoneAccountCreatorListener implements AccountCreatorListener
     public void onLoginLinphoneAccount(AccountCreator creator, AccountCreator.Status status, String response)
     {
         creator = PhoneLoginHandler.getInstance().getAccountCreator();
+        Message message = new Message();
+        Bundle bundle = new Bundle();
         if (response == null)
             response = "";
-        switch (status)
+        if (status == AccountCreator.Status.RequestOk)
         {
-            case RequestFailed:
-            case ServerError: throw new NetworkException(status.name() + response);
-            case UnexpectedError: throw new LoginException("Unexpected error:" + response);
-            case RequestOk:
-                Log.i("LoginLinphoneAccount", "Account for " + creator.getPhoneNumber() + " is login");
-                break;
-            case WrongActivationCode: throw new InvalidAuthCodeException(response);
-            case AccountNotExist: throw new AccountNotActivatedException(response);
-            case AccountNotActivated: throw new AccountNotActivatedException(response);
-            default: Log.i("LoginLinphoneAccount", "Unhandled status [" + status.name() + "]");
+            Log.i("LoginLinphoneAccount", "Account for " + creator.getPhoneNumber() + " is login");
         }
+        Log.i("LoginLinphoneAccount", "status [" + status.name() + "]");
+        Log.i("LoginLinphoneAccount", "response: \n" + response);
+        bundle.putString("status", status.name());
+        message.what = LoginHandler.LOGIN_LINPHONE_ACCOUNT;
+        message.setData(bundle);
+        LoginPhoneActivity.getHandler().sendMessage(message);
     }
 
     @Override
@@ -73,19 +74,16 @@ public class PhoneAccountCreatorListener implements AccountCreatorListener
     @Override
     public void onRecoverAccount(AccountCreator creator, AccountCreator.Status status, String response)
     {
+        Message message = new Message();
+        Bundle bundle = new Bundle();
         creator = PhoneLoginHandler.getInstance().getAccountCreator();
         if (response == null)
             response = "";
         switch (status)
         {
-            case PhoneNumberInvalid: throw new InvalidUserNameException("Invalid cellphone number:" + response);
-            case PhoneNumberOverused: throw new PhoneNumberOverusedException(response);
-            case RequestFailed:
-            case ServerError: throw new NetworkException(status.name() + response);
+            case PhoneNumberInvalid: Log.i("RecoverAccount", "Invalid cellphone number:" + response); break;
             case RequestOk:
-                Log.i("RecoverAccount", "Account for " + creator.getPhoneNumber() + " is recovered");
-                break;
-            case UnexpectedError: throw new LoginException("Unexpected error:" + response);
+                Log.i("RecoverAccount", "Account for " + creator.getPhoneNumber() + " is recovered"); break;
             case AccountNotExist:
                 {
                     Log.i("RecoverAccount", "Account " + creator.getUsername() + " does not exist, creating account.");
@@ -93,27 +91,35 @@ public class PhoneAccountCreatorListener implements AccountCreatorListener
                     creator.recoverAccount();
                     break;
                 }
-            default: Log.i("RecoverAccount", "Unhandled status [" + status.name() + "]");
         }
+        Log.i("RecoverAccount", "status [" + status.name() + "]");
+        Log.i("RecoverAccount", "response: \n" + response);
+        bundle.putString("status", status.name());
+        message.setData(bundle);
+        message.what = LoginHandler.RECOVER_ACCOUNT;
+        LoginPhoneActivity.getHandler().sendMessage(message);
     }
 
     @Override
     public void onCreateAccount(AccountCreator creator, AccountCreator.Status status, String response)
     {
         creator = PhoneLoginHandler.getInstance().getAccountCreator();
+        Message message = new Message();
+        Bundle bundle = new Bundle();
         if (response == null)
             response = "";
-        switch (status)
+        if (status == AccountCreator.Status.PhoneNumberInvalid)
         {
-            case PhoneNumberInvalid: throw new InvalidUserNameException("Invalid cellphone number:" + response);
-            case PhoneNumberOverused: throw new PhoneNumberOverusedException(response);
-            case RequestFailed:
-            case ServerError: throw new NetworkException(status.name() + response);
-            case RequestOk:
-            case AccountCreated: Log.i("CreateAccount", "Account for " + creator.getPhoneNumber() + " is created");
-                break;
-            case UnexpectedError: throw new LoginException("Unexpected error:" + response);
-            default: Log.i("CreateAccount", "Unhandled status [" + status.name() + "]");
+            Log.i("CreateAccount", "Invalid cellphone number:" + response);
+        } else if (status == AccountCreator.Status.AccountCreated)
+        {
+            Log.i("CreateAccount", "Account for " + creator.getPhoneNumber() + " is created");
         }
+        Log.i("CreateAccount", "status [" + status.name() + "]");
+        Log.i("CreateAccount", "response: \n" + response);
+        bundle.putString("status", status.name());
+        message.setData(bundle);
+        message.what = LoginHandler.CREATE_ACCOUNT;
+        LoginPhoneActivity.getHandler().sendMessage(message);
     }
 }

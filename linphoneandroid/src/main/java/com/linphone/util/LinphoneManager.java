@@ -205,9 +205,9 @@ public class LinphoneManager implements SensorEventListener {
 
         mCore.setUserAgent(
                 userAgent,
-                "4.5.0"
+                getString(R.string.linphone_sdk_version)
                         + " ("
-                        + "alpha.89+d12833d"
+                        + getString(R.string.linphone_sdk_branch)
                         + ")");
 
         mCore.setCallLogsDatabasePath(mCallLogDatabaseFile);

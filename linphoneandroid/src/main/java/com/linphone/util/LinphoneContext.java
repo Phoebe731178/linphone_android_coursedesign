@@ -87,7 +87,13 @@ public class LinphoneContext
             @Override
             public void onCallStateChanged(Core core, Call call, Call.State state, String message) {
                 android.util.Log.i("listener", state.name());
-                if (state == Call.State.Error) {
+                if(state == Call.State.IncomingReceived){
+                    onIncomingStarted();
+                } else if (state == Call.State.Connected) {
+                    onCallStarted();
+                } else if(state == Call.State.OutgoingInit){
+                    onOutgoingStarted();
+                } else if (state == Call.State.Error) {
                     // Convert Core message for internalization
                     if (call.getErrorInfo().getReason() == Reason.Declined) {
                         Toast.makeText(mContext, "Declined", Toast.LENGTH_SHORT).show();
@@ -102,19 +108,10 @@ public class LinphoneContext
                         Toast.makeText(mContext, "Busy", Toast.LENGTH_SHORT).show();
                         onCallHangUp();
                     }
-                } else if (state == Call.State.End) {
+                } else if (state == Call.State.End || state == Call.State.Released) {
                     if (call.getErrorInfo().getReason() == Reason.Declined) {
                         onCallHangUp();
                     }
-                } else if (state == Call.State.Connected) {
-                    onCallStarted();
-                } else if(state == Call.State.OutgoingInit){
-                    onOutgoingStarted();
-                } else if(state == Call.State.IncomingReceived){
-                    onIncomingStarted();
-                }
-                if (state == Call.State.End || state == Call.State.Released) {
-                    onCallHangUp();
                 }
             }
 

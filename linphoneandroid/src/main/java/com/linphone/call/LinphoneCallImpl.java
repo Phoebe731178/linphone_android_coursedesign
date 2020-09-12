@@ -49,7 +49,9 @@ public class LinphoneCallImpl implements LinphoneCall{
                 break;
             }
         }
-        mCall.terminate();
+        if(mCall != null) {
+            mCall.terminate();
+        }
         contactDetail.destroy();
     }
 

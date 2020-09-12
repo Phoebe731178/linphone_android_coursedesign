@@ -20,7 +20,10 @@
 package com.linphone.util;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
+import android.widget.Toast;
+import com.linphone.addressbook.view.AddressBookImpl;
 import com.linphone.util.compatibility.Compatibility;
 import org.linphone.core.*;
 import org.linphone.core.tools.Log;
@@ -76,6 +79,30 @@ public class LinphoneContext
         mContext = context;
 
         LinphonePreferences.instance().setContext(context);
+        mListener = new CoreListenerStub()
+        {
+            @Override
+            public void onRegistrationStateChanged(Core core, ProxyConfig proxyConfig, RegistrationState state, String message)
+            {
+                switch (state)
+                {
+                    case Failed:
+                        Toast.makeText(mContext, "登录失败", Toast.LENGTH_SHORT).show();
+                        break;
+                    case Progress:
+                        Toast.makeText(mContext, "正在登录，请稍后", Toast.LENGTH_SHORT).show();
+                        break;
+                    case Ok:
+                        Toast.makeText(mContext, "登录成功", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(mContext, AddressBookImpl.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        mContext.startActivity(intent);
+                        break;
+                    default:
+                        android.util.Log.i("RegistrationStateChanged", "Unhandled state [" + state.name() + "]");
+                }
+            }
+        };
 
         // Dump some debugging information to the logs
         dumpDeviceInformation();

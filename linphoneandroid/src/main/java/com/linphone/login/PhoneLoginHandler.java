@@ -12,8 +12,8 @@ public class PhoneLoginHandler implements LoginHandler
     private final AccountCreator accountCreator;
     private static final String PHONE_NUMBER_REGEX = "^1[3-9]\\d{9}$";
     private static final String AUTH_CODE_REGEX = "^\\d{4}$";
-    private static final String COUNTRY_CODE = "86";
-    private static final String DOMAIN = "sip.linphone.org";
+    public static final String COUNTRY_CODE = "86";
+    public static final String DOMAIN = "sip.linphone.org";
     private static final AccountCreatorListener listener = new PhoneAccountCreatorListener();
     private static final PhoneLoginHandler instance = new PhoneLoginHandler();
 

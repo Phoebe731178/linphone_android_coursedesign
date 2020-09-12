@@ -11,16 +11,18 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import com.linphone.R;
 import com.linphone.addressbook.DeleteContactPresenter;
+import com.linphone.call.CallOutgoingPresenter;
+import com.linphone.call.LinphoneCallImpl;
+import com.linphone.call.view.CallActivity;
+import com.linphone.util.LinphoneManager;
 import com.linphone.vo.Contact;
-
-
-import java.util.List;
+import org.linphone.core.*;
 
 //联系人详情
 public class ContactDetail extends Activity {
 
     private DeleteContactPresenter deleteContactPresenter = new DeleteContactPresenter(ContactDetail.this);
-
+    private CallOutgoingPresenter callOutgoingPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,24 +33,10 @@ public class ContactDetail extends Activity {
         final Contact contact = intent.getParcelableExtra("contact");
         final TextView name = findViewById(R.id.contactName);
         TextView phonenumber = findViewById(R.id.phonenumber);
-        TextView sip = findViewById(R.id.SIP);
-        // ListView phones = findViewById(R.id.contactPhonesList);
-        //ListView SIP = findViewById(R.id.contactSIPList);
         //填充联系人信息
         name.setText(contact.getName());
         if(contact.getPhones() != null){
-           /* String[] phoneList = contact.getPhones().toArray(new String[contact.getPhones().size()]);
-            ArrayAdapter<String> phonesAdapter = new ArrayAdapter<String>(this,
-                    android.R.layout.simple_list_item_1, phoneList);
-            phones.setAdapter(phonesAdapter);*/
             phonenumber.setText(contact.getPhones().get(0));
-        }
-        if(contact.getSIP() != null) {
-           /* String[] SIPList = contact.getPhones().toArray(new String[contact.getSIP().size()]);
-            ArrayAdapter<String> phonesAdapter = new ArrayAdapter<String>(this,
-                    android.R.layout.simple_list_item_1, SIPList);
-            SIP.setAdapter(phonesAdapter);*/
-            sip.setText(contact.getSIP().get(0));
         }
 
 
@@ -60,12 +48,8 @@ public class ContactDetail extends Activity {
                 intent.putExtra("contact_name",contact.getName());
                 intent.putExtra("contact_phone",contact.getPhones().get(0));
                 intent.putExtra("contact_id",contact.getContactID());
-//                if(contact.getSIP() != null) {
-//                    intent.putExtra("contact_sip", contact.getSIP().get(0));
-//                }
                 Log.i("tag2", "contact_name" + contact.getName());
                 Log.i("tag2", "contact_phone" +contact.getPhones().get(0));
-                //intent.putExtra("contacts",contact);
                 startActivity(intent);
             }
         });
@@ -98,6 +82,15 @@ public class ContactDetail extends Activity {
                         })
                         .create();
                 builder.show();
+            }
+        });
+
+        callOutgoingPresenter = new CallOutgoingPresenter();
+        ImageButton callButton = findViewById(R.id.phone);
+        callButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callOutgoingPresenter.makeCall(contact);
             }
         });
 

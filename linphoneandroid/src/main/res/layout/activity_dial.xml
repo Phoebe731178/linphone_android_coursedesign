@@ -1,0 +1,206 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+    <LinearLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFFFFF"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingBottom="5dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="5dp"
+            tools:ignore="MergeRootFrame" >
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1.5"
+                android:orientation="horizontal">
+            <EditText
+                    android:id="@+id/editText1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:layout_weight="1.5"
+                    android:textSize="40sp" />
+            <ImageButton
+                    android:id="@+id/deleteNumber"
+                    android:layout_width="70dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/deletenumber"/>
+
+        </LinearLayout>
+
+
+        <TableLayout
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="8">
+
+            <TableRow
+                    android:id="@+id/tableRow1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_weight="1">
+
+                <ImageButton
+                        android:id="@+id/imageButton1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/number1"
+                        android:onClick="telNumber"
+                        android:tag="1"/>
+                <ImageButton
+                        android:id="@+id/imageButton2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/number2"
+                        android:onClick="telNumber"
+                        android:tag="2"/>
+
+                <ImageButton
+                        android:id="@+id/imageButton3"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/number3"
+                        android:onClick="telNumber"
+                        android:tag="3"/>
+
+            </TableRow>
+
+            <TableRow
+                    android:id="@+id/TableRow01"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                <ImageButton
+                        android:id="@+id/ImageButton01"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/number4"
+                        android:onClick="telNumber"
+                        android:tag="4" />
+
+                <ImageButton
+                        android:id="@+id/ImageButton02"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/number5"
+                        android:onClick="telNumber"
+                        android:tag="5" />
+
+                <ImageButton
+                        android:id="@+id/ImageButton03"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/number6"
+                        android:onClick="telNumber"
+                        android:tag="6" />
+
+            </TableRow>
+
+            <TableRow
+                    android:id="@+id/TableRow02"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" >
+
+                <ImageButton
+                        android:id="@+id/ImageButton04"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/number7"
+                        android:onClick="telNumber"
+                        android:tag="7" />
+
+                <ImageButton
+                        android:id="@+id/ImageButton05"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/number8"
+                        android:onClick="telNumber"
+                        android:tag="8" />
+
+                <ImageButton
+                        android:id="@+id/ImageButton06"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/number9"
+                        android:onClick="telNumber"
+                        android:tag="9" />
+
+            </TableRow>
+
+            <TableRow
+                    android:id="@+id/TableRow03"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                <ImageButton
+                        android:id="@+id/ImageButton07"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/numberstar"
+                        android:onClick="telNumber"
+                        android:tag="*" />
+
+                <ImageButton
+                        android:id="@+id/ImageButton08"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/number0"
+                        android:onClick="telNumber"
+                        android:tag="0" />
+
+                <ImageButton
+                        android:id="@+id/ImageButton09"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/numberjin"
+                        android:onClick="telNumber"
+                        android:tag="#" />
+
+            </TableRow>
+        </TableLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:orientation="vertical">
+
+            <ImageButton
+                    android:id="@+id/imageButton5"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@drawable/answer2"
+                    android:onClick="call"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

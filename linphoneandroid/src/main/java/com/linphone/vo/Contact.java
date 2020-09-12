@@ -10,7 +10,6 @@ public class Contact implements Parcelable {
     private String contactID;
     private String name;
     private List<String> phones = null;
-    private List<String> SIP = null;
 
     public Contact(){ }
 
@@ -20,11 +19,6 @@ public class Contact implements Parcelable {
         this.phones = phones;
     }
 
-    public Contact(String name, List<String> phones, List<String> SIP){
-        this.name = name;
-        this.phones = phones;
-        this.SIP = SIP;
-    }
 
     public Contact(String name, List<String> phones){
         this.name = name;
@@ -35,7 +29,6 @@ public class Contact implements Parcelable {
         contactID = in.readString();
         name = in.readString();
         phones = in.createStringArrayList();
-        SIP = in.createStringArrayList();
     }
 
     @Override
@@ -43,7 +36,6 @@ public class Contact implements Parcelable {
         dest.writeString(contactID);
         dest.writeString(name);
         dest.writeStringList(phones);
-        dest.writeStringList(SIP);
     }
 
     @Override
@@ -75,9 +67,6 @@ public class Contact implements Parcelable {
         return phones;
     }
 
-    public List<String> getSIP() {
-        return SIP;
-    }
 
     public void setContactID(String contactID) {
         this.contactID = contactID;
@@ -91,7 +80,11 @@ public class Contact implements Parcelable {
         this.phones = phones;
     }
 
-    public void setSIP(List<String> SIP) {
-        this.SIP = SIP;
+    public void destroy(){
+        try{
+            this.contactID = "";
+            this.phones.clear();
+        }
+        catch (Exception ignore){}
     }
 }

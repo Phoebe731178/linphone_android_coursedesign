@@ -11,8 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import androidx.annotation.Nullable;
 import com.linphone.addressbook.AddressBookPresenter;
-import com.linphone.call.Call;
-import com.linphone.call.CallImpl;
+import com.linphone.call.LinphoneCall;
+import com.linphone.call.LinphoneCallImpl;
 import com.linphone.vo.Contact;
 
 import java.util.ArrayList;
@@ -37,7 +37,7 @@ public class AddressBookImpl extends Activity implements AddressBook {
         addressBookPresenter.observers();
 //        new AddressBookModelImpl(this).insertContactToMachine(new Contact("yahoo", Arrays.asList("1(234)521-432")));
 //        new AddressBookModelImpl(this).updateContactToMachine("1", "133", "1", AddressBookModelImpl.UpdateType.PHONE);
-//        new CallImpl().newCall("sip:+8618859808506@sip.linphone.org");
+//        new LinphoneCallImpl().newCall("sip:+8618965057688@sip.linphone.org");
     }
 
     @Override

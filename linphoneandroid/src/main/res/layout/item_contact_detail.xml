@@ -113,35 +113,6 @@
 
                 </LinearLayout>
                 <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_gravity="center">
-
-                    <TextView
-                            style="@style/contact_edit_form_label_font"
-                            android:layout_width="293dp"
-                            android:layout_height="match_parent"
-                            android:layout_centerVertical="true"
-                            android:text="SIP地址"
-                            android:layout_weight="0.8"
-                            android:textAllCaps="true"/>
-                </LinearLayout>
-                <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-                    <TextView
-                            android:id="@+id/SIP"
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:textColor="@color/black_color"
-                            android:gravity="left"
-                            android:inputType="textPersonName|textCapWords"
-                            android:paddingRight="5dp"
-                            android:textCursorDrawable="@null" />
-
-                </LinearLayout>
-                <LinearLayout
                         android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="282dp"

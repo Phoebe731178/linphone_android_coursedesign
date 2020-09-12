@@ -13,26 +13,26 @@ import java.util.*;
 //通讯录
 public class AddressBookModelImpl implements AddressBookModel {
 
-/**
- * 接口使用样例
- * 删除联系人号码，号码为一时删除联系人
- * deleteContactFromMachine(phone);
- *
- * 删除联系人
- * deleteContactByContactID(contactID);
- *
- * 新增联系人
- * insertContactToMachine(contact);
- *
- * 更新联系人姓名
- * updateContactToMachine(contactID, old_name, new_name, UpdateType.NAME);
- * old_name为更新前的联系人姓名 new_name为更新后的联系人姓名 UpdateType.NAME表示此方法用于更新联系人电话
- *
- * 更新联系人电话
- * updateContactToMachine(contactID, old_phone, new_phone, UpdateType.PHONE);
- * old_phone为更新前的手机号码 new_phone为更新后的手机号码 UpdateType.PHONE表示此方法用于更新联系人电话
- *
- */
+    /**
+     * 接口使用样例
+     * 删除联系人号码，号码为一时删除联系人
+     * deleteContactFromMachine(phone);
+     *
+     * 删除联系人
+     * deleteContactByContactID(contactID);
+     *
+     * 新增联系人
+     * insertContactToMachine(contact);
+     *
+     * 更新联系人姓名
+     * updateContactToMachine(contactID, old_name, new_name, UpdateType.NAME);
+     * old_name为更新前的联系人姓名 new_name为更新后的联系人姓名 UpdateType.NAME表示此方法用于更新联系人电话
+     *
+     * 更新联系人电话
+     * updateContactToMachine(contactID, old_phone, new_phone, UpdateType.PHONE);
+     * old_phone为更新前的手机号码 new_phone为更新后的手机号码 UpdateType.PHONE表示此方法用于更新联系人电话
+     *
+     */
     private Context context;
     private Map<String, Contact> addressBookMap = new HashMap<>();
     private List<Contact> contactList = new ArrayList<>();
@@ -97,14 +97,9 @@ public class AddressBookModelImpl implements AddressBookModel {
                     Contact contact = addressBookMap.get(contactID);
                     Log.i("tag1", "3 " + cursor.getString(0) + " " +cursor.getString(1));
                     List<String> SIP = new ArrayList<>();
-                    if(contact.getSIP() != null) {
-                        SIP = contact.getSIP();
-                    }
                     List<String> SIPCopy = new ArrayList<>(SIP);
                     Log.i("tag1", "4 " + cursor.getString(0) + " " +cursor.getString(1));
                     SIPCopy.add(contactAddress);
-                    contact.setSIP(SIPCopy);
-                    Log.i("tag1", "SIP: " + contact.getName() + "" + contact.getSIP());
                 }
             } while(cursor.moveToNext());
         }
@@ -129,7 +124,6 @@ public class AddressBookModelImpl implements AddressBookModel {
     public void insertContactToMachine(Contact contact){
         String name = contact.getName();
         List<String> phones = contact.getPhones();
-        List<String> SIP = contact.getSIP();
         ContentValues contentValues = new ContentValues();
         ContentResolver contentResolver = context.getContentResolver();
         long rawContactID;
@@ -164,19 +158,6 @@ public class AddressBookModelImpl implements AddressBookModel {
                     withValue(ContactsContract.CommonDataKinds.Phone.TYPE, ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE).
                     build();
             operations.add(contentProviderOperation2);
-        }
-        if(contact.getSIP() != null){
-            uri = Uri.parse("content://com.android.contacts/data");
-            for(String sipAddress: SIP){
-                Log.i("tag1", "contact " + contact.getName() + " SIP is " + sipAddress);
-                ContentProviderOperation contentProviderOperation = ContentProviderOperation.
-                        newInsert(uri).
-                        withValue(ContactsContract.Data.RAW_CONTACT_ID, rawContactID).
-                        withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.SipAddress.CONTENT_ITEM_TYPE).
-                        withValue(ContactsContract.Data.DATA1, sipAddress).
-                        build();
-                operations.add(contentProviderOperation);
-            }
         }
         try {
             contentResolver.applyBatch("com.android.contacts", operations);

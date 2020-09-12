@@ -87,7 +87,6 @@ public class EditContactImpl extends AppCompatActivity implements EditContact, T
 
         et_name = findViewById(R.id.contactName);
         editphone = findViewById(R.id.editphone);
-        editSIP = findViewById(R.id.editSIP);
 
         et_name.addTextChangedListener(new TextWatcher() {
             @Override
@@ -159,11 +158,11 @@ public class EditContactImpl extends AppCompatActivity implements EditContact, T
     }*/
 
 
-   @Override
+    @Override
     public void EditContactNameAndPhone() {
 
         Intent intent = getIntent();
-       // final Contact contact = intent.getParcelableExtra("contacts");
+        // final Contact contact = intent.getParcelableExtra("contacts");
         final String name = intent.getStringExtra("contact_name");
         et_name.setText(name);
         final String phone = intent.getStringExtra("contact_phone");
@@ -192,10 +191,10 @@ public class EditContactImpl extends AppCompatActivity implements EditContact, T
 //                if(editSIP.getText().toString().equals(null)) {
 //                    String newSIP = editSIP.getText().toString();
 //                }
-                Log.i("tag2", "new contact_name: " + newName);
-                Log.i("tag2", "new phone: " + newPhone);
+                Log.i("EditContactNameAndPhone ", "new contact_name: " + newName);
+                Log.i("EditContactNameAndPhone ", "new phone: " + newPhone);
 //                Log.i("tag2", "new contact_sip: " + newSIP);
-                Log.i("tag4", updateType + "");
+                Log.i("EditContactNameAndPhone ", updateType + "");
                 switch (updateType){
                     case NAME:
                         editContactPresenter.editContact(id,name,newName, AddressBookModelImpl.UpdateType.NAME);

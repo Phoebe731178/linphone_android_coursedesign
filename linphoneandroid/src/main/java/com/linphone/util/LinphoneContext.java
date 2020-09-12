@@ -24,6 +24,9 @@ import android.content.Intent;
 import android.os.Build;
 import android.widget.Toast;
 import com.linphone.addressbook.view.AddressBookImpl;
+import com.linphone.call.view.CallActivity;
+import com.linphone.call.view.CallIncomingActivity;
+import com.linphone.call.view.CallOutgoingActivity;
 import com.linphone.util.compatibility.Compatibility;
 import org.linphone.core.*;
 import org.linphone.core.tools.Log;
@@ -81,6 +84,40 @@ public class LinphoneContext
         LinphonePreferences.instance().setContext(context);
         mListener = new CoreListenerStub()
         {
+            @Override
+            public void onCallStateChanged(Core core, Call call, Call.State state, String message) {
+                android.util.Log.i("listener", state.name());
+                if (state == Call.State.Error) {
+                    // Convert Core message for internalization
+                    if (call.getErrorInfo().getReason() == Reason.Declined) {
+                        Toast.makeText(mContext, "Declined", Toast.LENGTH_SHORT).show();
+                        onCallHangUp();
+                    } else if (call.getErrorInfo().getReason() == Reason.NotFound) {
+                        Toast.makeText(mContext, "NotFound", Toast.LENGTH_SHORT).show();
+                        onCallHangUp();
+                    } else if (call.getErrorInfo().getReason() == Reason.NotAcceptable) {
+                        Toast.makeText(mContext, "NotAcceptable", Toast.LENGTH_SHORT).show();
+                        onCallHangUp();
+                    } else if (call.getErrorInfo().getReason() == Reason.Busy) {
+                        Toast.makeText(mContext, "Busy", Toast.LENGTH_SHORT).show();
+                        onCallHangUp();
+                    }
+                } else if (state == Call.State.End) {
+                    if (call.getErrorInfo().getReason() == Reason.Declined) {
+                        onCallHangUp();
+                    }
+                } else if (state == Call.State.Connected) {
+                    onCallStarted();
+                } else if(state == Call.State.OutgoingInit){
+                    onOutgoingStarted();
+                } else if(state == Call.State.IncomingReceived){
+                    onIncomingStarted();
+                }
+                if (state == Call.State.End || state == Call.State.Released) {
+                    onCallHangUp();
+                }
+            }
+
             @Override
             public void onRegistrationStateChanged(Core core, ProxyConfig proxyConfig, RegistrationState state, String message)
             {
@@ -187,4 +224,33 @@ public class LinphoneContext
         Log.i("SDK VERSION=" + mContext.getString(R.string.linphone_sdk_version));
         Log.i("SDK BRANCH=" + mContext.getString(R.string.linphone_sdk_branch));
     }
+
+    private void onOutgoingStarted(){
+        Intent intent = new Intent(mContext, CallOutgoingActivity.class);
+        android.util.Log.i("coreListener", "OutgoingInit");
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mContext.startActivity(intent);
+    }
+
+    private void onCallStarted(){
+        android.util.Log.i("coreListener", "Connected");
+        Intent intent = new Intent(mContext, CallActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mContext.startActivity(intent);
+    }
+
+    private void onIncomingStarted(){
+        Intent intent = new Intent(mContext, CallIncomingActivity.class);
+        android.util.Log.i("coreListener", "IncomingInit");
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mContext.startActivity(intent);
+    }
+
+    private void onCallHangUp(){
+        android.util.Log.i("coreListener", "hangup");
+        Intent intent = new Intent(mContext, AddressBookImpl.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mContext.startActivity(intent);
+    }
+
 }

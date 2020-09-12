@@ -52,7 +52,9 @@ public class LinphoneCallImpl implements LinphoneCall{
         if(mCall != null) {
             mCall.terminate();
         }
-        contactDetail.destroy();
+        if(contactDetail != null) {
+            contactDetail.destroy();
+        }
     }
 
     @Override

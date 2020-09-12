@@ -93,25 +93,20 @@ public class LinphoneContext
                     onCallStarted();
                 } else if(state == Call.State.OutgoingInit){
                     onOutgoingStarted();
-                } else if (state == Call.State.Error) {
-                    // Convert Core message for internalization
-                    if (call.getErrorInfo().getReason() == Reason.Declined) {
-                        Toast.makeText(mContext, "Declined", Toast.LENGTH_SHORT).show();
-                        onCallHangUp();
-                    } else if (call.getErrorInfo().getReason() == Reason.NotFound) {
-                        Toast.makeText(mContext, "NotFound", Toast.LENGTH_SHORT).show();
-                        onCallHangUp();
-                    } else if (call.getErrorInfo().getReason() == Reason.NotAcceptable) {
-                        Toast.makeText(mContext, "NotAcceptable", Toast.LENGTH_SHORT).show();
-                        onCallHangUp();
-                    } else if (call.getErrorInfo().getReason() == Reason.Busy) {
-                        Toast.makeText(mContext, "Busy", Toast.LENGTH_SHORT).show();
-                        onCallHangUp();
-                    }
-                } else if (state == Call.State.End || state == Call.State.Released) {
-                    if (call.getErrorInfo().getReason() == Reason.Declined) {
-                        onCallHangUp();
-                    }
+                } else if (call.getErrorInfo().getReason() == Reason.Declined) {
+                    Toast.makeText(mContext, "Declined", Toast.LENGTH_SHORT).show();
+                    onCallHangUp();
+                } else if (call.getErrorInfo().getReason() == Reason.NotFound) {
+                    Toast.makeText(mContext, "NotFound", Toast.LENGTH_SHORT).show();
+                    onCallHangUp();
+                } else if (call.getErrorInfo().getReason() == Reason.NotAcceptable) {
+                    Toast.makeText(mContext, "NotAcceptable", Toast.LENGTH_SHORT).show();
+                    onCallHangUp();
+                } else if (call.getErrorInfo().getReason() == Reason.Busy) {
+                    Toast.makeText(mContext, "Busy", Toast.LENGTH_SHORT).show();
+                    onCallHangUp();
+                } else if (state == Call.State.End) {
+                    onCallHangUp();
                 }
             }
 

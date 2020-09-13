@@ -34,6 +34,7 @@ public class CallOutgoingActivity extends Activity {
                 new LinphoneCallImpl().callDecline();
             }
         });
+
         lookUpCall();
 
         if(mCall != null) {

@@ -42,10 +42,7 @@ public class CallActivity extends Activity {
                 break;
             }
         }
-        if(mCall != null) {
-            Address address = mCall.getRemoteAddress();
-            Log.i("callActivity", address.getUsername());
-        }
+
         try {
             String phone = mCall.getRemoteAddress().getUsername().substring(3);
             Log.i("getContact", phone);

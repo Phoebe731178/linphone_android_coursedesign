@@ -19,20 +19,30 @@
  */
 package com.linphone.util;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.widget.Toast;
+import com.linphone.MainApplication;
+import com.linphone.addressbook.AddressBookModelImpl;
 import com.linphone.addressbook.view.AddressBookImpl;
+import com.linphone.addressbook.view.ContactDetail;
 import com.linphone.call.LinphoneCallImpl;
 import com.linphone.call.view.CallActivity;
 import com.linphone.call.view.CallIncomingActivity;
 import com.linphone.call.view.CallOutgoingActivity;
+import com.linphone.call.view.Dial;
 import com.linphone.util.compatibility.Compatibility;
+import com.linphone.vo.Contact;
 import org.linphone.core.*;
 import org.linphone.core.tools.Log;
 import org.linphone.mediastream.Version;
 import com.linphone.util.settings.LinphonePreferences;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedList;
 
 public class LinphoneContext
 {
@@ -96,18 +106,18 @@ public class LinphoneContext
                     onOutgoingStarted();
                 } else if (call.getErrorInfo().getReason() == Reason.Declined) {
                     Toast.makeText(mContext, "Declined", Toast.LENGTH_SHORT).show();
-                    onCallHangUp();
+                    onCallHangUp(call);
                 } else if (call.getErrorInfo().getReason() == Reason.NotFound) {
                     Toast.makeText(mContext, "NotFound", Toast.LENGTH_SHORT).show();
-                    onCallHangUp();
+                    onCallHangUp(call);
                 } else if (call.getErrorInfo().getReason() == Reason.NotAcceptable) {
                     Toast.makeText(mContext, "NotAcceptable", Toast.LENGTH_SHORT).show();
-                    onCallHangUp();
+                    onCallHangUp(call);
                 } else if (call.getErrorInfo().getReason() == Reason.Busy) {
                     Toast.makeText(mContext, "Busy", Toast.LENGTH_SHORT).show();
-                    onCallHangUp();
+                    onCallHangUp(call);
                 } else if (state == Call.State.End) {
-                    onCallHangUp();
+                    onCallHangUp(call);
                 }
             }
 
@@ -239,11 +249,40 @@ public class LinphoneContext
         mContext.startActivity(intent);
     }
 
-    private void onCallHangUp(){
+    private void onCallHangUp(Call call){
         android.util.Log.i("coreListener", "hangup");
-        Intent intent = new Intent(mContext, AddressBookImpl.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        mContext.startActivity(intent);
+        Intent intent = null;
+        try{
+            if(MainApplication.activities != null){
+                LinkedList<Activity> activitiesCopy = new LinkedList<>(MainApplication.activities);
+                Collections.reverse(activitiesCopy);
+                for(Activity activity: activitiesCopy){
+                    android.util.Log.i("activityCheck", "now " + activity.getClass().getName());
+                    if(activity.getClass().getName().equals("com.linphone.call.view.CallActivity")
+                                    || activity.getClass().getName().equals("com.linphone.call.view.CallOutgoingActivity")
+                                    || activity.getClass().getName().equals("com.linphone.call.view.CallIncomingActivity")){
+                        continue;
+                    }
+                    if(activity.getClass().getName().equals("com.linphone.addressbook.view.ContactDetail")){
+                        String phone = call.getRemoteAddress().getUsername().substring(3);
+                        String name = new AddressBookModelImpl(mContext).findNameFromPhone(phone);
+                        Contact contact = new Contact(name, Arrays.asList(phone));
+                        intent = new Intent(mContext, ContactDetail.class);
+                        intent.putExtra("contact", contact);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        mContext.startActivity(intent);
+                        break;
+
+                    } else {
+                        intent = new Intent(mContext, Dial.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        mContext.startActivity(intent);
+                        break;
+                    }
+
+                }
+            }
+        } catch (Exception ignore){}
     }
 
 }

@@ -6,9 +6,11 @@ import android.net.Uri;
 import android.os.RemoteException;
 import android.provider.ContactsContract;
 import android.util.Log;
+import com.github.promeg.pinyinhelper.Pinyin;
 import com.linphone.vo.Contact;
 
 import java.util.*;
+
 
 //通讯录
 public class AddressBookModelImpl implements AddressBookModel {
@@ -34,8 +36,7 @@ public class AddressBookModelImpl implements AddressBookModel {
      *
      */
     private Context context;
-    private Map<String, Contact> addressBookMap = new HashMap<>();
-    private List<Contact> contactList = new ArrayList<>();
+    private Map<String, Contact> addressBookMap = new LinkedHashMap<>();
     public enum UpdateType {NAME, PHONE, SIP}    //更新的种类
 
     public AddressBookModelImpl(Context context){
@@ -75,7 +76,25 @@ public class AddressBookModelImpl implements AddressBookModel {
             }
         }
         setContactAddress();
+        addressBookMap = sortNameList();
         return addressBookMap;
+    }
+
+    public Map<String, Contact> sortNameList(){
+        Map<String, Contact> result = new LinkedHashMap<>();
+        List<Map.Entry<String, Contact>> mapList = new ArrayList<>(addressBookMap.entrySet());
+        Collections.sort(mapList, new Comparator<Map.Entry<String, Contact>>() {
+            @Override
+            public int compare(Map.Entry<String, Contact> t1, Map.Entry<String, Contact> t2) {
+                String char1 = Pinyin.toPinyin(t1.getValue().getName(), "");
+                String char2 = Pinyin.toPinyin(t2.getValue().getName(), "");
+                return char1.compareTo(char2);
+            }
+        });
+        for (Map.Entry<String, Contact> entry: mapList){
+            result.put(entry.getKey(), entry.getValue());
+        }
+        return result;
     }
 
     // 查询通讯录联系人SIP地址
@@ -106,17 +125,6 @@ public class AddressBookModelImpl implements AddressBookModel {
         catch (Exception e){
             Log.i("tag1", "nobody has SIP address");
         }
-
-    }
-
-    //获取本机联系人详情(姓名，电话)
-    @Override
-    public List<Contact> getContactList(){
-        for(Map.Entry<String, Contact> entry: addressBookMap.entrySet()){
-            Contact contact = entry.getValue();
-            contactList.add(contact);
-        }
-        return contactList;
     }
 
     //插入本机联系人数据库

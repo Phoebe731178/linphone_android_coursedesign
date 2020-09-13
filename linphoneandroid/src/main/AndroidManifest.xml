@@ -7,23 +7,19 @@
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
             android:label="linphoneAndroid"
+            xmlns:tools="http://schemas.android.com/tools"
+            tools:replace="android:label"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity android:name="com.linphone.addressbook.view.EditContactImpl"/>
         <activity android:name="com.linphone.addressbook.view.ContactDetail"/>
-        <!--        <activity android:name="com.linphone.login.view.LoginPhoneActivity">-->
-        <!--            <intent-filter>-->
-        <!--                <action android:name="android.intent.action.MAIN"/>-->
-        <!--                <category android:name="android.intent.category.LAUNCHER"/>-->
-        <!--            </intent-filter>-->
-        <!--        </activity>-->
-        <activity android:name="com.linphone.login.view.LoginPhoneActivity"/>
-        <activity android:name="com.linphone.addressbook.view.AddressBookImpl">
+        <activity android:name="com.linphone.login.view.LoginPhoneActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+    <activity android:name="com.linphone.addressbook.view.AddressBookImpl"/>
         <activity android:name=".call.view.Dial"/>
         <activity android:name=".call.view.CallActivity"/>
         <activity android:name=".call.view.CallOutgoingActivity"/>

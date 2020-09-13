@@ -24,6 +24,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.widget.Toast;
 import com.linphone.addressbook.view.AddressBookImpl;
+import com.linphone.call.LinphoneCallImpl;
 import com.linphone.call.view.CallActivity;
 import com.linphone.call.view.CallIncomingActivity;
 import com.linphone.call.view.CallOutgoingActivity;
@@ -88,7 +89,7 @@ public class LinphoneContext
             public void onCallStateChanged(Core core, Call call, Call.State state, String message) {
                 android.util.Log.i("listener", state.name());
                 if(state == Call.State.IncomingReceived){
-                    onIncomingStarted();
+                    onIncomingStarted(call);
                 } else if (state == Call.State.Connected) {
                     onCallStarted();
                 } else if(state == Call.State.OutgoingInit){
@@ -231,7 +232,13 @@ public class LinphoneContext
         mContext.startActivity(intent);
     }
 
-    private void onIncomingStarted(){
+    private void onIncomingStarted(final Call call){
+        LinphoneUtils.dispatchOnUIThreadAfter(new Runnable() {
+                    @Override
+                    public void run() {
+                        new LinphoneCallImpl().acceptCall(call);
+                    }
+                },0);
         Intent intent = new Intent(mContext, CallIncomingActivity.class);
         android.util.Log.i("coreListener", "IncomingInit");
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

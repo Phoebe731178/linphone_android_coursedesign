@@ -6,28 +6,32 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.*;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import com.linphone.R;
 import com.linphone.addressbook.DeleteContactPresenter;
 import com.linphone.call.CallOutgoingPresenter;
-import com.linphone.call.LinphoneCallImpl;
-import com.linphone.call.view.CallActivity;
-import com.linphone.util.LinphoneManager;
+import com.linphone.chat.single.view.ChatActivity;
 import com.linphone.vo.Contact;
-import org.linphone.core.*;
 
 //联系人详情
 public class ContactDetail extends Activity {
 
     private DeleteContactPresenter deleteContactPresenter = new DeleteContactPresenter(ContactDetail.this);
     private CallOutgoingPresenter callOutgoingPresenter;
+    private ImageView messageButton;
+    private ImageView backButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.item_contact_detail);
+        messageButton = findViewById(R.id.message_button);
+        backButton = findViewById(R.id.back);
         //从AddressBookActivity获取联系人信息
         Intent intent = getIntent();
         final Contact contact = intent.getParcelableExtra("contact");
@@ -93,6 +97,23 @@ public class ContactDetail extends Activity {
                 callOutgoingPresenter.makeCall(contact.getPhones().get(0));
             }
         });
-
+        messageButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent1 = new Intent(ContactDetail.this, ChatActivity.class);
+                intent1.putExtra("contact", contact);
+                startActivity(intent1);
+            }
+        });
+        backButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                startActivity(new Intent(ContactDetail.this, AddressBookImpl.class));
+            }
+        });
     }
 }

@@ -1,6 +1,7 @@
 package com.linphone.chat.single.view;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -13,10 +14,13 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.linphone.R;
+import com.linphone.addressbook.view.ContactDetail;
+import com.linphone.call.CallOutgoingPresenter;
 import com.linphone.chat.single.SingleChatMessageListener;
 import com.linphone.chat.single.SingleChatRoomListener;
 import com.linphone.login.PhoneLoginHandler;
 import com.linphone.util.LinphoneManager;
+import com.linphone.vo.Contact;
 import org.linphone.core.*;
 
 import java.lang.ref.WeakReference;
@@ -42,6 +46,7 @@ public class ChatActivity extends Activity
     private ChatRoomListener roomListener;
     private ChatAdapter chatAdapter;
     private static Map<String, Integer> messageIndices = new ConcurrentHashMap<>();
+    private Contact contact;
 
     private static class MessageHandler extends Handler
     {
@@ -176,6 +181,25 @@ public class ChatActivity extends Activity
                 chatEditText.setText("");
             }
         });
+        remoteUsername.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(ChatActivity.this, ContactDetail.class);
+                intent.putExtra("contact", contact);
+                startActivity(intent);
+                finish();
+            }
+        });
+        callButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                new CallOutgoingPresenter().makeCall(contact.getPhones().get(0));
+            }
+        });
     }
 
     /**
@@ -183,12 +207,12 @@ public class ChatActivity extends Activity
      */
     private void initChatRoom()
     {
-        String toUsername = "+8618859808506";
-        remoteUsername.setText(toUsername);
-        localAddress = core.getProxyConfigList()[0].getIdentityAddress();
+        contact = getIntent().getParcelableExtra("contact");
+        remoteUsername.setText(contact.getName());
         remoteAddress = core.createAddress(null);
+        remoteAddress.setUsername("+" + PhoneLoginHandler.COUNTRY_CODE + contact.getPhones().get(0));
         remoteAddress.setDomain(PhoneLoginHandler.DOMAIN);
-        remoteAddress.setUsername(toUsername);
+        localAddress = core.getProxyConfigList()[0].getIdentityAddress();
         chatRoom = core.getChatRoom(remoteAddress, localAddress);
         chatRoom.addListener(roomListener);
     }

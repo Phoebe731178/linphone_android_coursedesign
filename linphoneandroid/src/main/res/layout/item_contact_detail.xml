@@ -140,7 +140,7 @@
                                     android:layout_width="60dp"
                                     android:layout_height="60dp" android:background="@drawable/message"
                                     android:layout_gravity="center_horizontal"
-                                    android:id="@+id/message"/>
+                                    android:id="@+id/message_button"/>
                         </LinearLayout>
                     </LinearLayout>
 

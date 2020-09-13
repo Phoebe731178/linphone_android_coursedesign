@@ -13,8 +13,8 @@ public class CallOutgoingPresenter {
     }
 
 
-    public void makeCall(Contact contact){
-        callOutgoingActivity.callOut(contact);
+    public void makeCall(String SIPAddress){
+        callOutgoingActivity.callOut(SIPAddress);
     }
 
 }

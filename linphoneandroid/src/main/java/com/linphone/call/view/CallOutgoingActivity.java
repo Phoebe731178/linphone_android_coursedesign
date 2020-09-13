@@ -52,9 +52,9 @@ public class CallOutgoingActivity extends Activity {
 
     }
 
-    public void callOut(Contact contact){
+    public void callOut(String SIPAddress){
 //        linphoneCall.newCall("sip:+8618965057688@sip.linphone.org");
-        new LinphoneCallImpl().newCall(contact);
+        new LinphoneCallImpl().newCall(SIPAddress);
     }
 
     private void lookUpCall(){

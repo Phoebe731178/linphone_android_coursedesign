@@ -8,18 +8,10 @@ import org.linphone.core.*;
 public class LinphoneCallImpl implements LinphoneCall{
 
     private Call mCall;
-    public static Contact contactDetail;
 
     @Override
-    public void newCall(Contact contact){
-        String SIPAddress = "";
-        contactDetail = contact;
-        try{
-            SIPAddress = contact.getPhones().get(0);
-        }
-        catch (Exception e){
-            Log.i("newCall", "contact sip is null");
-        }
+    public void newCall(String SIPAddress){
+
         android.util.Log.i("Call", "make a call");
         Core core = LinphoneManager.getCore();
         if(!isSIP(SIPAddress)) {
@@ -53,9 +45,6 @@ public class LinphoneCallImpl implements LinphoneCall{
         }
         if(mCall != null) {
             mCall.terminate();
-        }
-        if(contactDetail != null) {
-            contactDetail.destroy();
         }
     }
 

@@ -32,7 +32,7 @@ public class ContactDetail extends Activity {
         Intent intent = getIntent();
         final Contact contact = intent.getParcelableExtra("contact");
         final TextView name = findViewById(R.id.contactName);
-        TextView phonenumber = findViewById(R.id.phonenumber);
+        final TextView phonenumber = findViewById(R.id.phonenumber);
         //填充联系人信息
         name.setText(contact.getName());
         if(contact.getPhones() != null){
@@ -90,7 +90,7 @@ public class ContactDetail extends Activity {
         callButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                callOutgoingPresenter.makeCall(contact);
+                callOutgoingPresenter.makeCall(contact.getPhones().get(0));
             }
         });
 

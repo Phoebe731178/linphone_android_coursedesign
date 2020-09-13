@@ -189,13 +189,12 @@
                 android:orientation="vertical">
 
             <ImageButton
-                    android:id="@+id/imageButton5"
+                    android:id="@+id/dialCall"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:background="@drawable/answer2"
-                    android:onClick="call"/>
+                    android:background="@drawable/answer2"/>
 
         </LinearLayout>
 

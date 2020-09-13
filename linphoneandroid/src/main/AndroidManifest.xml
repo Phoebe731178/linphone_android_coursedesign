@@ -19,17 +19,12 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-    <activity android:name="com.linphone.addressbook.view.AddressBookImpl"/>
+        <activity android:name="com.linphone.addressbook.view.AddressBookImpl"/>
         <activity android:name=".call.view.Dial"/>
         <activity android:name=".call.view.CallActivity"/>
         <activity android:name=".call.view.CallOutgoingActivity"/>
         <activity android:name=".call.view.CallIncomingActivity"/>
-        <!--            <intent-filter>-->
-        <!--                <action android:name="android.intent.action.MAIN"/>-->
-        <!--                <category android:name="android.intent.category.LAUNCHER"/>-->
-        <!--            </intent-filter>-->
-        <!--        </activity>-->
-
+        <activity android:name=".chat.single.view.ChatActivity"/>
     </application>
     <uses-permission android:name="android.permission.READ_CALL_LOG"/>
     <uses-permission android:name="android.permission.WRITE_CALL_LOG"/>

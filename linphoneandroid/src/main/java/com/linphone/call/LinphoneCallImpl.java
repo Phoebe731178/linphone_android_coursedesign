@@ -44,7 +44,9 @@ public class LinphoneCallImpl implements LinphoneCall{
                     || Call.State.OutgoingProgress == cstate
                     || Call.State.OutgoingRinging == cstate
                     || Call.State.Connected == cstate
-                    || Call.State.StreamsRunning == cstate){
+                    || Call.State.StreamsRunning == cstate
+                    || Call.State.IncomingReceived == call.getState()
+                    || Call.State.IncomingEarlyMedia == call.getState()){
                 mCall = call;
                 break;
             }

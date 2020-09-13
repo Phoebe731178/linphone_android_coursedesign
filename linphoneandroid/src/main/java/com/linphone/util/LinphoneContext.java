@@ -233,12 +233,6 @@ public class LinphoneContext
     }
 
     private void onIncomingStarted(final Call call){
-        LinphoneUtils.dispatchOnUIThreadAfter(new Runnable() {
-                    @Override
-                    public void run() {
-                        new LinphoneCallImpl().acceptCall(call);
-                    }
-                },0);
         Intent intent = new Intent(mContext, CallIncomingActivity.class);
         android.util.Log.i("coreListener", "IncomingInit");
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

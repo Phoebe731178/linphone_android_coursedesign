@@ -97,6 +97,28 @@ public class AddressBookModelImpl implements AddressBookModel {
         return result;
     }
 
+    @Override
+    public String findNameFromPhone(String phone){
+        if(phone.contains("+86")){
+            phone = phone.substring(3);
+            Log.i("getContact", phone);
+        }
+        Uri uri = Uri.parse("content://com.android.contacts/data/phones");
+        String[] column = new String[] {ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME};
+        Cursor cursor = context.getContentResolver().query(uri,
+                column, ContactsContract.CommonDataKinds.Phone.NUMBER + "=?", new String[]{phone}, null);
+        try{
+            cursor.moveToFirst();
+            String name = cursor.getString(0);
+            Log.i("getContact", name);
+            return name;
+        }
+        catch (Exception e){
+            Log.i("callActivity", phone + " is not found");
+        }
+        return null;
+    }
+
     // 查询通讯录联系人SIP地址
     public void setContactAddress(){
         Uri uri = Uri.parse("content://com.android.contacts/data");

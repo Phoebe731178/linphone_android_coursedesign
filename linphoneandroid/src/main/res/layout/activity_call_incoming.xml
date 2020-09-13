@@ -61,7 +61,7 @@
                         android:layout_height="60dp"
                         android:background="@drawable/answer2"
                         android:layout_gravity="center_horizontal"
-                        android:id="@+id/answer"/>
+                        android:id="@+id/callIncomingAnswer"/>
             </LinearLayout>
             <LinearLayout
                     android:layout_width="match_parent"

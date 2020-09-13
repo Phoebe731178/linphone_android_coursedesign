@@ -3,6 +3,8 @@ package com.linphone.chat.single.view;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -18,10 +20,15 @@ import java.util.List;
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>
 {
     private List<ChatMessage> messages;
+    private Animation animation;
 
     public ChatAdapter(List<ChatMessage> messages)
     {
         this.messages = messages;
+        animation = new RotateAnimation(0.0f, 359.9f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        animation.setFillAfter(true);
+        animation.setDuration(1000);
+        animation.setRepeatCount(Animation.INFINITE);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder
@@ -66,9 +73,17 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>
             holder.chatRightTextView.setText(message.getTextContent());
             switch (message.getState())
             {
-                case NotDelivered: holder.imdnRight.setImageResource(R.drawable.imdn_error); break;
-                case InProgress: holder.imdnRight.setImageResource(R.drawable.imdn_loading); break;
-                default: holder.imdnRight.setVisibility(View.INVISIBLE);
+                case NotDelivered:
+                    holder.imdnRight.clearAnimation();
+                    holder.imdnRight.setImageResource(R.drawable.imdn_error);
+                    break;
+                case InProgress:
+                    holder.imdnRight.setImageResource(R.drawable.imdn_loading);
+                    holder.imdnRight.startAnimation(animation);
+                    break;
+                default:
+                    holder.imdnRight.clearAnimation();
+                    holder.imdnRight.setVisibility(View.INVISIBLE);
             }
         }
         else
@@ -80,9 +95,17 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>
             holder.chatLeftTextView.setText(message.getTextContent());
             switch (message.getState())
             {
-                case NotDelivered: holder.imdnLeft.setImageResource(R.drawable.imdn_error); break;
-                case InProgress: holder.imdnLeft.setImageResource(R.drawable.imdn_loading); break;
-                default: holder.imdnLeft.setVisibility(View.INVISIBLE);
+                case NotDelivered:
+                    holder.imdnLeft.clearAnimation();
+                    holder.imdnLeft.setImageResource(R.drawable.imdn_error);
+                    break;
+                case InProgress:
+                    holder.imdnLeft.setImageResource(R.drawable.imdn_loading);
+                    holder.imdnLeft.startAnimation(animation);
+                    break;
+                default:
+                    holder.imdnLeft.clearAnimation();
+                    holder.imdnLeft.setVisibility(View.INVISIBLE);
             }
         }
     }

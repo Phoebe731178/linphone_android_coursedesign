@@ -13,4 +13,6 @@ public interface AddressBookModel {
     void deleteContactFromMachine(String phone);
     void deleteContactByContactID(String contactID);
     void updateContactToMachine(String contactID, String old, String _new, AddressBookModelImpl.UpdateType updateType);
+    String findNameFromPhone(String phone);
+
 }

@@ -32,7 +32,13 @@ public class SingleChatMessageListener implements ChatMessageListener
     @Override
     public void onMsgStateChanged(ChatMessage message, ChatMessage.State state)
     {
-        int position = getMessageIndex(message, ChatActivity.getMessages());
+        int position = ChatActivity.getMessageIndex(message.getMessageId());
+        if (position == -1)
+        {
+            System.out.println("Message position cache missed");
+            position = getMessageIndex(message, ChatActivity.getMessages());
+            ChatActivity.addMessageIndex(message.getMessageId(), position);
+        }
         System.out.println(message.getMessageId());
         Bundle bundle = new Bundle();
         bundle.putInt("position", position);

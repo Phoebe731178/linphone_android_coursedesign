@@ -1,10 +1,8 @@
 package com.linphone.chat.single;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.widget.Toast;
 import com.linphone.chat.single.view.ChatActivity;
 import org.linphone.core.*;
 

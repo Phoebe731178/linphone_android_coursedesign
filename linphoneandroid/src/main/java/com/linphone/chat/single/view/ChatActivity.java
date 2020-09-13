@@ -22,6 +22,8 @@ import org.linphone.core.*;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class ChatActivity extends Activity
 {
@@ -39,6 +41,7 @@ public class ChatActivity extends Activity
     private ChatRoom chatRoom;
     private ChatRoomListener roomListener;
     private ChatAdapter chatAdapter;
+    private static Map<String, Integer> messageIndices = new ConcurrentHashMap<>();
 
     private static class MessageHandler extends Handler
     {
@@ -95,6 +98,22 @@ public class ChatActivity extends Activity
                 mActivity.chatAdapter.notifyItemChanged(ChatActivity.messages.size() - 1);
             }
         }
+    }
+
+    public static void addMessageIndex(String messageId, Integer index)
+    {
+        if (index >= 0)
+        {
+            messageIndices.put(messageId, index);
+        }
+    }
+
+    public static Integer getMessageIndex(String messageId)
+    {
+        Integer index = messageIndices.get(messageId);
+        if (index == null)
+            return -1;
+        else return index;
     }
 
     public static Handler getMessageHandler()
@@ -170,11 +189,6 @@ public class ChatActivity extends Activity
         remoteAddress = core.createAddress(null);
         remoteAddress.setDomain(PhoneLoginHandler.DOMAIN);
         remoteAddress.setUsername(toUsername);
-        /*chatRoom = core.searchChatRoom(null, localAddress, null, new Address[]{localAddress, remoteAddress});
-        if (chatRoom == null)
-        {
-            chatRoom = core.createChatRoom(null, localAddress, new Address[]{localAddress, remoteAddress});
-        }*/
         chatRoom = core.getChatRoom(remoteAddress, localAddress);
         chatRoom.addListener(roomListener);
     }
@@ -198,6 +212,7 @@ public class ChatActivity extends Activity
     {
         super.onStop();
         messages.clear();
+        messageIndices.clear();
         messageHandler.removeCallbacksAndMessages(null);
         roomHandler.removeCallbacksAndMessages(null);
     }

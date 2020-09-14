@@ -25,6 +25,7 @@
         <activity android:name=".call.view.CallOutgoingActivity"/>
         <activity android:name=".call.view.CallIncomingActivity"/>
         <activity android:name=".chat.single.view.ChatActivity"/>
+        <activity android:name=".addressbook.view.InsertContact"/>
     </application>
     <uses-permission android:name="android.permission.READ_CALL_LOG"/>
     <uses-permission android:name="android.permission.WRITE_CALL_LOG"/>

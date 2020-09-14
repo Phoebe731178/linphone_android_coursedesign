@@ -261,11 +261,12 @@ public class LinphoneContext
                     if(activity.getClass().getName().equals("com.linphone.call.view.CallActivity")
                                     || activity.getClass().getName().equals("com.linphone.call.view.CallOutgoingActivity")
                                     || activity.getClass().getName().equals("com.linphone.call.view.CallIncomingActivity")){
+                        activity.finish();
                         continue;
                     }
                     if(activity.getClass().getName().equals("com.linphone.addressbook.view.ContactDetail")){
                         String phone = call.getRemoteAddress().getUsername().substring(3);
-                        String name = new AddressBookModelImpl(mContext).findNameFromPhone(phone);
+                        String name = new AddressBookModelImpl(mContext).findNameFromPhone(phone).getName();
                         Contact contact = new Contact(name, Arrays.asList(phone));
                         intent = new Intent(mContext, ContactDetail.class);
                         intent.putExtra("contact", contact);

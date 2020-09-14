@@ -98,20 +98,22 @@ public class AddressBookModelImpl implements AddressBookModel {
     }
 
     @Override
-    public String findNameFromPhone(String phone){
+    public Contact findNameFromPhone(String phone){
         if(phone.contains("+86")){
             phone = phone.substring(3);
-            Log.i("getContact", phone);
         }
+        Log.i("getContact", phone);
         Uri uri = Uri.parse("content://com.android.contacts/data/phones");
-        String[] column = new String[] {ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME};
+        String[] column = new String[] {ContactsContract.CommonDataKinds.Phone.CONTACT_ID, ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME};
         Cursor cursor = context.getContentResolver().query(uri,
                 column, ContactsContract.CommonDataKinds.Phone.NUMBER + "=?", new String[]{phone}, null);
         try{
             cursor.moveToFirst();
-            String name = cursor.getString(0);
+            String contactID = cursor.getString(0);
+            String name = cursor.getString(1);
             Log.i("getContact", name);
-            return name;
+            Contact contact = new Contact(contactID, name, Arrays.asList(phone));
+            return contact;
         }
         catch (Exception e){
             Log.i("callActivity", phone + " is not found");

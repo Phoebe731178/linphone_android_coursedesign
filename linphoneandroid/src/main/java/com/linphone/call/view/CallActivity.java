@@ -3,6 +3,7 @@ package com.linphone.call.view;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -46,7 +47,7 @@ public class CallActivity extends Activity {
         try {
             String phone = mCall.getRemoteAddress().getUsername().substring(3);
             Log.i("getContact", phone);
-            String name = new AddressBookModelImpl(this).findNameFromPhone(phone);
+            String name = new AddressBookModelImpl(this).findNameFromPhone(phone).getName();
             Log.i("getContact", name);
             callName.setText(name);
             callPhone.setText(phone);
@@ -60,4 +61,13 @@ public class CallActivity extends Activity {
             }
         });
     }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK || keyCode == KeyEvent.KEYCODE_HOME){
+            new LinphoneCallImpl().callDecline();
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
 }

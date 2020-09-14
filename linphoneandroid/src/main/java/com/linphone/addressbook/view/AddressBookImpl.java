@@ -1,6 +1,7 @@
 package com.linphone.addressbook.view;
 
 import android.util.Log;
+import android.widget.ImageView;
 import com.linphone.R;
 import android.app.Activity;
 import android.content.Intent;
@@ -35,6 +36,14 @@ public class AddressBookImpl extends Activity implements AddressBook {
         setContentView(R.layout.activity_address_listview);
         addressBookPresenter.showAddressBook();
         addressBookPresenter.observers();
+        ImageView addContact = findViewById(R.id.add_contacts);
+        addContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AddressBookImpl.this, InsertContact.class);
+                startActivity(intent);
+            }
+        });
 //        new AddressBookModelImpl(this).insertContactToMachine(new Contact("yahoo", Arrays.asList("1(234)521-432")));
 //        new AddressBookModelImpl(this).updateContactToMachine("1", "133", "1", AddressBookModelImpl.UpdateType.PHONE);
 //        new LinphoneCallImpl().newCall("sip:+8618965057688@sip.linphone.org");

@@ -13,7 +13,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.linphone.R;
 import com.linphone.addressbook.AddressBookModelImpl;
 import com.linphone.addressbook.EditContactPresenter;
+import com.linphone.vo.Contact;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class EditContactImpl extends AppCompatActivity implements EditContact, TextWatcher {
@@ -42,8 +44,8 @@ public class EditContactImpl extends AppCompatActivity implements EditContact, T
 
     private void initViews()
     {
-        et_name = findViewById(R.id.contactName);
-        editphone = findViewById(R.id.editphone);
+        et_name = findViewById(R.id.editName);
+        editphone = findViewById(R.id.editPhone);
         et_name.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -90,7 +92,7 @@ public class EditContactImpl extends AppCompatActivity implements EditContact, T
         editok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent1 = new Intent(EditContactImpl.this,AddressBookImpl.class);
+                Intent intent1 = new Intent(EditContactImpl.this,ContactDetail.class);
                 //更新联系人姓名
                 String newName = et_name.getText().toString();
                 //更新联系人电话
@@ -105,6 +107,7 @@ public class EditContactImpl extends AppCompatActivity implements EditContact, T
                     case PHONE:
                         editContactPresenter.editContact(id,phone, newPhone,AddressBookModelImpl.UpdateType.PHONE);
                 }
+                intent1.putExtra("contact", new Contact(newName, Arrays.asList(newPhone)));
                 startActivity(intent1);
             }
         });

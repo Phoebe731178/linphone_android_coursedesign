@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import com.linphone.R;
+import com.linphone.addressbook.AddressBookModelImpl;
 import com.linphone.addressbook.DeleteContactPresenter;
 import com.linphone.call.CallOutgoingPresenter;
 import com.linphone.chat.single.view.ChatActivity;
@@ -34,8 +35,14 @@ public class ContactDetail extends Activity {
         backButton = findViewById(R.id.back);
         //从AddressBookActivity获取联系人信息
         Intent intent = getIntent();
-        final Contact contact = intent.getParcelableExtra("contact");
-        final TextView name = findViewById(R.id.contactName);
+        Contact contact = intent.getParcelableExtra("contact");
+        if(contact.getContactID() == null){
+             contact = new AddressBookModelImpl(this).findNameFromPhone(contact.getPhones().get(0));
+        }
+        final String finalID = contact.getContactID();
+        final String finalName = contact.getName();
+        final String finalPhone = contact.getPhones().get(0);
+        final TextView name = findViewById(R.id.contactDetailName);
         final TextView phonenumber = findViewById(R.id.phonenumber);
         //填充联系人信息
         name.setText(contact.getName());
@@ -49,16 +56,17 @@ public class ContactDetail extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ContactDetail.this, EditContactImpl.class);
-                intent.putExtra("contact_name",contact.getName());
-                intent.putExtra("contact_phone",contact.getPhones().get(0));
-                intent.putExtra("contact_id",contact.getContactID());
-                Log.i("tag2", "contact_name" + contact.getName());
-                Log.i("tag2", "contact_phone" +contact.getPhones().get(0));
+                intent.putExtra("contact_name", finalName);
+                intent.putExtra("contact_phone",finalPhone);
+                intent.putExtra("contact_id", finalID);
+                Log.i("tag2", "contact_name" + finalName);
+                Log.i("tag2", "contact_phone" + finalPhone);
                 startActivity(intent);
             }
         });
 
         ImageView bt_delete = findViewById(R.id.deleteContact);
+        final Contact finalContact = contact;
         bt_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,7 +80,7 @@ public class ContactDetail extends Activity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Toast.makeText(ContactDetail.this, "删除成功", Toast.LENGTH_SHORT).show();
-                        deleteContactPresenter.deleteContact(contact);
+                        deleteContactPresenter.deleteContact(finalContact);
                         Intent intent1 = new Intent(ContactDetail.this,AddressBookImpl.class);
                         startActivity(intent1);
                     }
@@ -94,7 +102,7 @@ public class ContactDetail extends Activity {
         callButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                callOutgoingPresenter.makeCall(contact.getPhones().get(0));
+                callOutgoingPresenter.makeCall(finalPhone);
             }
         });
         messageButton.setOnClickListener(new View.OnClickListener()
@@ -103,7 +111,7 @@ public class ContactDetail extends Activity {
             public void onClick(View v)
             {
                 Intent intent1 = new Intent(ContactDetail.this, ChatActivity.class);
-                intent1.putExtra("contact", contact);
+                intent1.putExtra("contact", finalContact);
                 startActivity(intent1);
             }
         });

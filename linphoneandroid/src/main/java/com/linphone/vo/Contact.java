@@ -7,8 +7,8 @@ import java.util.List;
 
 //联系人实体类
 public class Contact implements Parcelable {
-    private String contactID;
-    private String name;
+    private String contactID = null;
+    private String name = null;
     private List<String> phones = null;
 
     public Contact(){ }

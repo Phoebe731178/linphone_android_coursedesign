@@ -36,9 +36,8 @@ public class ContactDetail extends Activity {
         //从AddressBookActivity获取联系人信息
         Intent intent = getIntent();
         Contact contact = intent.getParcelableExtra("contact");
-        if(contact.getContactID() == null){
-             contact = new AddressBookModelImpl(this).findNameFromPhone(contact.getPhones().get(0));
-        }
+        contact = new AddressBookModelImpl(ContactDetail.this).findNameFromPhone(contact.getPhones().get(0));
+
         final String finalID = contact.getContactID();
         final String finalName = contact.getName();
         final String finalPhone = contact.getPhones().get(0);

@@ -5,6 +5,9 @@ import android.database.ContentObserver;
 import android.net.Uri;
 import android.os.Handler;
 import android.content.Context;
+import com.linphone.vo.Contact;
+
+import java.util.Map;
 
 //通讯录
 public class AddressBookPresenter {
@@ -12,6 +15,7 @@ public class AddressBookPresenter {
     AddressBookModel addressBookModel;
     AddressBook addressBook;
     Context context;
+    public static Map<String, Contact> addressBookMap;
 
     public AddressBookPresenter(Context context, AddressBook addressBook){
         this.addressBook = addressBook;

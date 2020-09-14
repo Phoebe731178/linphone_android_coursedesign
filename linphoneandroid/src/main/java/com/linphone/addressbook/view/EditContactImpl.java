@@ -22,14 +22,8 @@ public class EditContactImpl extends AppCompatActivity implements EditContact, T
 
     EditContactPresenter editContactPresenter = new EditContactPresenter(EditContactImpl.this, this);
 
-    private LinearLayout mRootLayout;
-    private List<LinearLayout> mLayoutList;
-    private List<EditText> mPhoneList;
-    private ImageView mAdd;
-    private ImageView mDelete;
     private EditText et_name;
     private EditText editphone;
-    private EditText editSIP;
     private AddressBookModelImpl.UpdateType updateType;
 
     @Override
@@ -103,9 +97,11 @@ public class EditContactImpl extends AppCompatActivity implements EditContact, T
                 Log.i("EditContactNameAndPhone ", updateType + "");
                 switch (updateType){
                     case NAME:
+                        Log.i("updateContact", "update name");
                         editContactPresenter.editContact(id,name,newName, AddressBookModelImpl.UpdateType.NAME);
                     case PHONE:
-                        editContactPresenter.editContact(id,phone, newPhone,AddressBookModelImpl.UpdateType.PHONE);
+                        Log.i("updateContact", "update phone");
+                        editContactPresenter.editContact(id,phone, newPhone, AddressBookModelImpl.UpdateType.PHONE);
                 }
                 intent1.putExtra("contact", new Contact(newName, Arrays.asList(newPhone)));
                 startActivity(intent1);

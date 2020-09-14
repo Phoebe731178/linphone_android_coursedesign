@@ -37,6 +37,7 @@ public class AddressBookModelImpl implements AddressBookModel {
      */
     private Context context;
     private Map<String, Contact> addressBookMap = new LinkedHashMap<>();
+    private List<Contact> contactList = new ArrayList<>();
     public enum UpdateType {NAME, PHONE, SIP}    //更新的种类
 
     public AddressBookModelImpl(Context context){
@@ -49,6 +50,7 @@ public class AddressBookModelImpl implements AddressBookModel {
         //查询本机数据库
         try {
             addressBookMap.clear();
+            AddressBookPresenter.addressBookMap.clear();
         }
         catch (Exception ignore){
         }
@@ -77,7 +79,15 @@ public class AddressBookModelImpl implements AddressBookModel {
         }
         setContactAddress();
         addressBookMap = sortNameList();
+        AddressBookPresenter.addressBookMap = addressBookMap;
+        setContactList();
         return addressBookMap;
+    }
+
+    public void setContactList(){
+        for(Map.Entry<String, Contact> entry: AddressBookPresenter.addressBookMap.entrySet()){
+            contactList.add(entry.getValue());
+        }
     }
 
     public Map<String, Contact> sortNameList(){
@@ -99,25 +109,40 @@ public class AddressBookModelImpl implements AddressBookModel {
 
     @Override
     public Contact findNameFromPhone(String phone){
-        if(phone.contains("+86")){
-            phone = phone.substring(3);
+        for(Contact contact: contactList){
+            Log.i("addressBook", contact.getName());
         }
-        Log.i("getContact", phone);
-        Uri uri = Uri.parse("content://com.android.contacts/data/phones");
-        String[] column = new String[] {ContactsContract.CommonDataKinds.Phone.CONTACT_ID, ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME};
-        Cursor cursor = context.getContentResolver().query(uri,
-                column, ContactsContract.CommonDataKinds.Phone.NUMBER + "=?", new String[]{phone}, null);
-        try{
-            cursor.moveToFirst();
-            String contactID = cursor.getString(0);
-            String name = cursor.getString(1);
-            Log.i("getContact", name);
-            Contact contact = new Contact(contactID, name, Arrays.asList(phone));
-            return contact;
+        Log.i("findNameFromPhone", phone);
+//        if(phone.contains("+86")){
+//            phone = phone.substring(3);
+//        }
+        Log.i("findNameFromPhone", phone);
+//        Uri uri = Uri.parse("content://com.android.contacts/data/phones");
+//        String[] column = new String[] {ContactsContract.CommonDataKinds.Phone.CONTACT_ID, ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME};
+//        Cursor cursor = context.getContentResolver().query(uri,
+//                column, ContactsContract.CommonDataKinds.Phone.NUMBER + "=?", new String[]{phone}, null);
+//        try{
+//            cursor.moveToFirst();
+//            String contactID = cursor.getString(0);
+//            String name = cursor.getString(1);
+//            Log.i("getContact", name);
+//            Contact contact = new Contact(contactID, name, Arrays.asList(phone));
+//            return contact;
+//        }
+//        catch (Exception e){
+//            Log.i("callActivity", phone + " is not found");
+//        }
+        Contact foundContact = new Contact();
+        for(Map.Entry<String, Contact> entry: AddressBookPresenter.addressBookMap.entrySet()){
+            Log.i("findNameFromPhone", entry.getValue().getName() + " " + entry.getValue().getPhones().get(0));
+            if(entry.getValue().getPhones().get(0).equals(phone)){
+                foundContact.setContactID(entry.getValue().getContactID());
+                foundContact.setName(entry.getValue().getName());
+                foundContact.setPhones(entry.getValue().getPhones());
+                return foundContact;
+            }
         }
-        catch (Exception e){
-            Log.i("callActivity", phone + " is not found");
-        }
+        Log.i("findNameFromPhone", phone + " cannot be found");
         return null;
     }
 

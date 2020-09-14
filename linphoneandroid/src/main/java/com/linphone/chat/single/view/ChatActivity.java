@@ -25,6 +25,7 @@ import org.linphone.core.*;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -215,6 +216,16 @@ public class ChatActivity extends Activity
         localAddress = core.getProxyConfigList()[0].getIdentityAddress();
         chatRoom = core.getChatRoom(remoteAddress, localAddress);
         chatRoom.addListener(roomListener);
+        messages.addAll(Arrays.asList(chatRoom.getHistory(0)));
+        for (int i = 0; i < messages.size(); i++)
+        {
+            ChatMessage message = messages.get(i);
+            if (!message.getMessageId().equals(""))
+            {
+                addMessageIndex(message.getMessageId(), i);
+            }
+        }
+        chatAdapter.notifyDataSetChanged();
     }
 
     /**

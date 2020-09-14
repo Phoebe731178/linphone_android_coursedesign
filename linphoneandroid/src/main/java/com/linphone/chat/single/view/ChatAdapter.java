@@ -73,6 +73,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>
             holder.chatRightTextView.setVisibility(View.VISIBLE);
             holder.userRightImageView.setVisibility(View.VISIBLE);
             holder.chatRightTextView.setText(message.getTextContent());
+            holder.imdnLeft.setVisibility(View.GONE);
             switch (message.getState())
             {
                 case NotDelivered:
@@ -95,6 +96,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>
             holder.chatRightTextView.setVisibility(View.GONE);
             holder.userRightImageView.setVisibility(View.GONE);
             holder.chatLeftTextView.setText(message.getTextContent());
+            holder.imdnRight.setVisibility(View.GONE);
             switch (message.getState())
             {
                 case NotDelivered:

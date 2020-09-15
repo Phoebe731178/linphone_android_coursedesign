@@ -98,6 +98,7 @@ public class ChatRecordActivity extends Activity
                 lock.writeLock().lock();
                 mActivity.adapter.notifyDataSetChanged();
                 lock.writeLock().unlock();
+                return;
             }
             switch (msg.what)
             {
@@ -185,7 +186,6 @@ public class ChatRecordActivity extends Activity
                 new RefreshThread(ChatRecordActivity.this).start();
             }
         });
-        new RefreshThread(ChatRecordActivity.this).start();
     }
 
     /**
@@ -196,23 +196,24 @@ public class ChatRecordActivity extends Activity
         threadLock.readLock().lock();
         if (isThreadRunning)
         {
+            threadLock.readLock().unlock();
             return;
         }
         threadLock.readLock().unlock();
-        System.out.println("thread running");
         threadLock.writeLock().lock();
         isThreadRunning = true;
         threadLock.writeLock().unlock();
         lock.writeLock().lock();
         records.clear();
-        /*Message message1 = new Message();
+        Message message1 = new Message();
         Bundle bundle1 = new Bundle();
         bundle1.putString("status", "ClearRecords");
         message1.setData(bundle1);
-        handler.sendMessage(message1);*/
+        handler.sendMessage(message1);
         lock.writeLock().unlock();
         roomIndices.clear();
         Map<String, Contact> contactMap = addressBookModel.getAddressBookInfo();
+        System.out.println("size of contact: " + contactMap.size());
         for (Map.Entry<String, Contact> entry: contactMap.entrySet())
         {
             if (isRunning)
@@ -222,6 +223,7 @@ public class ChatRecordActivity extends Activity
                 remoteAddress.setDomain(PhoneLoginHandler.DOMAIN);
                 remoteAddress.setUsername("+" + PhoneLoginHandler.COUNTRY_CODE + contact.getPhones().get(0));
                 ChatRoom chatRoom = core.getChatRoom(remoteAddress, localAddress);
+                Log.i("threadRemote", remoteAddress.getUsername());
                 if (chatRoom != null)
                 {
                     if (chatRoom.getHistorySize() > 0)
@@ -258,13 +260,14 @@ public class ChatRecordActivity extends Activity
         super.onResume();
         isRunning = true;
         Log.i("resume", "running");
-
+        new RefreshThread(ChatRecordActivity.this).start();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         isRunning = false;
+        Log.i("pause", "paused");
     }
 
     @Override

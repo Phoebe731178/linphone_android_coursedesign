@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.TextureView;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -18,10 +20,15 @@ import com.linphone.util.LinphoneManager;
 import com.linphone.vo.Contact;
 import org.linphone.core.Address;
 import org.linphone.core.Call;
+import org.linphone.core.CallParams;
+import org.linphone.core.Core;
 
 public class CallActivity extends Activity {
 
     private Call mCall;
+    private LinphoneOverlay mOverlay;
+    private WindowManager mWindowManager;
+    private TextureView mLocalPreview, mRemoteVideo;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,6 +37,9 @@ public class CallActivity extends Activity {
         TextView callName = findViewById(R.id.contactName);
         TextView callPhone = findViewById(R.id.phoneNumber);
         ImageButton drop = findViewById(R.id.hangup);
+        ImageButton video = findViewById(R.id.video);
+        mLocalPreview = findViewById(R.id.local_preview_texture);
+        mRemoteVideo = findViewById(R.id.remote_video_texture);
 
         for (Call call : LinphoneManager.getCore().getCalls()) {
             Call.State cstate = call.getState();
@@ -53,6 +63,35 @@ public class CallActivity extends Activity {
             callPhone.setText(phone);
         }
         catch (Exception ignore){}
+
+        video.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mRemoteVideo.setVisibility(View.VISIBLE);
+                mLocalPreview.setVisibility(View.VISIBLE);
+
+                mWindowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
+
+
+                Core core = LinphoneManager.getCore();
+                if ("MSAndroidOpenGLDisplay".equals(core.getVideoDisplayFilter())) {
+                    mOverlay = new LinphoneGL2JNIViewOverlay(CallActivity.this);
+                } else {
+                    mOverlay = new LinphoneTextureViewOverlay(CallActivity.this);
+                }
+                WindowManager.LayoutParams params = mOverlay.getWindowManagerLayoutParams();
+                params.x = 0;
+                params.y = 0;
+                mOverlay.addToWindowManager(mWindowManager, params);
+                core.setNativeVideoWindowId(mRemoteVideo);
+                core.setNativePreviewWindowId(mLocalPreview);
+                mCall.enableCamera(true);
+                CallParams callParams = core.createCallParams(mCall);
+                callParams.enableVideo(true);
+                callParams.setAudioBandwidthLimit(0);
+                mCall.update(callParams);
+            }
+        });
 
         drop.setOnClickListener(new View.OnClickListener() {
             @Override

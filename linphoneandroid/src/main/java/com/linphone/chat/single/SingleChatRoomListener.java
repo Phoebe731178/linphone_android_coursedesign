@@ -125,6 +125,11 @@ public class SingleChatRoomListener implements ChatRoomListener
     }
 
     @Override
+    public void onChatMessageParticipantImdnStateChanged(ChatRoom chatRoom, ChatMessage message, ParticipantImdnState state) {
+
+    }
+
+    @Override
     public void onConferenceJoined(ChatRoom chatRoom, EventLog eventLog) {
 
     }

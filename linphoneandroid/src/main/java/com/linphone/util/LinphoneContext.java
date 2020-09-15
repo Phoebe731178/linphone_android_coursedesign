@@ -96,7 +96,7 @@ public class LinphoneContext
         {
             @Override
             public void onCallStateChanged(Core core, Call call, Call.State state, String message) {
-                android.util.Log.i("listener", state.name());
+                android.util.Log.i("callStateListener", state.name());
                 if(state == Call.State.IncomingReceived){
                     onIncomingStarted(call);
                 } else if (state == Call.State.Connected) {

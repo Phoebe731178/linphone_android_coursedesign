@@ -28,17 +28,16 @@ import com.linphone.MainApplication;
 import com.linphone.addressbook.AddressBookModelImpl;
 import com.linphone.addressbook.view.AddressBookImpl;
 import com.linphone.addressbook.view.ContactDetail;
-import com.linphone.call.LinphoneCallImpl;
 import com.linphone.call.view.CallActivity;
 import com.linphone.call.view.CallIncomingActivity;
 import com.linphone.call.view.CallOutgoingActivity;
 import com.linphone.call.view.Dial;
 import com.linphone.util.compatibility.Compatibility;
+import com.linphone.util.settings.LinphonePreferences;
 import com.linphone.vo.Contact;
 import org.linphone.core.*;
 import org.linphone.core.tools.Log;
 import org.linphone.mediastream.Version;
-import com.linphone.util.settings.LinphonePreferences;
 
 import java.util.Arrays;
 import java.util.Collections;

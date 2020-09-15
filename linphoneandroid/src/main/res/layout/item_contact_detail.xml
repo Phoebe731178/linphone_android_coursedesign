@@ -143,6 +143,10 @@
                                     android:id="@+id/message_button"/>
                         </LinearLayout>
                     </LinearLayout>
+                    <Button
+                            android:text="聊天记录"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" android:id="@+id/button"/>
 
 
                 </LinearLayout>

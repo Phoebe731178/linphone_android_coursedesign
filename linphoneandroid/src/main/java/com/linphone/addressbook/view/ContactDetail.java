@@ -6,10 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import com.linphone.R;
@@ -17,6 +14,7 @@ import com.linphone.addressbook.AddressBookModelImpl;
 import com.linphone.addressbook.DeleteContactPresenter;
 import com.linphone.call.CallOutgoingPresenter;
 import com.linphone.chat.single.view.ChatActivity;
+import com.linphone.chat.view.ChatRecordActivity;
 import com.linphone.vo.Contact;
 
 //联系人详情
@@ -26,6 +24,7 @@ public class ContactDetail extends Activity {
     private CallOutgoingPresenter callOutgoingPresenter;
     private ImageView messageButton;
     private ImageView backButton;
+    private Button button;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,6 +32,13 @@ public class ContactDetail extends Activity {
         setContentView(R.layout.item_contact_detail);
         messageButton = findViewById(R.id.message_button);
         backButton = findViewById(R.id.back);
+        button = findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ContactDetail.this, ChatRecordActivity.class));
+            }
+        });
         //从AddressBookActivity获取联系人信息
         Intent intent = getIntent();
         Contact contact = intent.getParcelableExtra("contact");

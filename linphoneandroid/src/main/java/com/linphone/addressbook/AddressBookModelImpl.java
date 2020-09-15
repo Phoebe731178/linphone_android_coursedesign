@@ -80,11 +80,15 @@ public class AddressBookModelImpl implements AddressBookModel {
         setContactAddress();
         addressBookMap = sortNameList();
         AddressBookPresenter.addressBookMap = addressBookMap;
-        setContactList();
+//        setContactList();
         return addressBookMap;
     }
 
     public void setContactList(){
+        try {
+            contactList.clear();
+        }
+        catch (Exception ignore){}
         for(Map.Entry<String, Contact> entry: AddressBookPresenter.addressBookMap.entrySet()){
             contactList.add(entry.getValue());
         }
@@ -109,14 +113,14 @@ public class AddressBookModelImpl implements AddressBookModel {
 
     @Override
     public Contact findNameFromPhone(String phone){
-        for(Contact contact: contactList){
-            Log.i("addressBook", contact.getName());
-        }
-        Log.i("findNameFromPhone", phone);
-//        if(phone.contains("+86")){
-//            phone = phone.substring(3);
+//        for(Contact contact: contactList){
+//            Log.i("addressBook", contact.getName());
 //        }
-        Log.i("findNameFromPhone", phone);
+//        Log.i("findNameFromPhone", phone);
+////        if(phone.contains("+86")){
+////            phone = phone.substring(3);
+////        }
+//        Log.i("findNameFromPhone", phone);
 //        Uri uri = Uri.parse("content://com.android.contacts/data/phones");
 //        String[] column = new String[] {ContactsContract.CommonDataKinds.Phone.CONTACT_ID, ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME};
 //        Cursor cursor = context.getContentResolver().query(uri,

@@ -4,7 +4,10 @@ import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
 import com.linphone.chat.single.view.ChatActivity;
+import com.linphone.chat.view.ChatRecordActivity;
 import org.linphone.core.*;
+
+import java.util.List;
 
 public class SingleChatRoomListener implements ChatRoomListener
 {
@@ -41,7 +44,10 @@ public class SingleChatRoomListener implements ChatRoomListener
         bundle.putString("state", newState.name());
         message.setData(bundle);
         message.what = STATE_CHANGED;
-        ChatActivity.getRoomHandler().sendMessage(message);
+        if (ChatActivity.getRoomHandler() != null)
+        {
+            ChatActivity.getRoomHandler().sendMessage(message);
+        }
     }
 
     @Override
@@ -86,7 +92,22 @@ public class SingleChatRoomListener implements ChatRoomListener
         message.addListener(messageListenr);
         Log.i("ChatMessageReceived", "from: " + message.getFromAddress().asString() + ", to: " + message.getToAddress().asString());
         ChatActivity.getMessages().add(message);
-        ChatActivity.getRoomHandler().sendEmptyMessage(CHAT_MESSAGE_RECEIVED);
+        if (ChatActivity.getRoomHandler() != null)
+        {
+            ChatActivity.getRoomHandler().sendEmptyMessage(CHAT_MESSAGE_RECEIVED);
+        }
+        int index = ChatRecordActivity.getRecordIndex(chatRoom);
+        if (index != -1)
+        {
+            Message message1 = new Message();
+            message1.what = CHAT_MESSAGE_RECEIVED;
+            Bundle bundle = new Bundle();
+            bundle.putInt("position", index);
+            if (ChatRecordActivity.getHandler() != null)
+            {
+                ChatRecordActivity.getHandler().sendMessage(message1);
+            }
+        }
     }
 
     @Override
@@ -121,7 +142,22 @@ public class SingleChatRoomListener implements ChatRoomListener
         message.addListener(messageListenr);
         Log.i("ChatMessageSent", "from: " + message.getFromAddress().asString() + ", to: " + message.getToAddress().asString());
         ChatActivity.getMessages().add(message);
-        ChatActivity.getRoomHandler().sendEmptyMessage(CHAT_MESSAGE_SENT);
+        if (ChatActivity.getRoomHandler() != null)
+        {
+            ChatActivity.getRoomHandler().sendEmptyMessage(CHAT_MESSAGE_SENT);
+        }
+        int index = ChatRecordActivity.getRecordIndex(chatRoom);
+        if (index != -1)
+        {
+            Message message1 = new Message();
+            message1.what = CHAT_MESSAGE_SENT;
+            Bundle bundle = new Bundle();
+            bundle.putInt("position", index);
+            if (ChatRecordActivity.getHandler() != null)
+            {
+                ChatRecordActivity.getHandler().sendMessage(message1);
+            }
+        }
     }
 
     @Override

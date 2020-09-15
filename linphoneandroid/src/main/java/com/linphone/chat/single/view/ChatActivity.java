@@ -142,6 +142,8 @@ public class ChatActivity extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        messages.clear();
+        messageIndices.clear();
         roomListener = new SingleChatRoomListener();
         chatRecyclerView = findViewById(R.id.chat_recyclerview);
         chatEditText = findViewById(R.id.chat_editText);
@@ -216,6 +218,7 @@ public class ChatActivity extends Activity
         localAddress = core.getProxyConfigList()[0].getIdentityAddress();
         chatRoom = core.getChatRoom(remoteAddress, localAddress);
         chatRoom.addListener(roomListener);
+        chatRoom.setSubject(contact.getPhones().get(0));
         messages.addAll(Arrays.asList(chatRoom.getHistory(0)));
         for (int i = 0; i < messages.size(); i++)
         {
@@ -243,6 +246,26 @@ public class ChatActivity extends Activity
     }
 
     @Override
+    protected void onResume()
+    {
+        super.onResume();
+        chatRoom.markAsRead();
+        /*if (ChatRecordActivity.getHandler() != null)
+        {
+            int index = ChatRecordActivity.getRecordIndex(chatRoom);
+            if (index != -1)
+            {
+                Message message = new Message();
+                Bundle bundle = new Bundle();
+                bundle.putString("state", "MessageRead");
+                bundle.putInt("position", index);
+                message.setData(bundle);
+                ChatRecordActivity.getHandler().sendMessage(message);
+            }
+        }*/
+    }
+
+    @Override
     protected void onStop()
     {
         super.onStop();
@@ -250,5 +273,6 @@ public class ChatActivity extends Activity
         messageIndices.clear();
         messageHandler.removeCallbacksAndMessages(null);
         roomHandler.removeCallbacksAndMessages(null);
+        chatRoom.removeListener(roomListener);
     }
 }

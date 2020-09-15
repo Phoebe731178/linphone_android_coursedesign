@@ -1,10 +1,13 @@
 package com.linphone.addressbook;
 
+import android.os.Bundle;
+import android.os.Message;
 import com.linphone.addressbook.view.AddressBook;
 import android.database.ContentObserver;
 import android.net.Uri;
 import android.os.Handler;
 import android.content.Context;
+import com.linphone.chat.view.ChatRecordActivity;
 import com.linphone.vo.Contact;
 
 import java.util.Map;
@@ -16,6 +19,7 @@ public class AddressBookPresenter {
     AddressBook addressBook;
     Context context;
     public static Map<String, Contact> addressBookMap;
+    public static final int ON_CHANGE = 0;
 
     public AddressBookPresenter(Context context, AddressBook addressBook){
         this.addressBook = addressBook;
@@ -32,9 +36,14 @@ public class AddressBookPresenter {
     public void observers(){
         ContentObserver contentObserver = new ContentObserver(new Handler()) {
             @Override
-            public void onChange(boolean selfChange) {
+            public void onChange(boolean selfChange)
+            {
                 super.onChange(selfChange);
                 showAddressBook();
+                if (ChatRecordActivity.getHandler() != null)
+                {
+                    ChatRecordActivity.getHandler().sendEmptyMessage(ON_CHANGE);
+                }
             }
         };
         Uri uri = Uri.parse("content://com.android.contacts/contacts");

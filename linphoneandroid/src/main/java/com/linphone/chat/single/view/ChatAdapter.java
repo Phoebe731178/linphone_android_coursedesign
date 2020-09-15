@@ -65,6 +65,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>
     public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position)
     {
         ChatMessage message = messages.get(position);
+        System.out.println("position: " + position + "state: " + message.getState().name());
         Address address = LinphoneManager.getCore().getProxyConfigList()[0].getIdentityAddress();
         if (message.getFromAddress().weakEqual(address))
         {

@@ -209,7 +209,6 @@ public class MenuActivity extends Activity implements OnClickListener{
                     case R.id.ll_message:
                         //iv_message.setImageResource(R.drawable.tab_find_frd_pressed);
                         tv_message.setTextColor(0xff1B940A);
-                        //addFlagsToIntent(messageIntent);
                         startActivity(messageIntent);
 
                         break;

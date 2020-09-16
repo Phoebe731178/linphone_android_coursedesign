@@ -74,8 +74,8 @@
         <ImageButton
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                app:srcCompat="@drawable/video_online"
-                android:background="#00000000"
+
+                android:background="@drawable/open_video2"
                 android:id="@+id/video"/>
     </LinearLayout>
 

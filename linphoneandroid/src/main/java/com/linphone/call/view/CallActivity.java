@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import com.linphone.R;
 import com.linphone.addressbook.AddressBookModelImpl;
 import com.linphone.call.LinphoneCallImpl;
@@ -26,7 +27,7 @@ public class CallActivity extends Activity {
     private WindowManager mWindowManager;
     private TextureView mLocalPreview, mRemoteVideo;
     private CoreListener callListener;
-    private AlertDialog.Builder mCallUpdateDialog;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -137,11 +138,16 @@ public class CallActivity extends Activity {
 
     private void showAcceptCallUpdateDialog(){
 
-        mCallUpdateDialog = new AlertDialog.Builder(this);
-        mCallUpdateDialog.setTitle("title");
-        mCallUpdateDialog.setPositiveButton("yes", new DialogInterface.OnClickListener() {
+        SweetAlertDialog mCallUpdateDialog = new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE);
+        mCallUpdateDialog.setTitleText("Video Request");
+        mCallUpdateDialog.setCustomImage(R.drawable.chat_left);
+        mCallUpdateDialog.setContentText("对方请求打开视频");
+        mCallUpdateDialog.setCancelText("拒绝");
+        mCallUpdateDialog.showCancelButton(true);
+        mCallUpdateDialog.setConfirmText("接受");
+        mCallUpdateDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+            public void onClick(SweetAlertDialog dialogInterface) {
                 Core core = LinphoneManager.getCore();
                 core.enableVideoCapture(true);
                 core.enableVideoDisplay(true);

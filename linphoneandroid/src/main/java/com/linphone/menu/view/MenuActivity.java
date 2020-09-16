@@ -1,38 +1,27 @@
 package com.linphone.menu.view;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Activity;
-import android.app.LocalActivityManager;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.view.animation.*;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.viewpager.widget.ViewPager;
-import com.linphone.R;
-import butterknife.ButterKnife;
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import com.linphone.R;
 import com.linphone.about.view.AboutActivity;
 import com.linphone.addressbook.view.AddressBookImpl;
-import com.linphone.call.view.CallActivity;
 import com.linphone.call.view.Dial;
-import com.linphone.chat.single.view.ChatActivity;
-
 import com.linphone.chat.view.ChatRecordActivity;
 import com.linphone.login.view.LoginPhoneActivity;
 import com.linphone.menu.view.animation.GuillotineAnimation;
+import com.linphone.util.LinphoneContext;
 
 
 public class MenuActivity extends Activity implements OnClickListener{
@@ -202,7 +191,6 @@ public class MenuActivity extends Activity implements OnClickListener{
         //hang_fall.setAnimationListener(new Animation.AnimationListener() {
            // @Override
            // public void onAnimationEnd(Animation animation) {
-
                 // ImageView和TetxView置为绿色，页面随之跳转
                 switch (v.getId()) {
                     case R.id.ll_dial:
@@ -347,4 +335,15 @@ public class MenuActivity extends Activity implements OnClickListener{
 
      */
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        if (keyCode == KeyEvent.KEYCODE_BACK)
+        {
+            LinphoneContext.instance().destroy();
+            finish();
+            System.exit(0);
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }

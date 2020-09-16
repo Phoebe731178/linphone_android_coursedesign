@@ -39,4 +39,5 @@ dependencies {
     implementation 'com.github.promeg:tinypinyin-lexicons-java-cncity:2.0.3' // 可选，适用于Java的中国地区词典
     implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
     implementation 'org.jetbrains:annotations:20.1.0'
+    implementation  'com.github.f0ris.sweetalert:library:1.6.2'
 }

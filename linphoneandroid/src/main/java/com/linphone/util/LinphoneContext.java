@@ -28,18 +28,17 @@ import com.linphone.MainApplication;
 import com.linphone.addressbook.AddressBookModelImpl;
 import com.linphone.addressbook.view.AddressBookImpl;
 import com.linphone.addressbook.view.ContactDetail;
-
 import com.linphone.call.view.CallActivity;
 import com.linphone.call.view.CallIncomingActivity;
 import com.linphone.call.view.CallOutgoingActivity;
 import com.linphone.call.view.Dial;
+import com.linphone.menu.view.MenuActivity;
 import com.linphone.util.compatibility.Compatibility;
 import com.linphone.util.settings.LinphonePreferences;
 import com.linphone.vo.Contact;
 import org.linphone.core.*;
 import org.linphone.core.tools.Log;
 import org.linphone.mediastream.Version;
-
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -98,7 +97,7 @@ public class LinphoneContext
         {
             @Override
             public void onCallStateChanged(Core core, Call call, Call.State state, String message) {
-                android.util.Log.i("callStatelistener", state.name());
+                android.util.Log.i("callStateListener", state.name());
                 if(state == Call.State.IncomingReceived){
                     onIncomingStarted(call);
                 } else if (state == Call.State.Connected) {
@@ -135,7 +134,7 @@ public class LinphoneContext
                         break;
                     case Ok:
                         Toast.makeText(mContext, "登录成功", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(mContext, AddressBookImpl.class);
+                        Intent intent = new Intent(mContext, MenuActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         mContext.startActivity(intent);
                         break;

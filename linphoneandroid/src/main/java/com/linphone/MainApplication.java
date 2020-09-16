@@ -54,6 +54,7 @@ public class MainApplication extends Application
 
             @Override
             public void onActivityStarted(@NonNull Activity activity) {
+
             }
 
             @Override

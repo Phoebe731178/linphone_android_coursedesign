@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
@@ -57,16 +58,17 @@
                     android:layout_height="match_parent" android:layout_weight="1">
 
                 <ImageView
-                        android:layout_width="168dp"
-                        android:layout_height="158dp"
+                        android:layout_width="139dp"
+                        android:layout_height="129dp"
                         android:layout_gravity="center"
-                        android:src="@drawable/avatar"
+                        android:src="@mipmap/contact_head"
                         android:id="@+id/contactView"
                         android:layout_weight="1"/>
                 <TextView
                         android:padding="15dp"
                         android:gravity="center_horizontal"
                         android:text="TextView"
+                        android:textColor="#7adfb8"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/contactDetailName"
@@ -91,6 +93,7 @@
                             android:layout_height="match_parent"
                             android:layout_centerVertical="true"
                             android:text="电话号码"
+                            android:textColor="#7adfb8"
                             android:layout_weight="0.8"
                             android:textAllCaps="true"/>
 
@@ -103,6 +106,36 @@
                         android:orientation="vertical">
                     <TextView
                             android:id="@+id/phonenumber"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:textColor="@color/black_color"
+                            android:gravity="left"
+                            android:inputType="textPersonName|textCapWords"
+                            android:paddingRight="5dp"
+                            android:textCursorDrawable="@null" />
+
+                </LinearLayout>
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center">
+
+                    <TextView
+                            style="@style/contact_edit_form_label_font"
+                            android:layout_width="293dp"
+                            android:layout_height="match_parent"
+                            android:layout_centerVertical="true"
+                            android:text="SIP地址"
+                            android:textColor="#7adfb8"
+                            android:layout_weight="0.8"
+                            android:textAllCaps="true"/>
+                </LinearLayout>
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                    <TextView
+                            android:id="@+id/SIP"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:textColor="@color/black_color"
@@ -128,7 +161,7 @@
                                 android:orientation="vertical">
                             <ImageButton
                                     android:layout_width="60dp"
-                                    android:layout_height="60dp" android:background="@drawable/phone"
+                                    android:layout_height="60dp" android:background="@mipmap/call1"
                                     android:layout_gravity="center_horizontal"
                                     android:id="@+id/phone"/>
                         </LinearLayout>
@@ -138,15 +171,14 @@
                                 android:orientation="vertical">
                             <ImageButton
                                     android:layout_width="60dp"
-                                    android:layout_height="60dp" android:background="@drawable/message"
+                                    android:layout_height="60dp"
+                                    android:background="@mipmap/message1"
                                     android:layout_gravity="center_horizontal"
                                     android:id="@+id/message_button"/>
                         </LinearLayout>
                     </LinearLayout>
-                    <Button
-                            android:text="聊天记录"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" android:id="@+id/button"/>
+
+
 
 
                 </LinearLayout>
@@ -156,4 +188,5 @@
 
     </ScrollView>
 </LinearLayout>
+
 

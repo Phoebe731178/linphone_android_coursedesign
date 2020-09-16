@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
 import com.linphone.login.view.LoginPhoneActivity;
-import com.linphone.util.LinphoneManager;
 import org.linphone.core.AccountCreator;
 import org.linphone.core.AccountCreatorListener;
 
@@ -52,8 +51,6 @@ public class PhoneAccountCreatorListener implements AccountCreatorListener
         if (status == AccountCreator.Status.RequestOk)
         {
             Log.i("LoginLinphoneAccount", "Account for " + creator.getPhoneNumber() + " is login");
-            LinphoneManager.getCore().clearProxyConfig();
-            creator.createProxyConfig();
         }
         Log.i("LoginLinphoneAccount", "status [" + status.name() + "]");
         Log.i("LoginLinphoneAccount", "response: \n" + response);
@@ -88,12 +85,12 @@ public class PhoneAccountCreatorListener implements AccountCreatorListener
             case RequestOk:
                 Log.i("RecoverAccount", "Account for " + creator.getPhoneNumber() + " is recovered"); break;
             case AccountNotExist:
-                {
-                    Log.i("RecoverAccount", "Account " + creator.getUsername() + " does not exist, creating account.");
-                    creator.createAccount();
-                    creator.recoverAccount();
-                    break;
-                }
+            {
+                Log.i("RecoverAccount", "Account " + creator.getUsername() + " does not exist, creating account.");
+                creator.createAccount();
+                creator.recoverAccount();
+                break;
+            }
         }
         Log.i("RecoverAccount", "status [" + status.name() + "]");
         Log.i("RecoverAccount", "response: \n" + response);

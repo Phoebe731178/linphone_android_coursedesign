@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import com.linphone.addressbook.AddressBookPresenter;
 import com.linphone.call.LinphoneCall;
 import com.linphone.call.LinphoneCallImpl;
+import com.linphone.menu.view.MenuActivity;
 import com.linphone.vo.Contact;
 
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class AddressBookImpl extends Activity implements AddressBook {
     private ArrayAdapter<String> addressBookAdapter;
     private List<Contact> contactList;
     private List<String> nameList;
+    private ImageView contacts_back;
 
 
     @Override
@@ -37,6 +39,14 @@ public class AddressBookImpl extends Activity implements AddressBook {
         addressBookPresenter.showAddressBook();
         addressBookPresenter.observers();
         ImageView addContact = findViewById(R.id.add_contacts);
+        ImageView contacts_back = findViewById(R.id.contacts_back);
+        contacts_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AddressBookImpl.this, MenuActivity.class);
+                startActivity(intent);
+            }
+        });
         addContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

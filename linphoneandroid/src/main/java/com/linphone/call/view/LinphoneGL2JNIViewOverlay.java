@@ -1,4 +1,3 @@
-
 package com.linphone.call.view;
 
 import android.content.Context;
@@ -163,4 +162,3 @@ public class LinphoneGL2JNIViewOverlay extends org.linphone.mediastream.video.di
         windowManager.removeViewImmediate(this);
     }
 }
-

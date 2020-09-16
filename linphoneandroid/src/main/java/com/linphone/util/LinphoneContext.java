@@ -28,6 +28,7 @@ import com.linphone.MainApplication;
 import com.linphone.addressbook.AddressBookModelImpl;
 import com.linphone.addressbook.view.AddressBookImpl;
 import com.linphone.addressbook.view.ContactDetail;
+
 import com.linphone.call.view.CallActivity;
 import com.linphone.call.view.CallIncomingActivity;
 import com.linphone.call.view.CallOutgoingActivity;
@@ -38,6 +39,7 @@ import com.linphone.vo.Contact;
 import org.linphone.core.*;
 import org.linphone.core.tools.Log;
 import org.linphone.mediastream.Version;
+
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -96,7 +98,7 @@ public class LinphoneContext
         {
             @Override
             public void onCallStateChanged(Core core, Call call, Call.State state, String message) {
-                android.util.Log.i("callStateListener", state.name());
+                android.util.Log.i("callStatelistener", state.name());
                 if(state == Call.State.IncomingReceived){
                     onIncomingStarted(call);
                 } else if (state == Call.State.Connected) {
@@ -258,8 +260,8 @@ public class LinphoneContext
                 for(Activity activity: activitiesCopy){
                     android.util.Log.i("activityCheck", "now " + activity.getClass().getName());
                     if(activity.getClass().getName().equals("com.linphone.call.view.CallActivity")
-                                    || activity.getClass().getName().equals("com.linphone.call.view.CallOutgoingActivity")
-                                    || activity.getClass().getName().equals("com.linphone.call.view.CallIncomingActivity")){
+                            || activity.getClass().getName().equals("com.linphone.call.view.CallOutgoingActivity")
+                            || activity.getClass().getName().equals("com.linphone.call.view.CallIncomingActivity")){
                         activity.finish();
                         continue;
                     }

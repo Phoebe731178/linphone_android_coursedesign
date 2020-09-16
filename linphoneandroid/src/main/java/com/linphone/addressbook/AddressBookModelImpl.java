@@ -319,5 +319,3 @@ public class AddressBookModelImpl implements AddressBookModel {
     }
 
 }
-
-

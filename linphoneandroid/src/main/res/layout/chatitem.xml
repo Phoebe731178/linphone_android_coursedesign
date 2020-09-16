@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                   xmlns:tools="http://schemas.android.com/tools"
-                                                   android:layout_width="match_parent"
-                                                   android:layout_height="wrap_content">
+<androidx.constraintlayout.widget.ConstraintLayout
+                  xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:app="http://schemas.android.com/apk/res-auto"
+                  xmlns:tools="http://schemas.android.com/tools"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content">
 
     <ImageView
             android:layout_width="15dp"
-            android:layout_height="15dp" app:srcCompat="@drawable/imdn_error" android:id="@+id/imdn_left"
-            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="24dp"
-            app:layout_constraintStart_toEndOf="@+id/chat_left_textView" android:layout_marginStart="12dp"/>
+            android:layout_height="15dp"
+            app:srcCompat="@drawable/imdn_error"
+            android:id="@+id/imdn_left"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="24dp"
+            app:layout_constraintStart_toEndOf="@+id/chat_left_textView"
+            android:layout_marginStart="12dp"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -22,7 +27,7 @@
     <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
-            app:srcCompat="@drawable/user_right"
+            app:srcCompat="@drawable/chat_right"
             android:id="@+id/user_right_imageView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -31,7 +36,7 @@
     <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
-            app:srcCompat="@drawable/user_left"
+            app:srcCompat="@drawable/chat_left"
             android:id="@+id/user_left_imageView"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp"
@@ -50,7 +55,11 @@
     />
     <ImageView
             android:layout_width="15dp"
-            android:layout_height="15dp" app:srcCompat="@drawable/imdn_error" android:id="@+id/imdn_right"
+            android:layout_height="15dp"
+            app:srcCompat="@drawable/imdn_error"
+            android:id="@+id/imdn_right"
             app:layout_constraintEnd_toStartOf="@+id/chat_right_textView"
-            android:layout_marginEnd="12dp" app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="24dp"/>
+            android:layout_marginEnd="12dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="24dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

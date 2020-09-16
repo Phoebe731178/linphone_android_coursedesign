@@ -1,8 +1,10 @@
 package com.linphone.login;
 
+import com.linphone.login.exceptions.LoginException;
+
 public interface LoginHandler
 {
-    void login(String userName, String authCode);
+    void login(String userName, String authCode) throws LoginException;
     int ACTIVATE_ACCOUNT = 0;
     int ACTIVATE_ALIAS = 1;
     int IS_ACCOUNT_LINKED = 2;

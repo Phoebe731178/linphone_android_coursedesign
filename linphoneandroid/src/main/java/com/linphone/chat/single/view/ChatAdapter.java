@@ -46,8 +46,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>
             chatRightTextView = itemView.findViewById(R.id.chat_right_textView);
             userLeftImageView = itemView.findViewById(R.id.user_left_imageView);
             userRightImageView = itemView.findViewById(R.id.user_right_imageView);
-            userLeftImageView.setImageResource(R.drawable.user_left);
-            userRightImageView.setImageResource(R.drawable.user_right);
+            userLeftImageView.setImageResource(R.drawable.chat_left);
+            userRightImageView.setImageResource(R.drawable.chat_right);
             imdnLeft = itemView.findViewById(R.id.imdn_left);
             imdnRight = itemView.findViewById(R.id.imdn_right);
         }

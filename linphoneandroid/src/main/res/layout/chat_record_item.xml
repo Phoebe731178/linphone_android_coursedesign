@@ -7,9 +7,13 @@
 
     <ImageView
             android:layout_width="50dp"
-            android:layout_height="50dp" app:srcCompat="@drawable/user_left" android:id="@+id/user_image"
-            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="10dp" android:layout_marginStart="10dp"/>
+            android:layout_height="50dp"
+            app:srcCompat="@drawable/chat_left"
+            android:id="@+id/user_image"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"/>
     <TextView
             android:text="Loading..."
             android:layout_width="wrap_content"
@@ -36,7 +40,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="3dp"
-            android:background="@drawable/circle_red"
+            android:background="@drawable/user_left"
     />
     <TextView
             android:text="Loading..."

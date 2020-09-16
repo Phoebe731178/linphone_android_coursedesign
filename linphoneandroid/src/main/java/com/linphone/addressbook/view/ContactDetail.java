@@ -24,7 +24,7 @@ public class ContactDetail extends Activity {
     private CallOutgoingPresenter callOutgoingPresenter;
     private ImageView messageButton;
     private ImageView backButton;
-    private Button button;
+    //private Button button;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,6 +32,7 @@ public class ContactDetail extends Activity {
         setContentView(R.layout.item_contact_detail);
         messageButton = findViewById(R.id.message_button);
         backButton = findViewById(R.id.back);
+        /*
         button = findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,6 +40,8 @@ public class ContactDetail extends Activity {
                 startActivity(new Intent(ContactDetail.this, ChatRecordActivity.class));
             }
         });
+
+         */
         //从AddressBookActivity获取联系人信息
         Intent intent = getIntent();
         Contact contact = intent.getParcelableExtra("contact");

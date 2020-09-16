@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#7adfb8"
+              android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+            app:contentInsetStart="10dp"
+            android:layout_width="44dp"
+            android:layout_height="55dp"
+            android:windowNoTitle="true"
+            android:background="#7adfb8"
+    >
+
+        <ImageView
+                android:id="@+id/guillotine_hamburger"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_menu"
+
+        />
+    </androidx.appcompat.widget.Toolbar>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#7adfb8"
+                    android:orientation="vertical">
+        <LinearLayout
+                android:id="@+id/profile_group"
+                android:layout_width="match_parent"
+                android:layout_height="66dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="24dp"
+        >
+            <ImageView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="100dp"
+                    android:src="@mipmap/ic_profile"/>
+
+            <com.linphone.menu.view.widget.CanaroTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+                    android:textSize="20sp"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@android:color/white"
+                    android:text="PROFILE"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/assistant_group"
+                android:layout_width="match_parent"
+                android:layout_height="66dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="96dp">
+
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="100dp"
+                    android:src="@mipmap/ic_feed" />
+
+            <com.linphone.menu.view.widget.CanaroTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+                    android:textSize="20sp"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@android:color/white"
+                    android:text="ASSISTANT"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/about_group"
+                android:layout_width="match_parent"
+                android:layout_height="66dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="168dp">
+
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="100dp"
+                    android:src="@mipmap/ic_activity_active" />
+
+            <com.linphone.menu.view.widget.CanaroTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+                    android:textSize="20sp"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@android:color/white"
+                    android:text="ABOUT" />
+        </LinearLayout>
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+
+        <LinearLayout
+                android:id="@+id/settings_group"
+                android:layout_width="match_parent"
+                android:layout_height="66dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="240dp">
+
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="100dp"
+                    android:src="@mipmap/ic_settings" />
+
+            <com.linphone.menu.view.widget.CanaroTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+                    android:textSize="20sp"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@android:color/white"
+                    android:text="SETTINGS" />
+        </LinearLayout>
+
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>

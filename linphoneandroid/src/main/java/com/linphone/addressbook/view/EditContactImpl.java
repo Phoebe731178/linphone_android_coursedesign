@@ -125,4 +125,3 @@ public class EditContactImpl extends AppCompatActivity implements EditContact, T
 
     }
 }
-

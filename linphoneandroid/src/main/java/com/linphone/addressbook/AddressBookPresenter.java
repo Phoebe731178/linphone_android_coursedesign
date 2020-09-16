@@ -27,6 +27,11 @@ public class AddressBookPresenter {
         this.context = context;
     }
 
+    public AddressBookPresenter(Context context){
+        this.addressBookModel = new AddressBookModelImpl(context);
+        addressBookModel.getAddressBookInfo();
+    }
+
     //调用通讯录view层显示通讯录列表，并设置点击查看详情事件
     public void showAddressBook(){
         addressBook.showAddressBookList(addressBookModel.getAddressBookInfo());

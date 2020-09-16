@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.Window;
 import com.linphone.R;
+import com.linphone.addressbook.AddressBookPresenter;
 import com.linphone.login.view.LoginPhoneActivity;
 import com.linphone.util.LinphoneManager;
 
@@ -17,6 +18,7 @@ public class ActSplashScreen extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
+        new AddressBookPresenter(this);
         // 去掉标题
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.act_splash_screen);

@@ -15,12 +15,10 @@ import androidx.appcompat.widget.Toolbar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.linphone.R;
-import com.linphone.about.view.AboutActivity;
 import com.linphone.addressbook.AddressBookPresenter;
 import com.linphone.addressbook.view.AddressBookImpl;
 import com.linphone.call.view.Dial;
 import com.linphone.chat.view.ChatRecordActivity;
-import com.linphone.login.view.LoginPhoneActivity;
 import com.linphone.menu.view.animation.GuillotineAnimation;
 import com.linphone.util.LinphoneContext;
 
@@ -40,8 +38,8 @@ public class MenuActivity extends Activity implements OnClickListener{
     private LinearLayout ll_address;
     private LinearLayout ll_message;
 
-    private LinearLayout about_group;
-    private LinearLayout assistant_group;
+    //private LinearLayout about_group;
+    //private LinearLayout assistant_group;
 
     private Intent dialIntent;
     private Intent addressIntent;
@@ -125,8 +123,8 @@ public class MenuActivity extends Activity implements OnClickListener{
         ll_dial.setOnClickListener(this);
         ll_address.setOnClickListener(this);
         ll_message.setOnClickListener(this);
-        about_group.setOnClickListener(this);
-        assistant_group.setOnClickListener(this);
+        //about_group.setOnClickListener(this);
+        //assistant_group.setOnClickListener(this);
 
 
         //设置ViewPager滑动监听
@@ -136,8 +134,8 @@ public class MenuActivity extends Activity implements OnClickListener{
     private void initView() {
         View guillotineMenu = LayoutInflater.from(MenuActivity.this).inflate(R.layout.menu_top_guillotine, null);
        // root.addView(guillotineMenu);
-        this.about_group = guillotineMenu.findViewById(R.id.about_group);
-        this.assistant_group = guillotineMenu.findViewById(R.id.assistant_group);
+        //this.about_group = guillotineMenu.findViewById(R.id.about_group);
+       // this.assistant_group = guillotineMenu.findViewById(R.id.assistant_group);
 
         // 底部菜单3个Linearlayout
         this.ll_dial = (LinearLayout) findViewById(R.id.ll_dial);
@@ -187,7 +185,7 @@ public class MenuActivity extends Activity implements OnClickListener{
     public void onClick(View v) {
         // 在每次点击后将所有的底部按钮(ImageView,TextView)颜色改为灰色，然后根据点击着色
         restartBotton();
-        View guillotineMenu = LayoutInflater.from(MenuActivity.this).inflate(R.layout.menu_top_guillotine, null);
+        //View guillotineMenu = LayoutInflater.from(MenuActivity.this).inflate(R.layout.menu_top_guillotine, null);
         //Animation hang_fall = AnimationUtils.loadAnimation(MenuActivity.this, R.anim.hang_fall );
         //hang_fall.setAnimationListener(new Animation.AnimationListener() {
            // @Override
@@ -213,6 +211,7 @@ public class MenuActivity extends Activity implements OnClickListener{
                         startActivity(messageIntent);
 
                         break;
+                        /*
                     case R.id.about_group:
                         //View guillotineMenu = LayoutInflater.from(MenuActivity.this).inflate(R.layout.menu_top_guillotine, null);
                         guillotineMenu.setVisibility(View.GONE);
@@ -225,6 +224,8 @@ public class MenuActivity extends Activity implements OnClickListener{
                         startActivity(new Intent(MenuActivity.this,
                                 LoginPhoneActivity.class));
                         break;
+
+                         */
                     //case R.id.about_group:
                     //iv_message.setImageResource(R.drawable.tab_find_frd_pressed);
                     //viewPager.setCurrentItem(3);

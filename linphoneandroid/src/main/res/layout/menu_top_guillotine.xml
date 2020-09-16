@@ -22,14 +22,13 @@
 
         />
     </androidx.appcompat.widget.Toolbar>
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:layout_width="match_parent"
+    <RelativeLayout
+            android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="#7adfb8"
                     android:orientation="vertical">
         <LinearLayout
-                android:id="@+id/profile_group"
+                android:id="@+id/about_group"
                 android:layout_width="match_parent"
                 android:layout_height="66dp"
                 android:orientation="horizontal"
@@ -40,7 +39,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="100dp"
+                    android:layout_marginLeft="135dp"
                     android:src="@mipmap/ic_profile"/>
 
             <com.linphone.menu.view.widget.CanaroTextView
@@ -50,47 +49,40 @@
                     android:textSize="20sp"
                     android:layout_gravity="center_vertical"
                     android:textColor="@android:color/white"
-                    android:text="PROFILE"/>
+                    android:text="ABOUT"/>
 
         </LinearLayout>
 
         <LinearLayout
-                android:id="@+id/assistant_group"
+                android:id="@+id/welcome"
                 android:layout_width="match_parent"
                 android:layout_height="66dp"
                 android:orientation="horizontal"
                 android:layout_marginTop="96dp">
 
             <ImageView
-                    android:layout_width="wrap_content"
+                    android:layout_width="210dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="100dp"
-                    android:src="@mipmap/ic_feed" />
+                    android:src="@drawable/chat_left"/>
 
             <com.linphone.menu.view.widget.CanaroTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="24dp"
-                    android:textSize="20sp"
+                    android:layout_marginLeft="0dp"
+                    android:textSize="30sp"
                     android:layout_gravity="center_vertical"
-                    android:textColor="@android:color/white"
-                    android:text="ASSISTANT"/>
+                    android:textColor="#FCFCFF"
+                    android:text="Welcome!"/>
         </LinearLayout>
 
         <LinearLayout
-                android:id="@+id/about_group"
+                android:id="@+id/about_content"
                 android:layout_width="match_parent"
                 android:layout_height="66dp"
                 android:orientation="horizontal"
-                android:layout_marginTop="168dp">
+                android:layout_marginTop="200dp">
 
-            <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="100dp"
-                    android:src="@mipmap/ic_activity_active" />
+
 
             <com.linphone.menu.view.widget.CanaroTextView
                     android:layout_width="wrap_content"
@@ -99,36 +91,22 @@
                     android:textSize="20sp"
                     android:layout_gravity="center_vertical"
                     android:textColor="@android:color/white"
-                    android:text="ABOUT" />
+                    android:text="此为基于linphone开发的IIP电话系统1.0" />
         </LinearLayout>
-
-        <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"/>
-
         <LinearLayout
-                android:id="@+id/settings_group"
+                android:id="@+id/about_end"
                 android:layout_width="match_parent"
-                android:layout_height="66dp"
+                android:layout_height="84dp"
                 android:orientation="horizontal"
-                android:layout_marginTop="240dp">
+                android:layout_marginTop="280dp">
 
             <ImageView
-                    android:layout_width="wrap_content"
+                    android:layout_width="210dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="100dp"
-                    android:src="@mipmap/ic_settings" />
-
-            <com.linphone.menu.view.widget.CanaroTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="24dp"
-                    android:textSize="20sp"
-                    android:layout_gravity="center_vertical"
-                    android:textColor="@android:color/white"
-                    android:text="SETTINGS" />
+                    android:layout_marginLeft="180dp"
+                    android:src="@drawable/chat_right"/>
         </LinearLayout>
+
 
 
 

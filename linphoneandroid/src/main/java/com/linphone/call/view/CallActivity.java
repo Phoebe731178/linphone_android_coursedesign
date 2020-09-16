@@ -39,7 +39,6 @@ public class CallActivity extends Activity {
         ImageButton video = findViewById(R.id.video);
         mLocalPreview = findViewById(R.id.local_preview_texture);
         mRemoteVideo = findViewById(R.id.remote_video_texture);
-        video.setImageResource(R.drawable.video_online);
 
         callListener = new CoreListenerStub() {
             @Override
@@ -138,7 +137,7 @@ public class CallActivity extends Activity {
 
     private void showAcceptCallUpdateDialog(){
 
-        SweetAlertDialog mCallUpdateDialog = new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE);
+        final SweetAlertDialog mCallUpdateDialog = new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE);
         mCallUpdateDialog.setTitleText("Video Request");
         mCallUpdateDialog.setCustomImage(R.drawable.chat_left);
         mCallUpdateDialog.setContentText("对方请求打开视频");
@@ -171,6 +170,7 @@ public class CallActivity extends Activity {
                 mOverlay.addToWindowManager(mWindowManager, layoutParams);
                 core.setNativeVideoWindowId(mRemoteVideo);
                 core.setNativePreviewWindowId(mLocalPreview);
+                mCallUpdateDialog.dismiss();
             }
         });
 //        mCallUpdateDialog.setNegativeButton("no", new DialogInterface.OnClickListener() {

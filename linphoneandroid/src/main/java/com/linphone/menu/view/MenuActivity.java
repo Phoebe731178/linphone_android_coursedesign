@@ -16,6 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.linphone.R;
 import com.linphone.about.view.AboutActivity;
+import com.linphone.addressbook.AddressBookPresenter;
 import com.linphone.addressbook.view.AddressBookImpl;
 import com.linphone.call.view.Dial;
 import com.linphone.chat.view.ChatRecordActivity;
@@ -75,7 +76,7 @@ public class MenuActivity extends Activity implements OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu_activity_main);
 
-
+        new AddressBookPresenter(this);
         //groupActivity = new LocalActivityManager(this, true);
         //groupActivity.dispatchCreate(savedInstanceState);
 

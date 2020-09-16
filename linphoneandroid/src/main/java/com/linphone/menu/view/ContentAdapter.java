@@ -5,6 +5,7 @@ import java.util.List;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.viewpager.widget.PagerAdapter;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * ViewPager适配器
@@ -28,6 +29,7 @@ public class ContentAdapter extends PagerAdapter {
         return arg0 == arg1;
     }
 
+    @NotNull
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         View view = views.get(position);

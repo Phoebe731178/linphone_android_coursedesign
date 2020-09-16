@@ -1,9 +1,10 @@
 package com.linphone.call;
 
-import android.util.Log;
 import com.linphone.util.LinphoneManager;
-import com.linphone.vo.Contact;
-import org.linphone.core.*;
+import org.linphone.core.Address;
+import org.linphone.core.Call;
+import org.linphone.core.CallParams;
+import org.linphone.core.Core;
 
 public class LinphoneCallImpl implements LinphoneCall{
 

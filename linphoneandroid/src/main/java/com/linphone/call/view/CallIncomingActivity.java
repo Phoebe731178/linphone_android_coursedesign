@@ -13,7 +13,6 @@ import com.linphone.addressbook.AddressBookModelImpl;
 import com.linphone.call.LinphoneCallImpl;
 import com.linphone.util.LinphoneManager;
 import com.linphone.util.LinphoneUtils;
-import com.linphone.vo.Contact;
 import org.linphone.core.Address;
 import org.linphone.core.Call;
 

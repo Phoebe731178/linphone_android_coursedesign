@@ -2,26 +2,21 @@ package com.linphone.call.view;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.*;
-import android.widget.Button;
+import android.view.KeyEvent;
+import android.view.TextureView;
+import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import com.linphone.R;
 import com.linphone.addressbook.AddressBookModelImpl;
-import com.linphone.addressbook.view.AddressBookImpl;
-import com.linphone.call.LinphoneCall;
 import com.linphone.call.LinphoneCallImpl;
 import com.linphone.util.LinphoneManager;
 import com.linphone.util.settings.LinphonePreferences;
-import com.linphone.vo.Contact;
 import org.linphone.core.*;
 
 public class CallActivity extends Activity {
@@ -43,6 +38,7 @@ public class CallActivity extends Activity {
         ImageButton video = findViewById(R.id.video);
         mLocalPreview = findViewById(R.id.local_preview_texture);
         mRemoteVideo = findViewById(R.id.remote_video_texture);
+        video.setImageResource(R.drawable.video_online);
 
         callListener = new CoreListenerStub() {
             @Override

@@ -3,7 +3,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#7adfb8"
-                tools:context="View.Login" >
+                tools:context=".login.view.LoginPhoneActivity" >
 
     <include
             android:id="@+id/main_title"

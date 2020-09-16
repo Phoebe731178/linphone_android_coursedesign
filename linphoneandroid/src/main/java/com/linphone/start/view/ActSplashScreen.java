@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.view.Window;
 import com.linphone.R;
 import com.linphone.login.view.LoginPhoneActivity;
+import com.linphone.util.LinphoneManager;
 
 
 public class ActSplashScreen extends Activity {
@@ -25,6 +26,10 @@ public class ActSplashScreen extends Activity {
             @Override
             public void run() {
                 // TODO Auto-generated method stub
+                if (LinphoneManager.getCore().getProxyConfigList().length > 0)
+                {
+                    return;
+                }
                 Intent intent = new Intent(ActSplashScreen.this,
                         LoginPhoneActivity.class);
                 // 从启动动画切换到主界面
